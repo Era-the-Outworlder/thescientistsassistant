@@ -1,0 +1,314 @@
+//******************************************************************************
+// YAYA Ghost Template
+// Start/end talk dictionary
+//******************************************************************************
+
+//******************************************************************************
+//初回起動 OnFirstBoot
+//******************************************************************************
+
+OnFirstBoot
+{
+	ONFIRSTBOOTVARS
+
+	//True first boot
+	//if reference[0] == 0
+	{
+		"%(medkit)"
+		--
+		"%(tsaCurledUp)%(tsaHeadDown)%(ellps)%(tsaNeutral)%(tsaDazed) Hnnnnnnnggg%(ellps)%(tsaAlert) Oh! \_w[800]You must be one of the Scientist's new hires, \_w[200]right? \_w[700]%(tsaDazed)How else..? \_w[700] \n[200]But I don't%(ellps) \nYou'll have to excuse me-"
+		--
+		"\_w[3000]\cIt has been a%(ellps) well. \_w[1000] \n%(tsaCurledUp).\_w[100].\_w[100].\_w[100].\_w[100].\_w[100].\_w[700]"
+		--
+		"%(tsaHeadDown)\_w[3000]\n[300]%(nrrtr)(It almost appears that they have fallen asleep.)"
+		--
+		"\_w[1000]%(tsaOw)Haaah-hn?\_w[500] You're%(ellps)%(tsaOpen)%(tsaAlert) are those medical-?\_w[1000]%(tsaOw) Could you?"
+		--
+		"\c\n[200]\_w[500]%(nrrtr)(It would seem you have first-aid supplies. You can render aid by double-clicking them and selecting %(CHR(34))First Aid%(CHR(34)) from the menu that appears.)"
+
+	}
+	//Reinstalled first boots
+	//else
+	//{
+	//	"\0%(tsaNeutral)I feel like we've done this before..."
+	//}
+}
+
+
+ONFIRSTBOOTVARS{
+	username         	= "you"
+	tsanickname 		= "The Assistant"
+	teachusername    	= 0	
+	trust 				= 0
+	punches				= 0
+	woundpokes			= 0
+	medkitopen 		 	= 0
+	itemgrabbed 	 	= 0
+	timenoises 		 	= 1
+	awareness 	 	 	= 100 					//synonymous with consciousness 
+	timesinceexperiment = 10					//minutes since they got back from an experiment
+	willleaveafter		= 60 * 10 + RAND(120)	//When timesinceexperiment equals this, they Leave
+	firstbootdate 		= getTodaysDate
+	lastbootdate 		= getTodaysDate
+	thisbootdate 		= getTodaysDate
+	soundeffects		= 1
+	
+	//See Google Sheets document for details & examples on the upcoming
+	FirstBootHealth
+	
+	
+	
+	/*
+	//INJURY ARRAYS - a 0 means no injury, 1 means healing, 2 means bandaged, 3 means medicated, 4 means cleaned, 5 is active injury, 6 is as well but its more severe
+	//Health is calculated based on these.
+	armhealth = 100
+	arminjuries = IARRAY
+	//crook of arm
+	arminjuries ,= 0
+	//body of arm
+	arminjuries ,= 0
+	//wrist
+	arminjuries ,= 0
+	
+	headhealth = 100
+	headinjuries = IARRAY
+	//Cut on face
+	headinjuries ,= 4
+	//Injured eye
+	headinjuries ,= 0
+	
+	//Run processing on injuries
+	ConfigureHealth
+	*/
+
+
+}
+
+/*
+//calculate head health
+ConfigureHeadHealth{
+	headhealth = 100 	//start at max
+	for _i = 0; _i < ARRAYSIZE(headinjuries) ; _i++{
+		headhealth -= headinjuries[_i] * 2
+	}
+}
+*/
+
+getTodaysDate{
+	_result = IARRAY
+	//year, month, day, o'clock (?), minutes, seconds (we ignore seconds)
+	_result ,= year			//0
+	_result ,= month		//1
+	_result ,= day			//2
+	_result ,= hour		    //3
+	_result ,= minute		//4
+	_result ,= 0			//5 (seconds we don't care rn but its there)
+	
+	_result
+	
+	//_diff = FUNCTIONEX("time_check.dll","check_expiration",)
+	
+}
+
+//this was for testing
+dateCheck{
+	_diff = FUNCTIONEX("time_check.dll","how_many_days",lastbootdate[0],lastbootdate[1],lastbootdate[2],lastbootdate[3],lastbootdate[4],lastbootdate[5])
+	_diff
+}
+
+
+
+//******************************************************************************
+// Normal startup OnBoot
+//******************************************************************************
+
+OnBoot
+{
+	_bootstate = ONBOOTVARS
+	//Boot vars will also check if our ghost is here for a new experiment, staying the same, or away.
+	case _bootstate{
+	//New experiment
+	when 1{
+		//---- まず双方のサーフィスを表示
+		"\0%(tsaNeutral)"
+		--
+		"%(tsaNeutral)%(nrrtr)(They aren't looking great. What could have happened today?)"
+		"%(tsaNeutral)%(nrrtr)(Maybe they need a bit of help...)"
+		"%(tsaNeutral)%(nrrtr)(Are you going to do something?)"
+		/*
+		//---- 起動時間を確認してあいさつを変化
+		_timeslot = GetTimeSlot
+		
+		case _timeslot{
+		when "Morning"
+		{
+			"Good morning."
+		}
+		when "Noon"
+		{
+			"Have you eaten...?\e"
+
+		}
+		when "Daytime"
+		{
+			"Good afternoon."
+		}
+		when "Night"
+		{
+			"It's pretty late...\e"
+		}
+		others
+		{
+			//Midnight
+			"O-oh... hello.\e"
+		}
+		}
+		*/
+	}
+	//No change.
+	when 2{
+		if awareness > HIGHCONSC{
+		//Alert.
+			if trust > TRUSTBAD{
+				"%(tsaNeutral)Oh. \w[500]Hey. \w6Nice to see you again."
+			}else{
+				"%(tsaNeutral)%(nrrtr)(They don't seem to want to talk to you.)"
+			}
+			
+		}elseif awareness > LOWCONSC{
+		//They're doin ok.
+			"%(tsaNeutral)%(nrrtr)(They're a bit out of it.)%(br)%(tsaNeutral)H-hey%(ellps) what's? \w[2000]up? "
+		}else{
+		//They're Out.
+			"%(tsaNeutral)H-hey%(ellps)\w4%(ellps) welcome \w4back \w4to \w2the \w2party."
+		
+		}
+		
+	}
+	others{
+		"%(tsaNeutral)%(nrrtr)(They must still be with %(TheScientist)...)"
+	}
+	}
+}
+
+//Sets boot variables and returns their current state.
+ONBOOTVARS{
+	//if it's been more than a day
+	lastbootdate = thisbootdate
+	thisbootdate = getTodaysDate
+	//if a day has passed, it's been long enough for them to return, or its a signaled return
+	if dateCheck != 0 || (awayforscientist == 1 && hour > lastboot[3]) || returnsignal{
+		returnsignal = 0
+		timesinceexperiment = 0					//minutes since they got back from an experiment
+		willleaveafter		= 60 * 10 + RAND(120)	//When timesinceexperiment equals this, they Leave
+		awareness = 100	//base before things Occur
+		awayforscientist = 0
+		OnGenerateExperiment
+		1
+	
+	//Otherwise they're still gone.
+	}elseif awayforscientist == 1{
+		0
+	}else{
+	//otherwise... well, as you were.
+		2
+	
+	}
+	
+	
+
+}
+
+//Grabs an experiment code, then runs config for it.
+OnGenerateExperiment{
+	experimentcode = RAND(2) //so 0 for no experiment, 1 for dud, 2 tentacles
+
+	
+	case experimentcode{
+		when 0{
+			awarenessbuff = 10 - RAND(20)
+			headinjuries[0] = 4
+			ConfigurePartHealth(&headhealth,&headinjuries)
+		}
+	}
+
+
+}
+
+//------------------------------------------------------------------------------
+//Function to roughly examine morning/afternoon/evening/etc.
+//------------------------------------------------------------------------------
+GetTimeSlot
+{
+	case hour{
+	when 22,23,0,1,2,3 {'Midnight'}
+	when 4,5,6,7,8,9,10,11 {'Morning'}
+	when 12,13 {'Noon'}
+	when 14,15,16,17 {'Daytime'}
+	when 18,19,20,21 {'Night'}
+	}//caseの終わり
+}
+
+
+//******************************************************************************
+//終了 OnClose
+//******************************************************************************
+
+OnClose
+{
+	"\0%(tsaNeutral)"
+	--
+	if !awayforscientist{
+		//この部分には\eつけないでね！
+		_timeslot = GetTimeSlot
+		case _timeslot{
+		when "Morning"
+		{
+			"Have a nice morning."
+		}
+		when "Noon"
+		{
+			"It's lunch time. Go eat..."
+
+		}
+		when "Daytime"
+		{
+			"Ah, now? If you're sure..."
+		}
+		when "Night"
+		{
+			"It's pretty late..."
+		}
+		others
+		{
+			//Midnight
+			"O-oh... good night."
+		}
+		}
+		
+	}else{
+		if trust > TRUSTBAD{
+			"%(nrrtr)(Hopefully they'll be okay.)"
+		}else{
+			"%(nrrtr)(They're %(TheScientist)'s problem now.)"
+		}
+		
+	}
+	--
+		"\w9\w9\-\e"
+}
+
+
+//******************************************************************************
+//Restore from minimization OnWindowStateRestore
+//******************************************************************************
+
+OnWindowStateRestore
+{
+	"%(tsaNeutral)%(medkit)"
+	--
+	if !awayforscientist{
+		"%(tsaNeutral)Oh.\w4.\w4. it's less dark, now."
+	}
+	
+}

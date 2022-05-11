@@ -1,0 +1,17 @@
+charset,UTF-8
+
+name,The Scientist's Assistant
+type,ghost
+
+sakura.name,The Assistant
+kero.name,N/A
+
+sstp.allowunspecifiedsend,1
+
+icon,icon.ico
+
+shiori,yaya.dll
+
+craftman,seibihan
+craftmanw,Era The Outworlder & Pixel_Ratto & GrayArea/Ecclysium
+craftmanurl,n/a

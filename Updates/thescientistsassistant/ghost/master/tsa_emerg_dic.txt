@@ -1,0 +1,21 @@
+//******************************************************************************
+// YAYA Ghost Template
+// Emergency Dictionary
+// Minimum Error Handling
+// //  //  //  //
+// ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+// ！！！！！ Do not write anything that could cause a dictionary error ！！！！！
+// ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+//
+//******************************************************************************
+
+
+OnBoot
+{
+	"\0%(tsaNeutral)\1\s[-1]\0Fatal error occurred"
+}
+
+OnFirstBoot
+{
+	OnBoot
+}

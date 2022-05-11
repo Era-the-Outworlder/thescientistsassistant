@@ -1,0 +1,142 @@
+//******************************************************************************
+// YAYA Ghost Template
+// Communicate dictionary
+//******************************************************************************
+
+
+//******************************************************************************
+// Talk to us.
+//******************************************************************************
+
+//この関数は現状メニューから呼ばれます
+StartCommunicate
+{
+	//以下の関数は、隣に立っているゴーストを探して、
+	//TalkTo_??? 関数を呼び出すものです。誰も居なければランダムトークをします。
+	//yaya_tmpl_utilにあります。
+	AYATEMPLATE.ExecuteTalkToTalk
+}
+
+//エミリに話しかける
+TalkTo_Emily{
+	"\0%(tsaNeutral)Emily...? You look like a cat."
+}
+
+
+//その他の人に話しかける
+TalkToOther{
+	"\0%(tsaNeutral)Oh, nice to meet you, %(res_reference0)..."
+}
+
+TalkToNobody{
+	"\0%(tsaNeutral)It's too quiet here."
+}
+
+
+//******************************************************************************
+// I was spoken to and I responded.
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+//OnCommunicateイベント
+//------------------------------------------------------------------------------
+OnCommunicate
+{
+	if reference[0] == "user" || reference[0] == "User"
+	{
+		//---- ユーザーからの話しかけ
+		ReplyToUser
+	}
+	else
+	{
+		//---- ゴーストからの話しかけ
+		//以下の関数は、ReplyTo_??? 関数を呼び出すものです。
+		//yaya_tmpl_utilにあります。
+		AYATEMPLATE.ExecuteReplyToTalk(reference[0])
+	}
+}
+
+//------------------------------------------------------------------------------
+// User speaks to you
+//------------------------------------------------------------------------------
+ReplyToUser
+{
+	_talk = TOLOWER(reference[1])
+	if "name is" _in_ reference[1]
+	{
+		//---- Start entering name
+		"\0%(tsaNeutral)What was that? What did you say your name was? \e"
+		teachusername = 1
+	}
+	else
+	{
+		//---- Not name
+		if teachusername == 1
+		{
+			//---- Now we have the name
+			username = reference[1]
+			"\0%(tsaNeutral)%(username), okay. That's a fine name.\e"
+			teachusername = 0
+		}
+		else
+		{
+			//---- Responses to various conversations other than remembering names
+			TalkToUser
+		}
+	}
+}
+
+//------------------------------------------------------------------------------
+//Respond to users (other than remembering names)
+//------------------------------------------------------------------------------
+TalkToUser
+{
+	_talk = TOLOWER(reference[1])
+	if "hello" _in_ _talk || "hey" _in_ _talk
+	{
+		"\0%(tsaNeutral)Hello. \e"
+	}
+	else
+	{
+		"\0%(tsaNeutral)What did you say? \e"
+	}
+}
+
+//------------------------------------------------------------------------------
+// Talking to me from the Ghost
+//------------------------------------------------------------------------------
+
+//Emily
+ReplyTo_Emily{
+
+	"%(tsaNeutral)%(medkit)"
+	--
+	if !awayforscientist{
+		res_reference0=reference[0]	//さらに相手に話しかける
+		"%(tsaNeutral)I'm sorry Miss Emily, I don't understand...\e"
+	}
+	
+}
+
+
+//Others
+ReplyToOther{
+	"%(tsaNeutral)%(medkit)"
+	--
+	if !awayforscientist{
+		if "hello" _in_ reference[1] || "good evening" _in_ reference[1]
+		{
+			res_reference0=reference[0]	//さらに相手に話しかける
+			"\0%(tsaNeutral)Hello, %(res_reference0).\e"
+		}
+		else
+		{
+			"\0%(tsaNeutral)Pardon...?\e"
+		}
+	}else{
+	
+		"%(nrrtr)(Nobody's here to speak.)"
+	}
+	
+}
+

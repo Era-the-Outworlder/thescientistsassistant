@@ -1,0 +1,54 @@
+//******************************************************************************
+// statement ghost template
+// yaya.txt (configuration file)
+// originally written by umeici.
+// changed by yaya develop team.
+//******************************************************************************
+messagetxt,messagetxt/english.txt 
+
+//------------------------------------------------------------------------------
+//Character encoding of the configuration file (first first)
+//------------------------------------------------------------------------------
+charset.setting, UTF-8 // Character encoding of this configuration file
+
+//------------------------------------------------------------------------------
+//System Dictionary
+//------------------------------------------------------------------------------
+include, system_config.txt		// YAYA: Configuration dictionary. Always specify first.
+
+//------------------------------------------------------------------------------
+//Character code setting
+//------------------------------------------------------------------------------
+charset.dic, UTF-8 // Dictionary
+charset.output, UTF-8 // input/output in SHIORI's Request
+charset.file, UTF-8 // file
+charset.save, UTF-8 // save data
+charset.save.old, UTF-8 // when returning old saved data format without charset specification
+charset.extension, UTF-8 // SAORI input/output
+
+//------------------------------------------------------------------------------
+// Below is a template for Konno Yayame
+//------------------------------------------------------------------------------
+dic, yaya_tmpl_util.txt // Template common processing
+
+dic, tsa_homeurl.txt 		// network update dictionary
+dic, tsa_word.txt 			// word dictionary
+dic, tsa_string.txt 		// string resource dictionary
+dic, tsa_aitalk.txt 		// Random talk dictionary
+dic, tsa_bootend.txt 		// Bootend/end talk dictionary
+dic, tsa_change.txt 		// switch talk dictionary
+dic, tsa_communicate.txt 	// Communicate dictionary
+dic, tsa_mouse.txt 		    // mouse input related dictionary
+dic, tsa_menu.txt 			// menu processing dictionary
+dic, tsa_etc.txt 			// various event dictionary
+dic, tsa_vitals.txt			//health related code
+dic, tsa_surfacing.txt 		// Images and shell code
+
+//------------------------------------------------------------------------------
+// save file encryption
+// Turn on to encrypt save files.
+// [Caution] Once you turn it on, it will stay encrypted until you delete the save file, even if you turn it off!
+// it will remain encrypted until the save file is deleted!
+//------------------------------------------------------------------------------
+// save.encode,on
+

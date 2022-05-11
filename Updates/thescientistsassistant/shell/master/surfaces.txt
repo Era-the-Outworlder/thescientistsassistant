@@ -1,0 +1,133 @@
+charset,UTF-8
+
+descript
+{
+version,1
+}
+
+
+sakura.cursor{
+	mouseup0,FaceCut,system:cross
+	mouseup1,Concussion,system:cross
+	mouseup2,EyeProcedure,system:cross
+	mouseup3,InjectionSite,system:cross
+	mouseup4,LWristSore,system:cross
+	mouseup5,RWristSore,system:cross
+	mouseup6,TwistedAnkle,system:cross
+
+}
+
+char2.cursor{
+	
+}
+
+
+sakura.tooltips{
+	Head,Hair is kinda greasy...
+	Face,Do they even sleep?
+	FaceCut,Looks like it hurts.
+}
+
+
+surface0
+{
+animation0.interval,runonce
+animation0.pattern0,overlay,1000,0,0,0
+}
+
+
+surface100
+{
+
+//collision1,96,97,159,147,Face
+//collision3,6,56,75,117,Twintail
+//collision4,183,55,252,116,Twintail
+
+//torso
+animation200.interval,runonce
+animation200.pattern0,overlay,100200,0,0,0
+
+
+//left arm
+//animation300.interval,runonce
+//animation300.pattern0,overlay,100500,0,0,0
+
+//right arm
+//animation700.interval,runonce
+//animation700.pattern0,overlay,100600,0,0,0
+
+//head base
+animation2000.interval,runonce
+animation2000.pattern0,overlay,102000,0,0,0
+animation2000.collision1,234,85,250,100,FaceCut
+animation2000.collision10,150,0,290,50,Head
+animation2000.collision20,183,55,252,100,Face
+
+//bandaid on face cut
+animation2012.interval,never
+animation2012.pattern0,overlay,102012,0,0,0
+
+
+
+//default eyes
+animation2300.interval,runonce
+animation2300.pattern0,overlay,101300,0,0,0
+
+//default mouth
+animation2500.interval,runonce
+animation2500.pattern0,overlay,101500,0,0,0
+
+}
+
+//Closed medkit
+surface2000
+{	
+	animation10.interval,runonce
+	animation10.pattern0,overlay,200000,0,0,0
+	
+}
+
+//Open medkit
+surface2100
+{
+	//collision1,96,97,159,147,Lid
+	collision1,21,55,42,80,Bandaids
+	collision1,44,56,65,86,Washcloth
+	collision1,60,55,87,85,Gauze
+	collision1,80,52,106,95,Antibacterial
+	
+	
+	//base
+	animation10.interval,runonce
+	animation10.pattern0,overlay,200100,0,0,0
+	
+	//antibac
+	animation40.interval,never
+	animation40.pattern0,overlay,200400,0,0,0
+	
+	//washcloth
+	animation50.interval,never
+	animation50.pattern0,overlay,200500,0,0,0
+	
+	//bandaids
+	animation60.interval,never
+	animation60.pattern0,overlay,200600,0,0,0
+	
+	//gauze
+	animation70.interval,never
+	animation70.pattern0,overlay,200700,0,0,0
+	
+}
+
+
+
+//Antibacterial
+surface4000
+{
+	
+	animation40.interval,runonce
+	animation40.pattern0,overlay,400000,0,0,0
+	
+}
+
+

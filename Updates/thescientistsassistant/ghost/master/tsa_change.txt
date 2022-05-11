@@ -1,0 +1,99 @@
+//******************************************************************************
+// YAYA Ghost Template
+// Switching Talk Dictionary
+//******************************************************************************
+
+//******************************************************************************
+// Switching Ghosts 
+//******************************************************************************
+/*
+The function is described in the following form
+[event] + [ghost name].
+Events include the following.
+Some events will be OnClose or OnBoot if there is no corresponding function.
+Ghost names are prefixed with _.
+If there is no corresponding ghost name, the ghost name part will be "Other.
+
+If the name contains characters such as ", ', +-/*, half-width spaces, etc.
+If the name contains any of the characters used in the system, such as ", ', +-/*, half-width spaces, etc., they are all converted to _.
+Example: the "MobileMaster" -> OnGhostChanging_the__MobileMaster_
+
+OnGhostChanging When an attempt is made to switch to another ghost. If not, OnClose is called.
+OnGhostChanged When switching from another ghost. If no, OnBoot is called.
+OnGhostCalling When a ghost tries to call another ghost.
+OnGhostCalled When called by another ghost. If none, OnBoot is called.
+OnGhostCallComplete When another ghost is called and the invoked ghost has completed its activation, instead of OnOtherGhostBooted
+
+OnOtherGhostBooted When another ghost is invoked and the invoked ghost's boot-up is complete
+OnOtherGhostClosed When another ghost has finished
+OnOtherGhostChanged When another ghost has switched to another ghost, and the other ghost has completed its activation.
+*/ 
+
+
+
+//Switch to Other Ghosts
+OnGhostChangingOther
+{
+	if !awayforscientist{
+		"Someone else? I guess I'll leave..."
+	}else{
+		"%(nrrtr)(Not like they were here to entertain you anyway.)"
+	}
+	
+}
+
+/*
+//Switching from other ghosts
+OnGhostChangedOther
+{
+	"Oh, hello...?"
+}
+*/
+ 
+//******************************************************************************
+//Below this is for switching talk processing.
+//Unusually, there is no need to modify this, but if necessary, change it as needed.
+//Functions beginning with AYATEMPLATE. are located in _tmpl_util.dic.
+//******************************************************************************
+
+OnGhostChanging
+{
+	AYATEMPLATE.ExecuteChangeCallTalk("OnGhostChanging","OnClose")
+}
+
+OnGhostChanged
+{
+	AYATEMPLATE.ExecuteChangeCallTalk("OnGhostChanged","OnBoot")
+}
+
+OnGhostCalling
+{
+	AYATEMPLATE.ExecuteChangeCallTalk("OnGhostCalling")
+}
+
+OnGhostCalled
+{
+	AYATEMPLATE.ExecuteChangeCallTalk("OnGhostCalled","OnBoot")
+}
+
+OnGhostCallComplete
+{
+	AYATEMPLATE.ExecuteChangeCallTalk("OnGhostCallComplete")
+}
+
+OnOtherGhostClosed
+{
+	AYATEMPLATE.ExecuteChangeCallTalk("OnOtherGhostClosed")
+}
+
+OnOtherGhostBooted
+{
+	AYATEMPLATE.ExecuteChangeCallTalk("OnOtherGhostBooted")
+}
+
+OnOtherGhostChanged
+{
+	AYATEMPLATE.ExecuteChangeCallTalk("OnOtherGhostChanged")
+}
+
+

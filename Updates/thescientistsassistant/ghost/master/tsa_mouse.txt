@@ -1,0 +1,100 @@
+//******************************************************************************
+// YAYA Ghost Template
+// Mouse input related dictionaries
+//******************************************************************************
+
+
+//******************************************************************************
+//Mouse Processing Section
+///
+//The following describes the actual talk. Function names follow the rules below.
+///[Type] + [Scope] + [Part].
+///Type is one of MouseMove, MouseDoubleClick, MouseWheelUp, MouseWheelDown.
+//Scope is a scope number such as \0,\1,}.
+//Scope indicates which part of the hit judgment is used. In the case of an event at a place where there is no hit judgment
+//There is no site.
+//******************************************************************************
+
+
+//******************************************************************************
+// stroke response
+//******************************************************************************
+MouseMove0Head
+{
+	"sakura head pet"
+}
+
+
+MouseMove0Face
+{
+	"sakura face pet"
+}
+//******************************************************************************
+// Poked and prodded response
+//******************************************************************************
+
+// Pecked response on the body side
+MouseDoubleClick0Head
+{
+	punches++
+	trust--
+	//hit 'em in the head and they Conk
+	awarenessbuff++
+	ConfigureHealth
+	"\![sound,play,sounds/slap.wav,--volume=85]"
+	--
+	if awareness > HIGHCONSC{
+		"%(tsaNeutral)What was that for...?"
+	}elseif awareness > LOWCONSC{
+		"%(nrrtr)(They whimper.)%(br)%(tsaNeutral)Why%(ellps)?"
+	}else{
+		"%(nrrtr)(They let out a low groan.)"
+	}
+}
+
+MouseDoubleClick0Face
+{
+	MouseDoubleClick0Head
+}
+
+
+MouseDoubleClick0
+{
+	OpenMenu
+}
+
+
+
+//******************************************************************************
+//Mouse processing section core
+//The second number in AYATEMPLATE.MouseMoveWheelFunc is the "sensitivity".
+//The first number (0 or 1) is used to determine whether it is Move or Wheel.
+//No need to change it.
+//******************************************************************************
+
+OnMouseMove
+{
+	AYATEMPLATE.MouseMoveWheelFunc(0,50,'MouseMove')
+}
+
+OnMouseWheel
+{
+	_result = ''
+	if TOINT(reference[2]) > 0 {
+		_result = AYATEMPLATE.MouseMoveWheelFunc(1,4,'MouseWheelUp')
+	}
+	else {
+		_result = AYATEMPLATE.MouseMoveWheelFunc(1,4,'MouseWheelDown')
+	}
+	
+	if _result == '' {
+		_result = AYATEMPLATE.MouseMoveWheelFunc(1,4,'MouseWheel')
+	}
+	
+	_result
+}
+
+OnMouseDoubleClick
+{
+	AYATEMPLATE.MouseEventExec('MouseDoubleClick');
+}

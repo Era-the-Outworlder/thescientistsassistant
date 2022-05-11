@@ -1,0 +1,364 @@
+//******************************************************************************
+// YAYA Ghost Template
+// Menu processing dictionary
+//******************************************************************************
+
+//******************************************************************************
+// Expand Main Menu
+//
+// How to use AYATEMPLATE.MenuItem
+// First string = string to be displayed in the choices
+// Second string = function name to be executed when the choice is made
+// Third string = the amount of line breaks 50% increments 100% if omitted (＝\n)
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+//Main menu expansion
+//------------------------------------------------------------------------------
+OpenMenu
+{
+	if !awayforscientist{
+		if zonedout == 1{
+			"\0%(tsaNeutral)O-oh, I'm sorry. \w[315]I zoned out. \w[315]What did I miss...?"
+			zonedout = 0
+		}else{
+			"\0%(tsaNeutral)What do you need...?"
+		}
+		
+		--
+		"\![quicksection,true]%(br)"
+		--
+		"\![*]\__q[Menu_AITALK]Say something\__q"
+		--
+		if ( STRLEN(AYATEMPLATE.LastTalk) > 0 ) {
+			"    or   \![*]\__q[Menu_LASTTALK]Repeat\__q"
+		}
+		--
+		AYATEMPLATE.MenuItem("Talk frequency","Menu_TALKINTERVAL")
+		--
+		AYATEMPLATE.MenuItem("I have something to say","Menu_COMMUNICATEOPEN")
+		--
+		if awareness > LOWCONSC{
+			AYATEMPLATE.MenuItem("Settings","Menu_SETTINGS")
+		}
+		--
+		AYATEMPLATE.MenuItem("Nevermind","Menu_CANCEL",150)
+		--
+		"%(br)\f[align,center]\f[height,-2]\f[color,firebrick]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\f[color,default]\__q[OpenVitals]V+\__q\n"
+		--
+		"%(getHour):%(getMinute) %(month)/%(day)/%(year) equipped: "
+		--
+		case itemgrabbed{
+			when 4{
+				"antibacterial"
+			}
+			when 5{
+				"washcloth"
+			}
+			when 6{
+				"bandaids"
+			}
+			when 7{
+				"gauze"
+			}
+			others{
+				"nothing"
+			}
+		}
+		--
+		"\f[height,+2]\n\f[align,left]"
+	}
+}
+
+getHour{
+	if hour12 == 0{
+		12
+	}else{
+		hour12
+	}
+}
+
+getMinute{
+	if minute < 10{
+		"0%minute"
+	}else{
+		minute
+	}
+}
+
+//------------------------------------------------------------------------------
+//メニュー選択タイムアウト
+//------------------------------------------------------------------------------
+OnChoiceTimeout
+{
+	"Okay... maybe later."
+}
+
+
+//******************************************************************************
+// Description of each item processed
+//******************************************************************************
+
+//---- tell me something.
+Menu_AITALK
+{
+	//---- 明示的にAIトーク開始を指示
+	OnAiTalk
+}
+
+//---- what you said earlier.
+Menu_LASTTALK
+{
+	AYATEMPLATE.LastTalk
+}
+
+//---- adjusting talk frequency
+Menu_TALKINTERVAL
+{
+	"\0%(tsaNeutral)How often...? \w6I'll try not to bother you..."
+	--
+	AYATEMPLATE.MenuItem("Every minute","Menu_TALKMAX",200)
+	--
+	AYATEMPLATE.MenuItem("Every 3 minutes","Menu_TALKNORMAL")
+	--
+	AYATEMPLATE.MenuItem("Every 5 minutes","Menu_TALKPOOR")
+	--
+	AYATEMPLATE.MenuItem("Be quiet","Menu_TALKNONE")
+	--
+	AYATEMPLATE.MenuItem("Back","OpenMenu",150)
+}
+
+//---- talk to me somewhat
+Menu_COMMUNICATEOPEN
+{
+	"What is it?\![open,communicatebox]\e"
+}
+
+//---- talk to other ghosts
+Menu_GHOSTCOMSTART
+{
+	StartCommunicate
+}
+
+//---- Cancelled
+Menu_CANCEL
+{
+	"Okay...?\e"
+}
+
+//---- Talk Frequency
+Menu_TALKMAX
+{
+	//---- loud talk (1 min interval)
+	aitalkinterval = 60
+	"Sounds like a lot...\e"
+}
+
+Menu_TALKNORMAL
+{
+	//---- talk normally (every 3 minutes)
+	aitalkinterval = 180
+	"Okay, if you're sure...\e"
+}
+
+Menu_TALKPOOR
+{
+	//---- speak quietly (5 minute intervals)
+	aitalkinterval = 300
+	"I'll try not to bother you too much.\e"
+}
+
+Menu_TALKNONE
+{
+	//---- not talking
+	aitalkinterval = 0
+	"\I'll shut up.\e"
+}
+
+//---- Headline
+Menu_HEADLINECANCEL
+{
+	//---- Cancelled
+	"\0%(tsaNeutral)Sure.\e"
+}
+
+
+
+
+
+
+
+
+Menu_SETTINGS{
+	//ELEPHANT: make it nicer binch
+	"\![quicksection,true]"
+	--
+	"Your Name: \![*]\__q[Menu_CHANGENAME]%username\__q\n"
+	//AYATEMPLATE.MenuItem("Name: %username","Menu_CHANGENAME")
+	--
+	"Their Nickname: \![*]\__q[Menu_CHANGETSANICK]%tsanickname\__q\n"
+	//AYATEMPLATE.MenuItem("Their Nickname: %tsanickname","Menu_CHANGETSANICK")
+	--
+	"\n[half]"
+	--
+	if timenoises{
+		//AYATEMPLATE.MenuItem("Time Noises: on","Menu_FLIPBELL")
+		"Hour Bell: \![*]\__q[Menu_FLIPBELL]on\__q\n"
+	}else{
+		//AYATEMPLATE.MenuItem("Time Noises: off","Menu_FLIPBELL")
+		"Hour Bell: \![*]\__q[Menu_FLIPBELL]on\__q\n"
+	}
+	--
+	if soundeffects{
+		"Medical Sound Effects: \![*]\__q[Menu_FLIPSFX]on\__q\n"
+	}else{
+		"Medical Sound Effects: \![*]\__q[Menu_FLIPSFX]off\__q\n"
+	}
+	--
+	AYATEMPLATE.MenuItem("Back","OpenMenu",150)
+
+
+}
+
+Menu_CHANGENAME{
+	if awareness > HIGHCONSC{
+		"%(tsaNeutral)Name change? \w[500]Okay. \w[300]What should I call you now?"
+	//they won't be able to get to the menu if they're not aware enough
+	}else{
+		"%(tsaNeutral)Name%(ellps)? Oh. \w[700]Oh. \w[500]Yes. \w[1000]What do you go by now...?"
+	}
+	--
+	"\![open,inputbox,OnMenu_NAMECHANGEFINISH,0]"
+}
+
+OnMenu_NAMECHANGEFINISH{
+	username = reference0
+	"%(tsaNeutral)Sure%(ellps) I like %username."
+}
+
+
+Menu_CHANGETSANICK{
+	if awareness > HIGHCONSC{
+		"%(tsaNeutral)Oh... \w5you want to call me something different? Don't make it too \w2weird."
+	//they won't be able to get to the menu if they're not aware enough
+	}else{
+		"%(tsaNeutral)My name%(ellps)? Oh. \w[700]Oh, you want \w2to call me something else. What%(ellps)?"
+	}
+	--
+	"\![open,inputbox,OnMenu_TSANICKCHANGEFINISH,0]"
+}
+
+OnMenu_TSANICKCHANGEFINISH{
+	tsanickname = reference0
+	"%(tsaNeutral)%tsanickname works%(ellps)"
+}
+
+Menu_FLIPBELL{
+	if timenoises{
+		timenoises = 0
+		"%(nrrtr)(Hour chime turned off.)"
+	}else{
+		timenoises = 1
+		"%(nrrtr)(Hour chime turned on.)"
+	}
+}
+
+Menu_FLIPSFX{
+	if soundeffects{
+		soundeffects = 0
+		"%(nrrtr)(Sound effects turned off.)"
+	}else{
+		soundeffects = 1
+		"%(nrrtr)(Sound effects turned on.)"
+	}
+}
+
+
+
+
+
+
+
+
+
+
+//---- stamp book
+Menu_STAMP
+{
+	//Initialization
+	//Note from Gray who's fixing up and running things through DeepL:
+	//this line does not work. It does not recognize RegisterTempVar, and there may be a syntax error too.
+	//So this stamp thing won't work until that all gets fixed.
+	//SHIORI3FW.RegisterTempVar('StampInfo_IsExist','StampInfo_IsNotify','StampInfo_CurrentStampFile','StampInfo_CurrentStampTitle')
+	
+	StampInfo_IsExist = 0
+	StampInfo_IsNotify = 0
+	
+	// After taking the stamp book information, raise raises OnStampMenuExec and moves the process downstairs.
+	"\![raiseplugin,379E0DA0-131C-11DD-E1AC-90009E101CFE,OnStampInfoCall]\![raise,OnStampMenuExec]"
+}
+
+OnStampInfo
+{
+	// Whether there is a stamp or not?
+	StampInfo_IsExist = reference[1]
+	StampInfo_IsNotify = 1
+	StampInfo_CurrentStampFile = ''
+	StampInfo_CurrentStampTitle = ''
+	
+	// If stamped, which stamp is stamped?
+	_stamparray = SPLIT(reference[3],CHR(2))
+	
+	StampInfo_Data = _stamparray
+	
+	_n = ARRAYSIZE(_stamparray)
+	for _i = 0 ; _i < _n ; _i++ {
+		_stamp = RE_SPLIT(_stamparray[_i],'[\x1,]') //バイト値1かカンマかでぶった切る：互換モード対策
+		
+		// If you use it elsewhere, please change the name here.
+		if _stamp[0] == 'はろーYAYAわーるど' || _stamp[0] == '紺野ややめ' {
+			StampInfo_CurrentStampFile = _stamp[1]
+			StampInfo_CurrentStampTitle = _stamp[2]
+			break
+		}
+	}
+}
+
+OnStampMenuExec
+{
+	_stamp_type = ''
+	
+	//あった
+	if StampInfo_IsExist {
+		if 'ややめ' _in_ StampInfo_CurrentStampTitle { //マック朗におきかえ
+			"\u\s[10]\h%(tsaNeutral)もう押してあるのに、\w5まだほしいの？\w9\w9\u\s[11]ならおれのスタンプに置き換えだ！\w9\nどうだうれしいだろ！\w9\w9\h%(tsaNeutral)\n\nなにやってるの\w5…\w5…"
+			
+			_stamp_type = 'マック朗'
+		}
+		else { //ややめに置き換え
+			"\h%(tsaNeutral)\u\s[10]もうおれのスタンプが押してあるぞ？\w9\w9\h%(tsaNeutral)とりあえずわたしのに戻すねー。"
+			
+			_stamp_type = 'ややめ'
+		}
+	}
+	//ない
+	else {
+		"\0%(tsaNeutral)スタンプ？\w9\w9\n%(tsaNeutral)はいどうぞ～。\w9\w9\1\s[11]せっかくだから俺はこのスタンプを選ぶぜ！\w9\w9\0%(tsaNeutral)えーっと。"
+		
+		_stamp_type = 'ややめ'
+	}
+	--
+	if _stamp_type == 'ややめ' {
+		//2行目ファイル、3行目タイトル、4行目コメント
+		"\![raiseplugin,379E0DA0-131C-11DD-E1AC-90009E101CFE,OnStampAdd,/
+		ghost/master/stmp_yym.png,/
+		ややめスタンプ,/
+		紺野ややめが押したスタンプ。服のジッパーの取っ手とデザインが同じ。]"
+	}
+	else {
+		"\![raiseplugin,379E0DA0-131C-11DD-E1AC-90009E101CFE,OnStampAdd,/
+		ghost/master/stmp_mcr.png,/
+		マック朗スタンプ,/
+		マック朗が押したスタンプ。黒林檎。見た目に反して毒はない…と信じたい。]"
+	}
+}

@@ -1,0 +1,14 @@
+//******************************************************************************
+// YAYA ghost template
+// String resource dictionary (network update only)
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+//URL that will be the reference position for network updates
+//Be sure to change this! If you don't update it, delete the whole thing.
+//------------------------------------------------------------------------------
+On_homeurl
+{
+	https://raw.githubusercontent.com/ecclysium/thescientistsassistant/master/Updates/thescientistsassistant/"
+}
+
