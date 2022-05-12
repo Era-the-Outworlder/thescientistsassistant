@@ -6,7 +6,9 @@
 
 //Vitals monitor/menu
 OpenVitals{
-	"\![quicksection,true]\b2\f[height,-2]PROPERTY OF DOCTORIX\nVERSION 0.0.0\n"
+	"\![quicksection,true]\b2\f[height,-2]"
+	//--
+	//"PROPERTY OF DOCTRIX\nVERSION 0.0.0\n"
 	--
 	"ACTIVE REPORT CODE #%(experimentcode * (thisboot[1]))%(thisboot[2])\n"
 	--
@@ -41,19 +43,19 @@ OpenVitals{
 	--
 	"%(br)"
 	--
-	"CONSCIOUSNESS: %awareness%%(br)"
+	"CONSCIOUSNESS: %(TOINT(awareness))%%(br)"
 	--
-	"HEAD: %headhealth%\n"
+	"HEAD: %(TOINT(headhealth))%\n"
 	--
-	"RIGHT LEG: %rleghealth%\n"
+	"RIGHT LEG: %(TOINT(rleghealth))%\n"
 	--
-	"LEFT LEG: %lleghealth%\n"
+	"LEFT LEG: %(TOINT(lleghealth))%\n"
 	--
-	"RIGHT ARM: %rarmhealth%\n"
+	"RIGHT ARM: %(TOINT(rarmhealth))%\n"
 	--
-	"LEFT ARM: %larmhealth%\n"
+	"LEFT ARM: %(TOINT(larmhealth))%\n"
 	--
-	"%(br)OVERALL HEALTH SCORE: %overallhealth%\n"
+	"%(br)OVERALL HEALTH SCORE: %(TOINT(overallhealth))%\n"
 	
 
 
@@ -210,6 +212,11 @@ ConfigureHealth{
 	overallhealth = (awareness*2 + headhealth*2 + larmhealth + rarmhealth + lleghealth + rleghealth)/8
 }
 
+//Configure health works independently to make sure awareness is always valid
+getAwareness{
+	awareness
+}
+
 //update healing and all that by day
 //untreated/fresh wounds become infected (only sanitized but not bandaged wounds have a 50/50 chance)
 //infected wounds become visually raw again
@@ -224,13 +231,13 @@ OnDayPassHealth{
 		case timestatus[_i]{
 		when "fresh"{
 			timestatus[_i] = "infected"
-			visualstatus[_i] = 3
+			visualstatus[_i] = 4
 			severity[_i] += severity[_i]*.25
 			injurystatus[_i] = "got infected"
 		}
 		when "infected"{
 			timestatus[_i] = "infected"
-			visualstatus[_i] = 3
+			visualstatus[_i] = 4
 			severity[_i] += severity[_i]*.25
 			injurystatus[_i] = "is infected pretty bad"
 		}
@@ -242,7 +249,7 @@ OnDayPassHealth{
 				injurystatus[_i] = "is starting to heal"
 			}else{
 				timestatus[_i] = "infected"
-				visualstatus[_i] = 3
+				visualstatus[_i] = 4
 				severity[_i] += severity[_i]*.25
 				injurystatus[_i] = "is getting infected"
 			}

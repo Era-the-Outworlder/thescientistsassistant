@@ -11,6 +11,9 @@ nrrtr{
 	"\0"
 	//if we keep this sakura, planning code that will recall the current surfaces but the narration versions
 	//will probs use replace a lot, lol
+	//actually i need to test just using stop
+	//i feel like i tried to do that on gel and they broke but
+	//worth another shot if Zi says its possible and all that
 }
 
 
@@ -22,11 +25,13 @@ tsaNeutral : all{
 	if !awayforscientist{
 	
 		"\0\s[100]"
-		if visualstatus[0] == 2{
+		//FaceCut -- no clean state
+		if visualstatus[0] >= 3{
+			//call the wound img here
+			"\i[2001]"
+		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
 			//bandages
 			"\i[2012]"
-		}elseif visualstatus[0] == 3{
-			//call the wound img here
 		}
 	}else{
 		"\0\s[-1]"
@@ -35,16 +40,60 @@ tsaNeutral : all{
 
 }
 
-tsaCurledUp{
-	tsaNeutral
+tsaCurledUp : all{
+	if !awayforscientist{
+	
+		"\0\s[100]"
+		//FaceCut -- no clean state
+		if visualstatus[0] >= 3{
+			//call the wound img here
+			"\i[2001]"
+		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
+			//bandages
+			"\i[2012]"
+		}
+	}else{
+		"\0\s[-1]"
+	}
 }
 
-tsaOpen{
-	tsaNeutral
+tsaOpen : all{
+	if !awayforscientist{
+	
+		"\0\s[110]"
+		//FaceCut -- no clean state
+		if visualstatus[0] >= 3{
+			//call the wound img here
+			"\i[2001]"
+		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
+			//bandages
+			"\i[2012]"
+		}
+	}else{
+		"\0\s[-1]"
+	}
 }
 
-tsaGesture{
-	tsaNeutral
+tsaGesture : all{
+	if !awayforscientist{
+	
+		if trust > TRUSTGOOD || awareness < LOWCONSC{
+			"\0\s[130]"
+		}else{
+			"\0\s[120]"
+		}
+		
+		//FaceCut -- no clean state
+		if visualstatus[0] >= 3{
+			//call the wound img here
+			"\i[2001]"
+		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
+			//bandages
+			"\i[2012]"
+		}
+	}else{
+		"\0\s[-1]"
+	}
 }
 
 

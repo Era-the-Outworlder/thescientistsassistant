@@ -9,6 +9,6 @@
 //------------------------------------------------------------------------------
 On_homeurl
 {
-	https://raw.githubusercontent.com/ecclysium/thescientistsassistant/master/Updates/thescientistsassistant/"
+	"https://raw.githubusercontent.com/ecclysium/thescientistsassistant/master/Updates/thescientistsassistant/"
 }
 

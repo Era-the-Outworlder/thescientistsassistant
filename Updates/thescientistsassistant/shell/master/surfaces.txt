@@ -6,7 +6,8 @@ version,1
 }
 
 
-sakura.cursor{
+sakura.cursor
+{
 	mouseup0,FaceCut,system:cross
 	mouseup1,Concussion,system:cross
 	mouseup2,EyeProcedure,system:cross
@@ -17,67 +18,163 @@ sakura.cursor{
 
 }
 
-char2.cursor{
-	
+char2.cursor
+{
+	mouseup0,Gauze,system:hand
+	mouseup1,Washcloth,system:hand
+	mouseup2,Antibacterial,system:hand
+	mouseup3,Bandaids,system:hand
+	mousedown0,Gauze,system:grip
+	mousedown1,Washcloth,system:grip
+	mousedown2,Antibacterial,system:grip
+	mousedown3,Bandaids,system:grip
 }
 
 
-sakura.tooltips{
-	Head,Hair is kinda greasy...
+sakura.tooltips
+{
+	Head,Their hair is very messy.
 	Face,Do they even sleep?
 	FaceCut,Looks like it hurts.
+	Concussion,That can't be healthy.
+	EyeProcedure,You don't even want to know...
+	InjectionSite,What did The Scientist do??
+	LWristSore,A symbol of an unfortunate procedure.
+	RWristSore,A symbol of an unfortunate procedure.
+	TwistedAnkle,That's not a normal laboratory injury.
+}
+
+char2.tooltips
+{
+	Gauze,Gauze Wrappings
+	Washcloth,Washcloth
+	Antibacterial,Antibacterial Spray
+	Bandaids,Bandaids
 }
 
 
 surface0
 {
-animation0.interval,runonce
-animation0.pattern0,overlay,1000,0,0,0
+	animation0.interval,runonce
+	animation0.pattern0,overlay,0,0,0,0
 }
 
 
 surface100
 {
-
-//collision1,96,97,159,147,Face
-//collision3,6,56,75,117,Twintail
-//collision4,183,55,252,116,Twintail
-
-//torso
-animation200.interval,runonce
-animation200.pattern0,overlay,100200,0,0,0
-
-
-//left arm
-//animation300.interval,runonce
-//animation300.pattern0,overlay,100500,0,0,0
-
-//right arm
-//animation700.interval,runonce
-//animation700.pattern0,overlay,100600,0,0,0
-
-//head base
-animation2000.interval,runonce
-animation2000.pattern0,overlay,102000,0,0,0
-animation2000.collision1,234,85,250,100,FaceCut
-animation2000.collision10,150,0,290,50,Head
-animation2000.collision20,183,55,252,100,Face
-
-//bandaid on face cut
-animation2012.interval,never
-animation2012.pattern0,overlay,102012,0,0,0
-
-
-
-//default eyes
-animation2300.interval,runonce
-animation2300.pattern0,overlay,101300,0,0,0
-
-//default mouth
-animation2500.interval,runonce
-animation2500.pattern0,overlay,101500,0,0,0
-
+	//All the content is in appends actually.
 }
+surface101
+{
+	//All the content is in appends actually.
+}
+surface110
+{
+	//All the content is in appends actually.
+}
+surface111
+{
+	//All the content is in appends actually.
+}
+surface120
+{
+	//All the content is in appends actually.
+}
+surface121
+{
+	//All the content is in appends actually.
+}
+surface130
+{
+	//All the content is in appends actually.
+}
+surface131
+{
+	//All the content is in appends actually.
+}
+
+
+//Head down versions
+
+
+
+//Arm on ground + injuries
+surface.append110,111,130,131{
+	
+	//left arm - on ground
+	animation800.interval,runonce
+	animation800.pattern0,overlay,100800,0,0,0
+	
+}
+
+//Arm on legs + injuries
+surface.append100,101,20,121{
+	
+	//left arm - curled in
+	animation700.interval,runonce
+	animation700.pattern0,overlay,100700,0,0,0
+	
+}
+
+
+//Arm gesture + injuries
+surface.append120-139{
+	
+	//right arm - raised
+	animation200.interval,runonce
+	animation200.pattern0,overlay,100200,0,0,0
+	
+}
+
+
+//Torso, leg injuries
+surface.append100-299{
+	
+	//torso
+	animation600.interval,runonce
+	animation600.pattern0,overlay,100600,0,0,0
+	
+}
+
+
+//Head up! Expressions and injuries
+//also blinking
+surface.append100-299{
+	
+	//head base
+	animation2000.interval,runonce
+	animation2000.pattern0,overlay,102000,0,0,0
+	animation2000.collision10,102,42,232,82,Head
+	animation2000.collision20,124,86,191,148,Face
+
+	//face cut
+	animation2001.interval,never
+	animation2001.pattern0,overlay,102001,0,0,0
+	animation2001.collision1,169,120,199,150,FaceCut
+
+	//bandaid on face cut
+	animation2012.interval,never
+	animation2012.pattern0,overlay,102012,0,0,0
+	animation2012.collision1,169,120,199,150,FaceCut
+
+	//default eyes
+	animation2300.interval,runonce
+	animation2300.pattern0,overlay,102300,0,0,0
+
+	//default mouth
+	animation2500.interval,runonce
+	animation2500.pattern0,overlay,102500,0,0,0
+	
+}
+
+//Head up! Talk frames!
+//actually I think I might be able to combine this w other bits but gonna worry about that later
+surface.append100,110,120,130{
+	
+
+	
+}
+
 
 //Closed medkit
 surface2000
@@ -92,9 +189,9 @@ surface2100
 {
 	//collision1,96,97,159,147,Lid
 	collision1,21,55,42,80,Bandaids
-	collision1,44,56,65,86,Washcloth
-	collision1,60,55,87,85,Gauze
-	collision1,80,52,106,95,Antibacterial
+	collision2,44,56,65,86,Washcloth
+	collision3,60,55,87,85,Gauze
+	collision4,80,52,106,95,Antibacterial
 	
 	
 	//base
@@ -119,15 +216,5 @@ surface2100
 	
 }
 
-
-
-//Antibacterial
-surface4000
-{
-	
-	animation40.interval,runonce
-	animation40.pattern0,overlay,400000,0,0,0
-	
-}
 
 

@@ -12,26 +12,36 @@ OnFirstBoot
 	ONFIRSTBOOTVARS
 
 	//True first boot
-	//if reference[0] == 0
+	if reference[0] == 0
 	{
 		"%(medkit)"
 		--
 		"%(tsaCurledUp)%(tsaHeadDown)%(ellps)%(tsaNeutral)%(tsaDazed) Hnnnnnnnggg%(ellps)%(tsaAlert) Oh! \_w[800]You must be one of the Scientist's new hires, \_w[200]right? \_w[700]%(tsaDazed)How else..? \_w[700] \n[200]But I don't%(ellps) \nYou'll have to excuse me-"
 		--
-		"\_w[3000]\cIt has been a%(ellps) well. \_w[1000] \n%(tsaCurledUp).\_w[100].\_w[100].\_w[100].\_w[100].\_w[100].\_w[700]"
+		"\_w[3000]\cIt has been a%(ellps) well. \_w[1000] \n%(tsaCurledUp).\_w[200].\_w[200].\_w[200].\_w[200].\_w[200].\_w[700]"
 		--
 		"%(tsaHeadDown)\_w[3000]\n[300]%(nrrtr)(It almost appears that they have fallen asleep.)"
 		--
-		"\_w[1000]%(tsaOw)Haaah-hn?\_w[500] You're%(ellps)%(tsaOpen)%(tsaAlert) are those medical-?\_w[1000]%(tsaOw) Could you?"
+		"\n[200]\_w[2000]%(tsaOw)Haaah-hn?\_w[500] You're%(ellps)%(tsaOpen)%(tsaAlert) are those medical-?\_w[1000]%(tsaOw) Could you?"
 		--
-		"\c\n[200]\_w[500]%(nrrtr)(It would seem you have first-aid supplies. You can render aid by double-clicking them and selecting %(CHR(34))First Aid%(CHR(34)) from the menu that appears.)"
+		"\c\n[200]\_w[500]%(nrrtr)(It would seem you have first-aid supplies. You can render aid by double-clicking the box to open it. \n[200]Equip an item to use by double-clicking it, then double-click the injury you wish to treat.)"
 
 	}
-	//Reinstalled first boots
-	//else
-	//{
-	//	"\0%(tsaNeutral)I feel like we've done this before..."
-	//}
+	// Reinstalled first boots
+	else
+	{
+		"%(medkit)"
+		--
+		"%(tsaCurledUp)%(tsaHeadDown)%(ellps)%(tsaNeutral)%(tsaDazed) Hnnnnnnnggg%(ellps)%(tsaAlert) Oh! \_w[800]You must be one of the Scientist's new hires, \_w[200]right? \_w[700]%(tsaDazed)How else..? \_w[700] \n[200]Have we met%(ellps)? \nYou'll have to excuse me-"
+		--
+		"\_w[3000]\cIt has been a%(ellps) well. \_w[1000] \n%(tsaCurledUp).\_w[200].\_w[200].\_w[200].\_w[200].\_w[200].\_w[700]"
+		--
+		"%(tsaHeadDown)\_w[3000]\n[300]%(nrrtr)(It almost appears that they have fallen asleep.)"
+		--
+		"\_w[1000]%(tsaOw)Nnnnnggg%(ellps)\_w[500] You have%(ellps)%(tsaOpen)%(tsaAlert) I was right.\_w[1000]%(tsaOw) Could you?"
+		--
+		"\c\n[200]\_w[500]%(nrrtr)(You have first-aid supplies at hand. You can render aid by double-clicking the box to open it. \n[200]Equip an item to use by double-clicking it, then double-click the injury you wish to treat.)"
+	}
 }
 
 
@@ -42,6 +52,7 @@ ONFIRSTBOOTVARS{
 	trust 				= 0
 	punches				= 0
 	woundpokes			= 0
+	pets				= 0
 	medkitopen 		 	= 0
 	itemgrabbed 	 	= 0
 	timenoises 		 	= 1
@@ -55,44 +66,9 @@ ONFIRSTBOOTVARS{
 	
 	//See Google Sheets document for details & examples on the upcoming
 	FirstBootHealth
-	
-	
-	
-	/*
-	//INJURY ARRAYS - a 0 means no injury, 1 means healing, 2 means bandaged, 3 means medicated, 4 means cleaned, 5 is active injury, 6 is as well but its more severe
-	//Health is calculated based on these.
-	armhealth = 100
-	arminjuries = IARRAY
-	//crook of arm
-	arminjuries ,= 0
-	//body of arm
-	arminjuries ,= 0
-	//wrist
-	arminjuries ,= 0
-	
-	headhealth = 100
-	headinjuries = IARRAY
-	//Cut on face
-	headinjuries ,= 4
-	//Injured eye
-	headinjuries ,= 0
-	
-	//Run processing on injuries
-	ConfigureHealth
-	*/
 
 
 }
-
-/*
-//calculate head health
-ConfigureHeadHealth{
-	headhealth = 100 	//start at max
-	for _i = 0; _i < ARRAYSIZE(headinjuries) ; _i++{
-		headhealth -= headinjuries[_i] * 2
-	}
-}
-*/
 
 getTodaysDate{
 	_result = IARRAY
@@ -106,8 +82,7 @@ getTodaysDate{
 	
 	_result
 	
-	//_diff = FUNCTIONEX("time_check.dll","check_expiration",)
-	
+
 }
 
 //this was for testing
@@ -126,11 +101,13 @@ OnBoot
 {
 	_bootstate = ONBOOTVARS
 	//Boot vars will also check if our ghost is here for a new experiment, staying the same, or away.
+	"%(medkit)"
+	--
 	case _bootstate{
 	//New experiment
 	when 1{
 		//---- まず双方のサーフィスを表示
-		"\0%(tsaNeutral)"
+		"\0%(tsaNeutral)%(medkit)"
 		--
 		"%(tsaNeutral)%(nrrtr)(They aren't looking great. What could have happened today?)"
 		"%(tsaNeutral)%(nrrtr)(Maybe they need a bit of help...)"
@@ -169,7 +146,10 @@ OnBoot
 	when 2{
 		if awareness > HIGHCONSC{
 		//Alert.
-			if trust > TRUSTBAD{
+			if trust > TRUSTGOOD{
+			"%(tsaNeutral)%(nrrtr)(They're humming a jaunty tune.) \n%(tsaGesture)%(tsaHappy)Welcome back."
+			}
+			elseif trust > TRUSTBAD{
 				"%(tsaNeutral)Oh. \w[500]Hey. \w6Nice to see you again."
 			}else{
 				"%(tsaNeutral)%(nrrtr)(They don't seem to want to talk to you.)"
@@ -177,10 +157,33 @@ OnBoot
 			
 		}elseif awareness > LOWCONSC{
 		//They're doin ok.
-			"%(tsaNeutral)%(nrrtr)(They're a bit out of it.)%(br)%(tsaNeutral)H-hey%(ellps) what's? \w[2000]up? "
+			if trust > TRUSTGOOD{ //good trust
+				"%(tsaOpen)%(tsaRelieved)\_w[300]...You're here. \_w[500]I wasn't sure%(ellps)"
+			}
+			elseif trust > TRUSTBAD{ //middling/no trust
+				"%(tsaNeutral)%(nrrtr)(They're a bit out of it.)%(br)%(tsaNeutral)H-hey%(ellps) what's? \w[2000]up? "
+				"%(tsaNeutral)%(tsaDazed)%(ellps)%(nrrtr)(It seems that %(TheAssistant) hasn't noticed you yet.)"
+			}else{ //negative trust
+				"%(tsaCurledUp)%(tsaHeadDown)%(ellps)%(nrrtr)(They're pretending not to notice you.)"
+			}
+			
 		}else{
 		//They're Out.
-			"%(tsaNeutral)H-hey%(ellps)\w4%(ellps) welcome \w4back \w4to \w2the \w2party."
+			if trust > TRUSTGOOD{ //good trust
+				"%(tsaCurledUp)hmmmm%(ellps)%(tsaOpen) %(nrrtr)(%(TheAssistant) seems fairly relaxed, considering their condition.)"
+			}
+			elseif trust > TRUSTBAD{ //middling/no trust
+				"%(tsaNeutral)H-hey%(ellps)\w4%(ellps) welcome \w4back \w4to \w2the \w2party."
+				"%(tsaCurledUp)%(tsaSuperDazed)%(ellps)"
+				"%(tsaNeutral)%(tsaSuperDazed)...hnnnnnng%(ellps)"
+				"%(tsaOpen)%(tsaSuperDazed)%(nrrtr)(It seems that %(TheAssistant) hasn't noticed you at all.)"
+			}else{ //negative trust
+				"%(tsaCurledUp)%(tsaScared)%(ellps)oh.\_w[1000] please no%(ellps)"
+				"%(tsaCurledUp)%(tsaSuperDazed)\_w[2000]...not again%(ellps)"
+				"%(tsaCurledUp)%(tsaSuperDazed)...can it%(ellps) when will..?"
+				"%(tsaCurledUp)%(tsaSuperDepressed)%(nrrtr)(It seems they can sense your presence.)"
+			}
+			
 		
 		}
 		
@@ -191,13 +194,21 @@ OnBoot
 	}
 }
 
+
 //Sets boot variables and returns their current state.
 ONBOOTVARS{
 	//if it's been more than a day
 	lastbootdate = thisbootdate
 	thisbootdate = getTodaysDate
+	_daychange = dateCheck
+	
+	//heals so many days
+	for _i = 0; _i < _daychange; _i++{
+		OnDayPassHealth
+	}
+	
 	//if a day has passed, it's been long enough for them to return, or its a signaled return
-	if dateCheck != 0 || (awayforscientist == 1 && hour > lastboot[3]) || returnsignal{
+	if _daychange != 0 || (awayforscientist == 1 && hour > lastboot[3]) || returnsignal{
 		returnsignal = 0
 		timesinceexperiment = 0					//minutes since they got back from an experiment
 		willleaveafter		= 60 * 10 + RAND(120)	//When timesinceexperiment equals this, they Leave
@@ -226,9 +237,9 @@ OnGenerateExperiment{
 	
 	case experimentcode{
 		when 0{
-			awarenessbuff = 10 - RAND(20)
-			headinjuries[0] = 4
-			ConfigurePartHealth(&headhealth,&headinjuries)
+		//	awarenessbuff = 10 - RAND(20)
+		//	headinjuries[0] = 4
+		//	ConfigurePartHealth(&headhealth,&headinjuries)
 		}
 	}
 
@@ -261,6 +272,7 @@ OnClose
 	if !awayforscientist{
 		//この部分には\eつけないでね！
 		_timeslot = GetTimeSlot
+		
 		case _timeslot{
 		when "Morning"
 		{
@@ -286,6 +298,47 @@ OnClose
 		}
 		}
 		
+		
+		if awareness > HIGHCONSC{
+		//Alert.
+			if trust > TRUSTGOOD{ //good trust
+				"%(nrrtr)(They seem disappointed that you're leaving.)"
+				"Well, I'll see you again, right? It's ok then."
+			}
+			elseif trust > TRUSTBAD{ //middling/no trust
+				"Goodbye then."
+			}else{ //negative trust
+				"%(nrrtr)(Their relief at your leaving would be insulting, if you hadn't earned it.) "
+				"%(ellps) Go on then."
+			}
+			
+		}elseif awareness > LOWCONSC{
+		//They're doin ok.
+			if trust > TRUSTGOOD{ //good trust
+				"Ok... See you later then."
+			}
+			elseif trust > TRUSTBAD{ //middling/no trust
+				"I'm%(ellps) We'll see eachother again%(ellps)"
+			}else{ //negative trust
+				"%(ellps)"
+			}
+		}else{
+		//They're Out.
+			if trust > TRUSTGOOD{ //good trust
+				"%(ellps)leaving%(ellps)"
+				"%(nrrtr)(It's not clear whether they even notice you leaving, but they seem to tense up a bit as you go.)"
+			}
+			elseif trust > TRUSTBAD{ //middling/no trust
+				"%(nrrtr)(It's not clear whether they even notice you leaving.)"
+				"%(ellps) -care%(ellps)"
+			}else{ //negative trust
+				"%(nrrtr)(It's not clear whether they even notice you leaving, but they seem to relax a little as you go.)"
+				"%(ellps) Go."
+				"%(ellps)"
+			}
+			
+		}
+		
 	}else{
 		if trust > TRUSTBAD{
 			"%(nrrtr)(Hopefully they'll be okay.)"
@@ -295,20 +348,30 @@ OnClose
 		
 	}
 	--
-		"\w9\w9\-\e"
+	"\w9\w9\-\e"
 }
+
+
 
 
 //******************************************************************************
 //Restore from minimization OnWindowStateRestore
 //******************************************************************************
 
+//gonna be honest I don't even think this triggers
 OnWindowStateRestore
 {
 	"%(tsaNeutral)%(medkit)"
 	--
 	if !awayforscientist{
-		"%(tsaNeutral)Oh.\w4.\w4. it's less dark, now."
+		if awareness > HIGHCONSC{
+			"%(tsaNeutral)Oh.\w4.\w4. it's less dark, now."
+		}elseif awareness > LOWCONSC{
+		    "%(tsaNeutral)It's bright again%(ellps) sun%(ellps) I miss it%(ellps)"
+		}else{
+			"%(tsaCurledUp)%(nrrtr)(Did they even notice it ended?)"
+		}
+		
 	}
 	
 }

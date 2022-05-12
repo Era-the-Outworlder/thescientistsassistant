@@ -1,9 +1,12 @@
 charset,UTF-8
 
 name,The Scientist's Assistant
+id,The Scientist's Assistant
 type,ghost
 
 sakura.name,The Assistant
+sakura.name2,Moby
+
 kero.name,N/A
 
 sstp.allowunspecifiedsend,1
@@ -12,6 +15,7 @@ icon,icon.ico
 
 shiori,yaya.dll
 
-craftman,seibihan
+craftman,Era The Outworlder & Pixel_Ratto & GrayArea/Ecclysium
 craftmanw,Era The Outworlder & Pixel_Ratto & GrayArea/Ecclysium
 craftmanurl,n/a
+homeurl,https://raw.githubusercontent.com/ecclysium/thescientistsassistant/master/Updates/thescientistsassistant/

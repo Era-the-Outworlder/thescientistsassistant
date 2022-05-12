@@ -9,6 +9,7 @@
 //******************************************************************************
 #globaldefine LOWCONSC 40
 #globaldefine HIGHCONSC 75
+#globaldefine TRUSTHIGH 75
 #globaldefine TRUSTGOOD 25
 #globaldefine TRUSTBAD -25
 
@@ -35,7 +36,99 @@ ellps{
 
 TheScientist{
 	"The Scientist"
+	"The Scientist"
+	"The Scientist"
+	"The Scientist"
+	"The Scientist"
+	"Doctrix"
 
+}
+
+oldChemicals
+{
+	"bitter salt"
+	"brimstone"
+	"rouge"
+	"saltpetre"
+	"vitriol"
+	"caustic potash"
+	"ferrum"
+	"isinglass"
+	"corundum"
+	"caustic soda"
+	"red liquor"
+	"quicksilver"
+	"lunar caustic"
+	"antimony"
+	"cobalt"
+	"orpiment"
+	"realgar"
+	"molybdena"
+	"acidum salis"
+	"aqua fortis"
+	"aqua tofani"
+	"aqua vitae"
+	"cinnabar"
+	"hartshorn"
+	"nix alba"
+	"pyrite"
+}
+
+planetaryMetals{
+	"lead"
+	"tin"
+	"iron"
+	"gold"
+	"copper"
+	"mercury"
+	"quicksilver"
+	"silver"
+	//there are only 7 metals, mercury = quicksilver
+}
+
+mundaneAndLaterMetals{
+	"antimony"
+	"arsenic"
+	"bismuth"
+	"cobalt"
+	"magnesium"
+	"manganese"
+	"nickel"
+	"oxygen"
+	"phlogiston"
+	"phosphorus"
+	"platinum"
+	"sulfur"
+	"zinc"
+}
+
+alchemicalCompounds
+{
+	"acid"
+	"sal ammoniac"
+	"aqua fortis"
+	"aqua regia"
+	"spirit of wine"
+	"aqua vitae"
+	"amalgam"
+	"cinnabar"
+	"vinegar"
+	"vitriol"
+	"brimstone"
+}
+
+alchemicalProcesses{
+	"calcination"
+	"congelation"
+	"fixation"
+	"solution"
+	"digestion"
+	"distillation"
+	"sublimation"
+	"ceration"
+	"fermentation"
+	"multiplication"
+	"projection"
 }
 
 

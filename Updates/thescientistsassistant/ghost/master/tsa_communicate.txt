@@ -96,7 +96,13 @@ TalkToUser
 	{
 		"\0%(tsaNeutral)Hello. \e"
 	}
-	else
+	elseif "raise" _in_ _talk && "hand" _in_ _talk{
+		if awareness > LOWCONSC{
+			"%(tsaGesture)Like this%(ellps)?"
+		}else{
+			"%(nrrtr)(They fumble about uselessly.)"
+		}
+	}else
 	{
 		"\0%(tsaNeutral)What did you say? \e"
 	}
@@ -113,7 +119,15 @@ ReplyTo_Emily{
 	--
 	if !awayforscientist{
 		res_reference0=reference[0]	//さらに相手に話しかける
-		"%(tsaNeutral)I'm sorry Miss Emily, I don't understand...\e"
+		if awareness > HIGHCONSC{
+			"%(tsaNeutral)I'm sorry Miss Emily, I don't understand...\e"
+
+		}elseif awareness > LOWCONSC{
+			"%(tsaNeutral)Oh%(ellps) it's a cat pal%(ellps) did %(TheScientist) make you%(ellps)? \w[1500]That's \w[1000]sad."
+		}else{
+			"%(ellps)cat%(ellps)"
+		}
+		
 	}
 	
 }
@@ -123,15 +137,23 @@ ReplyTo_Emily{
 ReplyToOther{
 	"%(tsaNeutral)%(medkit)"
 	--
+	_talk = TOLOWER(reference[1])
 	if !awayforscientist{
-		if "hello" _in_ reference[1] || "good evening" _in_ reference[1]
+		if "hello" _in_ _talk || "good evening" _in_ _talk || "heya" _in_ _talk || "hi" _in_ _talk
 		{
 			res_reference0=reference[0]	//さらに相手に話しかける
-			"\0%(tsaNeutral)Hello, %(res_reference0).\e"
+			if awareness > HIGHCONSC{
+				"%(tsaNeutral)Hello? Have I met you before%(ellps)?"
+				
+			}elseif awareness > LOWCONSC{
+			   "%(tsaCurledUp)Who%(ellps)? \w8You look funny%(ellps)"
+			}else{
+				"%(ellps)did ya \w3say somethin'%(ellps)? Try \w8%(planetaryMetals)%(ellps)"
+			}
 		}
 		else
 		{
-			"\0%(tsaNeutral)Pardon...?\e"
+			"%(nrrtr)(They make an ambiguous noise.)"
 		}
 	}else{
 	

@@ -34,12 +34,30 @@ OnOtherGhostChanged When another ghost has switched to another ghost, and the ot
 //Switch to Other Ghosts
 OnGhostChangingOther
 {
-	if !awayforscientist{
-		"Someone else? I guess I'll leave..."
-	}else{
-		"%(nrrtr)(Not like they were here to entertain you anyway.)"
+	if reference2 = "The Scientist's Assistant"
+	{
+		if !awayforscientist{
+			"%(nrrtr)(They probably don't even notice being %CHR(34)reloaded%CHR(34).)"
+		}else{
+			"%(nrrtr)(They probably can't feel being %CHR(34)reloaded%CHR(34) from where they are.)"
+		}
 	}
-	
+	else
+	{
+		if !awayforscientist{
+			if awareness > HIGHCONSC{
+				"%(tsaNeutral)Someone else? I guess I'll leave..."
+
+			}elseif awareness > LOWCONSC{
+				"%(nrrtr)(They look confused.)%(br)%(tsaNeutral)Who is%(ellps)?"
+			}else{
+				"%(tsaHeadDown)%(nrrtr)(They look like they were dragged into unconsciousness first.)"
+			}
+			
+		}else{
+			"%(nrrtr)(Not like they were here to entertain you anyway.)"
+		}
+	}
 }
 
 /*

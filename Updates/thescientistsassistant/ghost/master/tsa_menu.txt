@@ -19,10 +19,62 @@ OpenMenu
 {
 	if !awayforscientist{
 		if zonedout == 1{
-			"\0%(tsaNeutral)O-oh, I'm sorry. \w[315]I zoned out. \w[315]What did I miss...?"
 			zonedout = 0
+			if awareness > HIGHCONSC{
+		
+				if trust > TRUSTGOOD{
+					"\0%(tsaNeutral)O-oh, I'm sorry. \w[315]I zoned out. \w[315]What did I miss?"
+					"\0%(tsaNeutral)Oh, you're here. \w[315]I zoned out. \w[315]Sorry, what were we doing?"
+				}elseif trust > TRUSTBAD{
+					"%(tsaNeutral)O-oh, I'm sorry. \w[315]I zoned out. \w[315]What did I miss?"
+					"\0%(tsaNeutral)O-oh.\w[315]I zoned out. \w[315]What did I miss...?"
+				}else{
+					"\0%(tsaNeutral)O-oh, I zoned out. \w[800]I'm still here."
+					"%(nrrtr)(They startle a bit, and then look away, refusing to meet your gaze.)"
+				}
+			}elseif awareness > LOWCONSC{
+				if trust > TRUSTBAD{
+					"%(tsaNeutral)O-oh, \w4I'm sorry. \w[915]I zoned out again%(ellps)"
+					"%(tsaCurledUp)Oh, \w[800]sorry%(ellps) I can just \w[900]zone out sometimes%(ellps)"
+				}else{
+					"%(nrrtr)(They dazedly look at you, and then look away again.)"
+					"%(nrrtr)(They shake a little and grumble.)"
+				}
+			}else{
+				"%(tsaNeutral)O-oh, it's %username, %(oldChemicals)%(ellps)"
+				"%(nrrtr)(They hiccup and swivel their head around.)"
+				"%(nrrtr)(They shake a little and stare at you.)"
+				"%(nrrtr)(They turn to stare, nodding off for a moment, but then blinking up to meet your gaze.)"
+			}
+			
+			
 		}else{
-			"\0%(tsaNeutral)What do you need...?"
+			if awareness > HIGHCONSC{
+	
+				if trust > TRUSTGOOD{
+					"%(tsaOpen)Ah, did you need something?"
+				}elseif trust > TRUSTBAD{
+					"%(tsaNeutral)What can I do for you?"
+					
+				}else{
+					"%(tsaNeutral)What do you want?"
+					"%(tsaNeutral)Yes?"
+					"%(tsaNeutral)No."
+				}
+			}elseif awareness > LOWCONSC{
+				if trust > TRUSTBAD{
+					"%(tsaNeutral)Hey there, %username%(ellps)"
+					"%(tsaCurledUp)I can feel the fungus growing underneath my skin%(ellps)"
+					"%(tsaNeutral)Hey%(ellps) I can help%(ellps)"
+				}else{
+					"%(tsaNeutral)%(ellps)?"
+				}
+			}else{
+				"%(nrrtr)(They turn to stare.)"
+				"%(nrrtr)(They flounder a little, \w4but eventually settle to where they can stare at you.)"
+				"%(nrrtr)(They turn to you.)"
+				"%(tsaNeutral)%(ellps)?"
+			}
 		}
 		
 		--
@@ -33,18 +85,23 @@ OpenMenu
 		if ( STRLEN(AYATEMPLATE.LastTalk) > 0 ) {
 			"    or   \![*]\__q[Menu_LASTTALK]Repeat\__q"
 		}
-		--
-		AYATEMPLATE.MenuItem("Talk frequency","Menu_TALKINTERVAL")
+	//	--
+	//	AYATEMPLATE.MenuItem("Talk frequency","Menu_TALKINTERVAL")
 		--
 		AYATEMPLATE.MenuItem("I have something to say","Menu_COMMUNICATEOPEN")
 		--
-		if awareness > LOWCONSC{
-			AYATEMPLATE.MenuItem("Settings","Menu_SETTINGS")
-		}
-		--
 		AYATEMPLATE.MenuItem("Nevermind","Menu_CANCEL",150)
 		--
-		"%(br)\f[align,center]\f[height,-2]\f[color,firebrick]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\f[color,default]\__q[OpenVitals]V+\__q\n"
+		"%(br)\f[align,center]"
+		--
+		if awareness > LOWCONSC{
+		//	AYATEMPLATE.MenuItem("Settings","Menu_SETTINGS")
+			"\__q[Menu_SETTINGS]\_b[settingssymbol.png,inline,--option=use_self_alpha]\__q"
+		}else{
+			"\_b[settingssymbol.png,inline,--option=use_self_alpha]"
+		}
+		--
+		"\f[height,-2]\f[color,firebrick] ~~~~~~~~~~~~~~~~~~~~~~~~~~~\f[color,default]\__q[OpenVitals]\_b[vitalsymbol.png,inline,--option=use_self_alpha]\__q\n"
 		--
 		"%(getHour):%(getMinute) %(month)/%(day)/%(year) equipped: "
 		--
@@ -60,6 +117,9 @@ OpenMenu
 			}
 			when 7{
 				"gauze"
+			}
+			when 8{
+				"panacea"
 			}
 			others{
 				"nothing"
@@ -198,6 +258,9 @@ Menu_SETTINGS{
 	--
 	"Their Nickname: \![*]\__q[Menu_CHANGETSANICK]%tsanickname\__q\n"
 	//AYATEMPLATE.MenuItem("Their Nickname: %tsanickname","Menu_CHANGETSANICK")
+	--
+	_talkint = TOINT(aitalkinterval / 60)
+	"Talk Interval: \![*]\__q[Menu_TALKINTERVAL]every %_talkint min\__q\n"
 	--
 	"\n[half]"
 	--
