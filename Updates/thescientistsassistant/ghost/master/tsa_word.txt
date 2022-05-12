@@ -38,9 +38,7 @@ TheScientist{
 	"The Scientist"
 	"The Scientist"
 	"The Scientist"
-	"The Scientist"
-	"The Scientist"
-	"Doctrix"
+	"The Doctrix"
 
 }
 

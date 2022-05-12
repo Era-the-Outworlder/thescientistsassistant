@@ -47,10 +47,12 @@ OnFirstBoot
 
 ONFIRSTBOOTVARS{
 	username         	= "you"
+	honor				= "Ser"
 	tsanickname 		= "The Assistant"
 	teachusername    	= 0	
 	trust 				= 0
 	punches				= 0
+	currentpunches		= 0
 	woundpokes			= 0
 	pets				= 0
 	medkitopen 		 	= 0
@@ -63,6 +65,7 @@ ONFIRSTBOOTVARS{
 	lastbootdate 		= getTodaysDate
 	thisbootdate 		= getTodaysDate
 	soundeffects		= 1
+	
 	
 	//See Google Sheets document for details & examples on the upcoming
 	FirstBootHealth

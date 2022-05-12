@@ -121,15 +121,24 @@ MouseMove0Face
 MouseDoubleClick0Head
 {
 	punches++
+	currentpunches--
 	trust--
-	if punches % 5{
+	if currentpunches % 3{
 		zonedout = 1
 		//*bonk* *bonk* forget
 	}
 	//hit 'em in the head and they Conk
 	awarenessbuff+= 3
+	
 	ConfigureHealth
 	"\![sound,play,sounds/slap.wav,--volume=85]"
+	--
+	//Also, at this rate, you're gonna give them a fuckin concussion. 
+	if currentpunches > 10{
+		OnGiveConcussion
+	}
+	//We do a line so we're certain the above hides the below
+	
 	--
 	if awareness > HIGHCONSC{
 		
