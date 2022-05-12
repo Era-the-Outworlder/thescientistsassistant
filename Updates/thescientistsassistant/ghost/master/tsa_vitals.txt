@@ -375,7 +375,7 @@ OnExperiment0FaceCut{
 			BANDAID(0)
 			--
 			injuryrequires[0] = "none"
-			"\0%(tsaNeutral)Ah... thanks. \w[840]I suppose now it really won't get infected."
+			"\0%(tsaNeutral)Ah... thanks. \_w[840]I suppose now it really won't get infected."
 		}elseif injuryrequires[0] == "antibac"{
 			"%(tsaNeutral)Ouch%(ellps) I think you're supposed to clean wounds first."
 		}else{

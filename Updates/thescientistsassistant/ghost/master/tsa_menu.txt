@@ -23,19 +23,19 @@ OpenMenu
 			if awareness > HIGHCONSC{
 		
 				if trust > TRUSTGOOD{
-					"\0%(tsaNeutral)O-oh, I'm sorry. \w[315]I zoned out. \w[315]What did I miss?"
-					"\0%(tsaNeutral)Oh, you're here. \w[315]I zoned out. \w[315]Sorry, what were we doing?"
+					"\0%(tsaNeutral)O-oh, I'm sorry. \_w[315]I zoned out. \_w[315]What did I miss?"
+					"\0%(tsaNeutral)Oh, you're here. \_w[315]I zoned out. \_w[315]Sorry, what were we doing?"
 				}elseif trust > TRUSTBAD{
-					"%(tsaNeutral)O-oh, I'm sorry. \w[315]I zoned out. \w[315]What did I miss?"
-					"\0%(tsaNeutral)O-oh.\w[315]I zoned out. \w[315]What did I miss...?"
+					"%(tsaNeutral)O-oh, I'm sorry. \_w[315]I zoned out. \_w[315]What did I miss?"
+					"\0%(tsaNeutral)O-oh.\_w[315]I zoned out. \_w[315]What did I miss...?"
 				}else{
-					"\0%(tsaNeutral)O-oh, I zoned out. \w[800]I'm still here."
+					"\0%(tsaNeutral)O-oh, I zoned out. \_w[800]I'm still here."
 					"%(nrrtr)(They startle a bit, and then look away, refusing to meet your gaze.)"
 				}
 			}elseif awareness > LOWCONSC{
 				if trust > TRUSTBAD{
-					"%(tsaNeutral)O-oh, \w4I'm sorry. \w[915]I zoned out again%(ellps)"
-					"%(tsaCurledUp)Oh, \w[800]sorry%(ellps) I can just \w[900]zone out sometimes%(ellps)"
+					"%(tsaNeutral)O-oh, \w4I'm sorry. \_w[915]I zoned out again%(ellps)"
+					"%(tsaCurledUp)Oh, \_w[800]sorry%(ellps) I can just \_w[900]zone out sometimes%(ellps)"
 				}else{
 					"%(nrrtr)(They dazedly look at you, and then look away again.)"
 					"%(nrrtr)(They shake a little and grumble.)"
@@ -89,6 +89,8 @@ OpenMenu
 	//	AYATEMPLATE.MenuItem("Talk frequency","Menu_TALKINTERVAL")
 		--
 		AYATEMPLATE.MenuItem("I have something to say","Menu_COMMUNICATEOPEN")
+		--
+		AYATEMPLATE.MenuItem("I have a question","Menu_QUESTIONNAIRE")
 		--
 		AYATEMPLATE.MenuItem("Nevermind","Menu_CANCEL",150)
 		--
@@ -285,10 +287,10 @@ Menu_SETTINGS{
 
 Menu_CHANGENAME{
 	if awareness > HIGHCONSC{
-		"%(tsaNeutral)Name change? \w[500]Okay. \w[300]What should I call you now?"
+		"%(tsaNeutral)Name change? \_w[500]Okay. \_w[300]What should I call you now?"
 	//they won't be able to get to the menu if they're not aware enough
 	}else{
-		"%(tsaNeutral)Name%(ellps)? Oh. \w[700]Oh. \w[500]Yes. \w[1000]What do you go by now...?"
+		"%(tsaNeutral)Name%(ellps)? Oh. \_w[700]Oh. \_w[500]Yes. \_w[1000]What do you go by now...?"
 	}
 	--
 	"\![open,inputbox,OnMenu_NAMECHANGEFINISH,0]"
@@ -305,7 +307,7 @@ Menu_CHANGETSANICK{
 		"%(tsaNeutral)Oh... \w5you want to call me something different? Don't make it too \w2weird."
 	//they won't be able to get to the menu if they're not aware enough
 	}else{
-		"%(tsaNeutral)My name%(ellps)? Oh. \w[700]Oh, you want \w2to call me something else. What%(ellps)?"
+		"%(tsaNeutral)My name%(ellps)? Oh. \_w[700]Oh, you want \w2to call me something else. What%(ellps)?"
 	}
 	--
 	"\![open,inputbox,OnMenu_TSANICKCHANGEFINISH,0]"
@@ -336,9 +338,393 @@ Menu_FLIPSFX{
 	}
 }
 
+//---- questionasking menu, as written by era
 
+Menu_QUESTIONNAIRE
+{
+	if awareness > HIGHCONSC
+	{
+		if trust > TRUSTGOOD
+		{
+			"%(tsaOpen)What do you want to know?"
+		}
+		elseif trust > TRUSTBAD
+		{
+			"%(tsaNeutral)What kind of question?"
+		}
+		else
+		{
+			"%(tsaNeutral)%(ellps)not like you'll take no for an answer."
+		}
+	}
+	elseif awareness > LOWCONSC
+	{
+		if trust > TRUSTBAD
+		{
+			"%(tsaNeutral)mmm%(ellps) yeah?"
+		}
+		else
+		{
+			"%(tsaNeutral)%(ellps)?"
+		}
+	}
+	else
+	{
+		"%(nrrtr)(They stare blankly.)"
+		"%(tsaNeutral)%(ellps)?"
+	}
+	--
+	"\_q%(br)"
+	--
+	"\![*]\__q[OnQuestionnaire,1]What's your name?\__q\n"
+	--
+	"\![*]\__q[OnQuestionnaire,2]Tell me about yourself\__q\n"
+	--
+	"\![*]\__q[OnQuestionnaire,3]Where are you from?\__q\n"
+	--
+	"\![*]\__q[OnQuestionnaire,4]Are you ok?\__q\n"
+	--
+	"\![*]\__q[OnQuestionnaire,5]What's going on right now?\__q\n"
+	--
+	"\![*]\__q[OnQuestionnaire,6]Tell me about \f[italic,true]her.\f[default]\__q\n"
+	--
+	"\![*]\__q[OnQuestionnaire,7]Is this a test?\__q\n"
+}
 
-
+OnQuestionnaire
+{
+	case reference0
+	{
+		when 1 // about name
+		{
+			if awareness > HIGHCONSC
+			{
+				if trust > TRUSTGOOD
+				{
+					"(tsaCurledUp)%(tsaNervous)My name is Moby, actually. I don’t really feel like I know who I am outside of that, though."
+					"%(tsaNervous)Moby. %(tsaOpen)%(tsaNervous)My name is%(ellps) Moby."
+				}
+				elseif trust > TRUSTBAD
+				{
+					"Name%(ellps)? %(tsaAlert)Uh, %(TheAssistant) is fine. %(tsaCurledUp)%(tsaDepressed)Names don’t really matter anymore."
+					"%(tsaCurledUp)Doesn’t just %tsanicknamed work for you%(ellps)?"
+				}
+				else
+				{
+					"%(tsaCurledUp)%(tsaAlert)Doesn’t matter. \_w[800]%(tsaDepressed)I am The Assistant, occupation and title."
+					"%(tsaCurledUp)Why? \_w[700]Why do you need to know?"
+					"%(tsaCurledUp)%(tsaNervous)What’s it to you?"
+				}
+			}
+			elseif awareness > LOWCONSC
+			{
+				if trust > TRUSTGOOD
+				{
+					"%(tsaOpen)%(tsaDazed)Name%(ellps) Name%(ellps) oh yeah. \_w[2000]I’m Moby%(ellps) I forget that a lot%(ellps)"
+				}
+				elseif trust > TRUSTBAD
+				{
+					"%(tsaCurledUp)Why? \_w[700]Why?"
+					"%(tsaCurledUp)%(tsaAlert)Don’t. \_w[800]%(tsaDepressed)I%(ellps) assist."
+					"%(tsaCurledUp)Call %tsanicknamed%(ellps)"
+				}
+				else
+				{
+					"%(tsaCurledUp)%(tsa)%(nrrtr)(They curl deeper into themself.)"
+				}
+			}
+			else
+			{
+				"%(tsaOpen)%(tsaSuperDazed)Who am I%(ellps)? Who are you?"
+				"%(tsaOpen)%(tsaSuperDazed)I \_w[500]am \_w[800]\f[height,-6]mnstnanfnonononnveeees.\f[height,+6] %(br)%(nrrtr)(They fall off into a dazed mumble.)"
+				"%(nrrtr)(They mumble something incomprehensible.)"
+			}
+		}
+		when 2 //about self
+		{
+			if awareness > HIGHCONSC
+			{
+				if trust > TRUSTGOOD
+				{
+				
+				}
+				elseif trust > TRUSTBAD
+				{
+				
+				}
+				else
+				{
+				
+				}
+			}
+			elseif awareness > LOWCONSC
+			{
+			   if trust > TRUSTGOOD
+				{
+				
+				}
+				elseif trust > TRUSTBAD
+				{
+				
+				}
+				else
+				{
+				
+				}
+			}
+			else
+			{
+				if trust > TRUSTBAD
+				{
+				
+				}
+				else
+				{
+				
+				}
+			}
+		
+		}
+		when 3 //about home
+		{
+			if awareness > HIGHCONSC
+			{
+				if trust > TRUSTGOOD
+				{
+				
+				}
+				elseif trust > TRUSTBAD
+				{
+					
+				}
+				else
+				{
+					
+				}
+			}
+			elseif awareness > LOWCONSC
+			{
+			   if trust > TRUSTGOOD
+				{
+					"%(tsaCurledUp)I \w6remember \w6before%(ellps)\w4%(ellps)"
+					"%(tsaCurledUp)%(tsaNervous)My room is nice%(ellps) I have things I own%(ellps)"
+				}
+				elseif trust > TRUSTBAD
+				{
+					
+				}
+				else
+				{
+					"%(tsaCurledUp)%(tsaNervous)%(nrrtr)(They don’t seem comfortable enough to talk much about that.)"
+				}
+			}
+			else
+			{
+				if trust > TRUSTBAD
+				{
+					"%(tsaOpen)%(tsaSuperDazed)Where is home%(ellps)?"
+					"%(tsaOpen)%(tsaSuperDazed)Home%(ellps) sleep. \_w[900]No matter what%(ellps) here hurts less. "
+					"%(tsaOpen)%(tsaSuperDazed)Sounds like%(ellps)%(br)%(nrrtr)(They trail off with a mumble.)"
+				}
+				else
+				{
+				
+				}
+			}
+		}
+		when 4 //is ok?
+		{
+			if awareness > HIGHCONSC
+			{
+				if trust > TRUSTBAD
+				{
+					if healthy && bandaged
+					{
+						"%(tsaNeutral)I am perfectly functional. "
+					}
+					elseif healthy
+					{
+						"%(tsaOpen)Yeah%(ellps) thanks for the bandages."
+					}
+					elseif bandaged
+					{
+						"%(tsaOpen)Thank you for the bandages%(ellps) it will heal in time. "
+						"%(tsaNeutral)%(tsaNervous)At least it is a little better now. \_w[100]Less likely to get infected."
+					}
+					else
+					{
+						"%(tsaCurledUp)I could be a lot better, frankly."
+					}
+				}
+				else
+				{
+					"%(tsaCurledUp)%(tsaNervous)%(nrrtr)(They're clearly worried about what you might do with that information.)"
+				}
+			}
+			elseif awareness > LOWCONSC
+			{
+			   if trust > TRUSTBAD
+				{
+					if healthy
+					{
+						"%(tsaOpen)%(tsaDazed)Peachy%(ellps) keen%(ellps)"
+						"%(tsaOpen)%(tsaDazed)I can’t feel \_w[1500]anything honestly."
+					}
+					else
+					{
+						"%(tsaOpen)%(tsaDazed)At least I get painkillers%(ellps)"
+					}
+				}
+				else
+				{
+				
+				}
+			}
+			else
+			{
+				if trust > TRUSTBAD
+				{
+					"%(tsaOpen)It’s so \_w[3000]time \_w[2000]right now. \n%(nrrtr)(They mumble something incoherent.)"
+				}
+				else
+				{
+				
+				}
+			}
+		}
+		when 5 //reality check
+		{
+			if awareness > HIGHCONSC
+			{
+				if trust > TRUSTBAD
+				{
+					"%(tsaOpen)Huh? \_w[700]%(tsaGesture)We're talking%(ellps)?"
+				}
+				else
+				{
+				
+				}
+			}
+			elseif awareness > LOWCONSC
+			{
+			   if trust > TRUSTGOOD
+				{
+				
+				}
+				elseif trust > TRUSTBAD
+				{
+				
+				}
+				else
+				{
+				
+				}
+			}
+			else
+			{
+				if trust > TRUSTBAD
+				{
+					"%(tsaNeutral)Macaroni."
+					"%(tsaNeutral)%(tsaDepressed)They named the whale Moby Dick%(ellps) that’s so mean%(ellps)"
+					"%(tsaNeutral)It’s \_w[1500]bagel o clock. \_w[3000]Because clocks%(ellps) bagels."
+				}
+				else
+				{
+				
+				}
+			}
+		}
+		when 6 //HER. The Doctrix
+		{
+			if awareness > HIGHCONSC
+			{
+				if trust > TRUSTGOOD
+				{
+				
+				}
+				elseif trust > TRUSTBAD
+				{
+				
+				}
+				else
+				{
+				
+				}
+			}
+			elseif awareness > LOWCONSC
+			{
+			   if trust > TRUSTGOOD
+				{
+				
+				}
+				elseif trust > TRUSTBAD
+				{
+				
+				}
+				else
+				{
+				
+				}
+			}
+			else
+			{
+				if trust > TRUSTBAD
+				{
+				
+				}
+				else
+				{
+				
+				}
+			}
+		}
+		when 7 //test
+		{
+			if awareness > HIGHCONSC
+			{
+				if trust > TRUSTGOOD
+				{
+				
+				}
+				elseif trust > TRUSTBAD
+				{
+				
+				}
+				else
+				{
+				
+				}
+			}
+			elseif awareness > LOWCONSC
+			{
+			   if trust > TRUSTGOOD
+				{
+				
+				}
+				elseif trust > TRUSTBAD
+				{
+				
+				}
+				else
+				{
+				
+				}
+			}
+			else
+			{
+				if trust > TRUSTBAD
+				{
+				
+				}
+				else
+				{
+				
+				}
+			}
+		}
+	
+	}
+}
 
 
 

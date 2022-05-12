@@ -35,13 +35,13 @@ ellps{
 }
 
 TheScientist{
-	"The Scientist"
-	"The Scientist"
-	"The Scientist"
-	"The Scientist"
-	"The Scientist"
-	"Doctrix"
-
+	_num = RAND(59)
+	if _num >49{
+		"The Scientist"
+	}
+	else{
+		"The Doctrix"
+	}
 }
 
 oldChemicals

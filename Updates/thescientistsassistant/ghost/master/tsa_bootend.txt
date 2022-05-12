@@ -150,7 +150,7 @@ OnBoot
 			"%(tsaNeutral)%(nrrtr)(They're humming a jaunty tune.) \n%(tsaGesture)%(tsaHappy)Welcome back."
 			}
 			elseif trust > TRUSTBAD{
-				"%(tsaNeutral)Oh. \w[500]Hey. \w6Nice to see you again."
+				"%(tsaNeutral)Oh. \_w[500]Hey. \w6Nice to see you again."
 			}else{
 				"%(tsaNeutral)%(nrrtr)(They don't seem to want to talk to you.)"
 			}
@@ -161,7 +161,7 @@ OnBoot
 				"%(tsaOpen)%(tsaRelieved)\_w[300]...You're here. \_w[500]I wasn't sure%(ellps)"
 			}
 			elseif trust > TRUSTBAD{ //middling/no trust
-				"%(tsaNeutral)%(nrrtr)(They're a bit out of it.)%(br)%(tsaNeutral)H-hey%(ellps) what's? \w[2000]up? "
+				"%(tsaNeutral)%(nrrtr)(They're a bit out of it.)%(br)%(tsaNeutral)H-hey%(ellps) what's? \_w[2000]up? "
 				"%(tsaNeutral)%(tsaDazed)%(ellps)%(nrrtr)(It seems that %(TheAssistant) hasn't noticed you yet.)"
 			}else{ //negative trust
 				"%(tsaCurledUp)%(tsaHeadDown)%(ellps)%(nrrtr)(They're pretending not to notice you.)"

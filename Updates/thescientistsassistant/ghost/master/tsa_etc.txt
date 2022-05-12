@@ -160,7 +160,7 @@ OnVanishSelected
 	"%(tsaNeutral)%(medkit)"
 	--
 	if !awayforscientist{
-		"\0%(tsaNeutral)...huh? \w8\w8Why...  why does it hurt? \w[630]%username? \w[745]It hurts, it hurts, oh fuck I'm dying, I think I'm dying--\e"
+		"\0%(tsaNeutral)...huh? \w8\w8Why...  why does it hurt? \_w[630]%username? \_w[745]It hurts, it hurts, oh fuck I'm dying, I think I'm dying--\e"
 
 	}else{
 		"%(nrrtr)(Somewhere, they're in pain...)"
@@ -176,7 +176,7 @@ OnVanishCancel
 	"%(tsaNeutral)%(medkit)"
 	--
 	if !awayforscientist{
-		"\0%(tsaNeutral)Was that it...? \w[412]It's gone. \w8It's gone.\w4.\w4. I thought I was going to die.\w4.\w4. \w[615]You didn't do that, did you...?"
+		"\0%(tsaNeutral)Was that it...? \_w[412]It's gone. \w8It's gone.\w4.\w4. I thought I was going to die.\w4.\w4. \_w[615]You didn't do that, did you...?"
 
 	}else{
 		"%(nrrtr)(Crisis averted. Somewhere, %(TheAssistant)'s heart thunders, feeling your power overwhelming them, just to fade away.)"
@@ -191,7 +191,7 @@ OnVanished
 	"%(tsaNeutral)%(medkit)"
 	--
 	if !awayforscientist{
-		"\0%(tsaNeutral)--ow, ow, ow, make it stop, I-- I, oh, I think I'm going t-to.\w4.\w4. going to.\w4.\w4.%(br)%(nrrtr)(They've fallen unconscious.)\w[400]%(br)(Good night, %(TheAssistant). Sleep forever. It's better for you, this way.)"
+		"\0%(tsaNeutral)--ow, ow, ow, make it stop, I-- I, oh, I think I'm going t-to.\w4.\w4. going to.\w4.\w4.%(br)%(nrrtr)(They've fallen unconscious.)\_w[400]%(br)(Good night, %(TheAssistant). Sleep forever. It's better for you, this way.)"
 
 	}else{
 		"%(nrrtr)(Even with The Scientist, now they're out of their misery.)"
