@@ -1,0 +1,14 @@
+
+
+profile/
+
+*.bak
+*.psd
+*.mdp
+*.log
+*log.txt
+
+*/yaya_variable.cfg
+*/shell.dat
+*/var.txt
+*/ghost.dat

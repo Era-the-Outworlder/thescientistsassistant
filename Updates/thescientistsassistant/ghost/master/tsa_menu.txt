@@ -43,6 +43,9 @@ OpenMenu
 		}
 		--
 		AYATEMPLATE.MenuItem("Nevermind","Menu_CANCEL",150)
+		//[edit]
+		--
+		"\q[Test FB,OnFirstBoot,0]"
 		--
 		"%(br)\f[align,center]\f[height,-2]\f[color,firebrick]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\f[color,default]\__q[OpenVitals]V+\__q\n"
 		--

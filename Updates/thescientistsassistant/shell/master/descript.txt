@@ -17,6 +17,13 @@ sakura.seriko.alignmenttodesktop,free
 kero.seriko.alignmenttodesktop,free
 char2.seriko.alignmenttodesktop,free
 
+//[edit]
+sakura.defaultleft,800
+
+kero.defaultleft,700
+
+
+
 sakura.balloon.offsetx,0
 sakura.balloon.offsety,50
 

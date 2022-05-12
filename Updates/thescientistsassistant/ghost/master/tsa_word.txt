@@ -38,6 +38,35 @@ TheScientist{
 
 }
 
+oldChemicals
+{
+	"bitter salt"
+	"brimstone"
+	"rouge"
+	"saltpetre"
+	"vitriol"
+	"caustic potash"
+	"ferrum"
+	"isinglass"
+	"corundum"
+	"caustic soda"
+	"red liquor"
+	"quicksilver"
+	"lunar caustic"
+	"antimony"
+	"cobalt"
+	"orpiment"
+	"realgar"
+	"molybdena"
+	"acidum salis"
+	"aqua fortis"
+	"aqua tofani"
+	"aqua vitae"
+	"cinnabar"
+	"hartshorn"
+	"nix alba"
+	"pyrite"
+}
 
 //******************************************************************************
 //Word acqusition events

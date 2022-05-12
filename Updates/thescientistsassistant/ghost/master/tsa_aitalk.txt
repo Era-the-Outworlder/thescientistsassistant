@@ -22,7 +22,64 @@ RandomTalkEx : nonoverlap
 {
 	if !awayforscientist{
 		
-		"%(tsaNeutral)Things can occur..."
+		if awareness > HIGHCONSC{
+		//Alert.
+			if trust > TRUSTGOOD{ //good trust
+			"My-- well. %(TheScientist) has been focused on the human body a lot lately."
+			"The other day I thought I saw a homunculus in the lab.\n[200] It was just a poppet someone had dropped."
+			"I've been wondering what kind of uses might still be discovered for %(oldChemicals)..."
+			}
+			elseif trust > TRUSTBAD{ //middling/no trust
+					"%(tsaNeutral)Need to be careful handling %(oldChemicals)."
+					
+			}else{ //negative trust
+				
+			}
+			
+		}elseif awareness > LOWCONSC{
+		//They're doin ok.
+			if trust > TRUSTGOOD{ //good trust
+				"This could be worse. It could- It could be- right?"
+				"It's not... it's not so bad."
+				"...you're still here..."
+			}
+			elseif trust > TRUSTBAD{ //middling/no trust
+				
+			}else{ //negative trust
+				"%(ellps)"
+				"%(ellps) %(nrrtr)(They watch you warily.)"
+				if teachname {"%(ellps) %(nrrtr)(%(TheAssistant) watches you very warily.)"}
+			}
+			
+		}else{
+		//They're Out.
+		//[Era note] the "\e Character Name" is so that ghosts that implement OnOtherGhostTalk can "get the reference"
+		
+			if trust > TRUSTGOOD{ //good trust
+				"this wasn't%(ellps) don't worry%(ellps) too much."
+				"is%(ellps) azoth-- my veins?"
+				"%(ellps)the stone-- no%(ellps) it's not%(ellps)"
+
+				"%(ellps)the white lion%(ellps) bounds across the planes%(ellps)\e Planeswalker Ajani Goldmane"
+			}
+			elseif trust > TRUSTBAD{ //middling/no trust
+				"not alone%(ellps) this place%(ellps)"
+				"so%(ellps) tired%(ellps)"
+
+				"%(ellps)to be driven so mad%(ellps) by the fruits of his own research%(ellps)\e Griffin, The Invisible Man"
+				"%(ellps)peppy%(ellps)bunny%(ellps) cute li'l ears%(ellps)\e Ruby, rabbit Villager"
+				"%(ellps)odd names%(ellps) for lab mice%(ellps)\e Pinky and the Brain"
+			}else{ //negative trust
+				if teachname {"%(ellps) (It's hard to tell, but%(TheAssistant) is trembling ever-so-slightly.)"}
+				"%(ellps) (It's hard to tell, but they're trembling ever-so-slightly.)"
+				
+
+				"%(ellps)he carried a black sword%(ellps) and the storm it brought-- \_w[1000]death.\e Elric IIIV, 428th Emperor of Melniboné"
+				"%(ellps)blindly he sought immortality%(ellps) and in his jealousy distroyed his fellows%(ellps)\e Seath the Scaleless"
+			}
+			
+		}
+		
 	}else{
 		"%(tsaNeutral)"
 	}
