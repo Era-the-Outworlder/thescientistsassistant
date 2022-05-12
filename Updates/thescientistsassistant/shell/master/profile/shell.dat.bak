@@ -2,6 +2,7 @@ Charset,UTF-8
 __system_settings_version__,2
 balloon,D:\SSP\balloon\Seb_Balloon\
 Char1.balloon.isleft,1
+<<<<<<< HEAD
 balloon0.offset,101.-224
 Char0.centery,923
 Char2.centery,249
@@ -11,5 +12,19 @@ Char2.center,879
 Char0.center,924
 Char1.centery,900
 Char1.center,1599
+=======
+balloon2.offset,-14.-71
+balloon0.offset,51.18
+scriptbox.left,3081
+Char0.centery,966
+Char2.centery,1040
+Char0.balloon.isleft,1
+Char.VirtualDesktop,0f955a53-e3fe-4f5a-aa96-c46c5b5a44db
+Char2.center,1592
+Char0.center,3204
+scriptbox.top,460
+Char1.centery,1040
+Char1.center,1470
+>>>>>>> main
 Char2.balloon.isleft,1
 __system_written_flag_do_not_remove__,written

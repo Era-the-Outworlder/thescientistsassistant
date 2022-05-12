@@ -8,7 +8,7 @@ br{
 }
 
 nrrtr{
-	"\0"
+	"\0\i[9999]\0"
 	//if we keep this sakura, planning code that will recall the current surfaces but the narration versions
 	//will probs use replace a lot, lol
 	//actually i need to test just using stop
@@ -18,12 +18,13 @@ nrrtr{
 
 
 
-tsaNeutral : all{
+tsaNeutral : all {
 	//future plans will include this function continuing their last pose aside from gesturing upward, which they won't do
 	//it also will apply the most relevant 'default' expression
 	
 	if !awayforscientist{
 	
+<<<<<<< HEAD
 		"\0\s[100]"
 		//FaceCut -- no clean state
 		if visualstatus[0] >= 3{
@@ -32,6 +33,34 @@ tsaNeutral : all{
 		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
 			//bandages
 			"\i[2012]"
+=======
+		case SHIORI3FW.LastSurface[0]{
+			when 110, 130{
+				"\0\s[110]"
+			}
+			others{
+				"\0\s[100]"
+			}
+		}
+		--
+		//FaceCut -- no clean state
+		if visualstatus[0] >= 3{
+			//call the wound img here
+			"\i[2701]"
+		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
+			//bandages
+			"\i[2712]"
+		}
+		--
+		"\w[0]"
+		--
+		if awareness > HIGHCONSC{
+			"%(tsaNeutralFace)"
+		}elseif awareness > LOWCONSC{
+			"%(tsaDazed)"
+		}else{
+			"%(tsaSuperDazed)"
+>>>>>>> main
 		}
 	}else{
 		"\0\s[-1]"
@@ -47,10 +76,28 @@ tsaCurledUp : all{
 		//FaceCut -- no clean state
 		if visualstatus[0] >= 3{
 			//call the wound img here
+<<<<<<< HEAD
 			"\i[2001]"
 		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
 			//bandages
 			"\i[2012]"
+=======
+			"\i[2701]"
+		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
+			//bandages
+			"\i[2712]"
+		}
+		--
+		"\w[0]"
+		--
+		
+		if awareness > HIGHCONSC{
+			"%(tsaAlert)"
+		}elseif awareness > LOWCONSC{
+			"%(tsaDazed)"
+		}else{
+			"%(tsaSuperDazed)"
+>>>>>>> main
 		}
 	}else{
 		"\0\s[-1]"
@@ -64,10 +111,24 @@ tsaOpen : all{
 		//FaceCut -- no clean state
 		if visualstatus[0] >= 3{
 			//call the wound img here
+<<<<<<< HEAD
 			"\i[2001]"
 		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
 			//bandages
 			"\i[2012]"
+=======
+			"\i[2701]"
+		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
+			//bandages
+			"\i[2712]"
+		}
+		if awareness > HIGHCONSC{
+			"%(tsaAlert)"
+		}elseif awareness > LOWCONSC{
+			"%(tsaDazed)"
+		}else{
+			"%(tsaSuperDazed)"
+>>>>>>> main
 		}
 	}else{
 		"\0\s[-1]"
@@ -86,14 +147,126 @@ tsaGesture : all{
 		//FaceCut -- no clean state
 		if visualstatus[0] >= 3{
 			//call the wound img here
+<<<<<<< HEAD
 			"\i[2001]"
 		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
 			//bandages
 			"\i[2012]"
+=======
+			"\i[2701]"
+		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
+			//bandages
+			"\i[2712]"
+		}
+		--
+		"\w[1]"
+		--
+		if awareness > HIGHCONSC{
+			"%(tsaAlert)"
+		}elseif awareness > LOWCONSC{
+			"%(tsaDazed)"
+		}else{
+			"%(tsaSuperDazed)"
+>>>>>>> main
 		}
 	}else{
 		"\0\s[-1]"
 	}
+<<<<<<< HEAD
+=======
+}
+
+
+tsaNeutralFace{
+	"\w[1]"
+	--
+	"\i[2310]\i[2510]"
+}
+
+
+
+tsaAlert{
+	"\w[1]"
+	--
+	"\i[2320]\i[2520]"
+}
+
+tsaScared{
+	"\w[1]"
+	--
+	"\i[2330]"
+	--
+	"\i[2530]"
+	"\i[2540]"
+	"\i[2550]"
+}
+
+tsaRelieved{
+	"\w[0]"
+	--
+	"\i[2340]"
+	--
+	"\i[2530]"
+	"\i[2510]"
+	"\i[2540]"
+}
+
+tsaDazed{
+	"\w[1]"
+	--
+	"\i[2350]"
+	--
+	"\i[2530]"
+	"\i[2540]"
+	"\i[2520]"
+}
+
+tsaSuperDazed{
+	"\w[1]"
+	--
+	"\i[2360]"
+	--
+	"\i[2530]"
+	"\i[2540]"
+	"\i[2520]"
+}
+
+tsaHappy{
+	"\w[1]"
+	--
+	"\i[2310]"
+	--
+	"\i[2560]"
+}
+
+tsaDepressed{
+	"\w[1]"
+	--
+	"\i[2370]"
+	"\i[2380]"
+	--
+	"\i[2510]"
+}
+
+tsaSuperDepressed{
+	"\w[1]"
+	--
+	"\i[2390]\i[2510]"
+}
+tsaOw{
+	"\w[1]"
+	--
+	"\i[2341]"
+	"\i[2340]"
+	--
+	"\i[2530]"
+	"\i[2540]"
+	"\i[2550]"
+}
+
+tsaHeadDown{
+	//stub
+>>>>>>> main
 }
 
 

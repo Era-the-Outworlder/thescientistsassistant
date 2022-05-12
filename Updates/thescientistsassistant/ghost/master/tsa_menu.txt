@@ -23,6 +23,7 @@ OpenMenu
 			if awareness > HIGHCONSC{
 		
 				if trust > TRUSTGOOD{
+<<<<<<< HEAD
 					"\0%(tsaNeutral)O-oh, I'm sorry. \_w[315]I zoned out. \_w[315]What did I miss?"
 					"\0%(tsaNeutral)Oh, you're here. \_w[315]I zoned out. \_w[315]Sorry, what were we doing?"
 				}elseif trust > TRUSTBAD{
@@ -45,6 +46,30 @@ OpenMenu
 				"%(nrrtr)(They hiccup and swivel their head around.)"
 				"%(nrrtr)(They shake a little and stare at you.)"
 				"%(nrrtr)(They turn to stare, nodding off for a moment, but then blinking up to meet your gaze.)"
+=======
+					"\0%(tsaNeutral)O-oh, I'm sorry. \w[315]I zoned out. \w[315]What did I miss?"
+					"\0%(tsaNeutral)Oh, you're here. \w[315]I zoned out. \w[315]Sorry, what were we doing?"
+				}elseif trust > TRUSTBAD{
+					"%(tsaNeutral)O-oh, I'm sorry. \w[315]I zoned out. \w[315]What did I miss?"
+					"\0%(tsaNeutral)O-oh.\w[315]I zoned out. \w[315]What did I miss...?"
+				}else{
+					"\0%(tsaNeutral)O-oh, I zoned out. \w[800]I'm still here."
+					"%(tsaNeutral)%(nrrtr)(They startle a bit, and then look away, refusing to meet your gaze.)"
+				}
+			}elseif awareness > LOWCONSC{
+				if trust > TRUSTBAD{
+					"%(tsaNeutral)O-oh, \w4I'm sorry. \w[915]I zoned out again%(ellps)"
+					"%(tsaCurledUp)Oh, \w[800]sorry%(ellps) I can just \w[900]zone out sometimes%(ellps)"
+				}else{
+					"%(tsaNeutral)%(nrrtr)(They dazedly look at you, and then look away again.)"
+					"%(tsaNeutral)%(nrrtr)(They shake a little and grumble.)"
+				}
+			}else{
+				"%(tsaNeutral)O-oh, it's %username, %(oldChemicals)%(ellps)"
+				"%(tsaNeutral)%(tsaDazed)%(nrrtr)(They hiccup and swivel their head around.)"
+				"%(tsaNeutral)%(tsaDazed)%(nrrtr)(They shake a little and stare at you.)"
+				"%(tsaNeutral)%(tsaDazed)%(nrrtr)(They turn to stare, nodding off for a moment, but then blinking up to meet your gaze.)"
+>>>>>>> main
 			}
 			
 			
@@ -70,9 +95,15 @@ OpenMenu
 					"%(tsaNeutral)%(ellps)?"
 				}
 			}else{
+<<<<<<< HEAD
 				"%(nrrtr)(They turn to stare.)"
 				"%(nrrtr)(They flounder a little, \w4but eventually settle to where they can stare at you.)"
 				"%(nrrtr)(They turn to you.)"
+=======
+				"%(tsaNeutral)%(nrrtr)(They make a noise.)"
+				"%(tsaNeutral)%(tsaDazed)%(nrrtr)(They flounder a little, \w4but take a peek.)"
+				"%(tsaNeutral)%(nrrtr)(They nod in your general direction.)"
+>>>>>>> main
 				"%(tsaNeutral)%(ellps)?"
 			}
 		}
@@ -85,12 +116,22 @@ OpenMenu
 		if ( STRLEN(AYATEMPLATE.LastTalk) > 0 ) {
 			"    or   \![*]\__q[Menu_LASTTALK]Repeat\__q"
 		}
+<<<<<<< HEAD
 	//	--
 	//	AYATEMPLATE.MenuItem("Talk frequency","Menu_TALKINTERVAL")
 		--
 		AYATEMPLATE.MenuItem("I have something to say","Menu_COMMUNICATEOPEN")
 		--
 		AYATEMPLATE.MenuItem("I have a question","Menu_QUESTIONNAIRE")
+=======
+
+		--
+		AYATEMPLATE.MenuItem("I have something to say","Menu_COMMUNICATEOPEN")
+		--
+		AYATEMPLATE.MenuItem("I have a question","Menu_ASK")
+		--
+		AYATEMPLATE.MenuItem("Could you raise your right arm?","Menu_RIGHTARM")
+>>>>>>> main
 		--
 		AYATEMPLATE.MenuItem("Nevermind","Menu_CANCEL",150)
 		--
@@ -202,6 +243,34 @@ Menu_GHOSTCOMSTART
 	StartCommunicate
 }
 
+
+
+//---- questions
+Menu_ASK{
+	"not fully done yet come back later"
+}
+
+//---- right arm
+Menu_RIGHTARM{
+	if awareness > HIGHCONSC{
+    
+        if trust > TRUSTBAD{
+			"Uh%(ellps) sure. \w4%(tsaGesture)There."
+        }else{
+			"Uh%(ellps) how about no."
+        }
+    }elseif awareness > LOWCONSC{
+        "%(tsaGesture)Yes, Doctrix%(ellps)"
+    }else{
+		"Uh%(ellps) \w4%(tsaGesture)%(nrrtr)(They jaggedly shove it up, but soon it falls limply back down.)%(tsaNeutral)"
+    }
+}
+
+
+
+
+
+
 //---- Cancelled
 Menu_CANCEL
 {
@@ -261,6 +330,11 @@ Menu_SETTINGS{
 	"Their Nickname: \![*]\__q[Menu_CHANGETSANICK]%tsanickname\__q\n"
 	//AYATEMPLATE.MenuItem("Their Nickname: %tsanickname","Menu_CHANGETSANICK")
 	--
+<<<<<<< HEAD
+=======
+	"Your Honorific: \![*]\__q[Menu_HONORIFIC]%honor\__q\n"
+	--
+>>>>>>> main
 	_talkint = TOINT(aitalkinterval / 60)
 	"Talk Interval: \![*]\__q[Menu_TALKINTERVAL]every %_talkint min\__q\n"
 	--
@@ -271,7 +345,7 @@ Menu_SETTINGS{
 		"Hour Bell: \![*]\__q[Menu_FLIPBELL]on\__q\n"
 	}else{
 		//AYATEMPLATE.MenuItem("Time Noises: off","Menu_FLIPBELL")
-		"Hour Bell: \![*]\__q[Menu_FLIPBELL]on\__q\n"
+		"Hour Bell: \![*]\__q[Menu_FLIPBELL]off\__q\n"
 	}
 	--
 	if soundeffects{
@@ -316,6 +390,33 @@ Menu_CHANGETSANICK{
 OnMenu_TSANICKCHANGEFINISH{
 	tsanickname = reference0
 	"%(tsaNeutral)%tsanickname works%(ellps)"
+}
+
+Menu_HONORIFIC{
+	"%(tsaNeutral)What to%(ellps)?\![quicksection,true]%(br)"
+	--
+	"\![*]\__q[OnMenu_CHANGEHONORIFICFINISH,Ma'am]Ma'am\__q\n"
+	--
+	"\![*]\__q[OnMenu_CHANGEHONORIFICFINISH,Madam]Madam\__q\n"
+	--
+	"\![*]\__q[OnMenu_CHANGEHONORIFICFINISH,Sir]Sir\__q\n"
+	--
+	"\![*]\__q[OnMenu_CHANGEHONORIFICFINISH,Mister]Mister\__q\n"
+	--
+	"\![*]\__q[OnMenu_CHANGEHONORIFICFINISH,Ser]Ser\__q\n"
+	--
+	"\![*]\__q[OnMenu_CHANGEHONORIFICFINISH,Mx]Mx\__q%(br)"
+	--
+	"\![*]\__q[Menu_OTHERHONORIFIC]Other\__q%(br)"
+}
+
+Menu_OTHERHONORIFIC{
+	"\![open,inputbox,OnMenu_CHANGEHONORIFICFINISH,0]"
+}
+
+OnMenu_CHANGEHONORIFICFINISH{
+	honor = reference0
+	"%(tsaNeutral)Yes, %honor%(ellps)"
 }
 
 Menu_FLIPBELL{

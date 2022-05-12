@@ -95,6 +95,7 @@ FirstBootHealth{
 	timestatus = IARRAY
 	conditionpreposition = IARRAY
 	injurystatus = IARRAY
+	wheninfected = IARRAY
 	
 	//Index 0 - FaceCut
 	//The FaceCut is the only one that starts out injured for now.
@@ -105,6 +106,7 @@ FirstBootHealth{
 	timestatus ,= "fresh"
 	conditionpreposition ,= "cut on"
 	injurystatus ,= "looks shallow enough"
+	wheninfected ,= "antibac"
 	
 	//Index 1 - Concussion
 	bodypart ,= "head"
@@ -114,6 +116,7 @@ FirstBootHealth{
 	timestatus ,= "healed"
 	conditionpreposition ,= "concussion I got"
 	injurystatus ,= "seems to have healed well"
+	wheninfected ,= "washcloth"
 	
 	//Index 2 - EyeProcedure
 	bodypart ,= "face"
@@ -123,6 +126,7 @@ FirstBootHealth{
 	timestatus ,= "healed"
 	conditionpreposition ,= "procedure %(TheScientist) did"
 	injurystatus ,= "seems to have healed well"
+	wheninfected ,= "washcloth"
 	
 	//Index 3 - InjectionSite
 	bodypart ,= "left arm"
@@ -132,6 +136,7 @@ FirstBootHealth{
 	timestatus ,= "healed"
 	conditionpreposition ,= "botched IV wound on"
 	injurystatus ,= "seems to have healed well"
+	wheninfected ,= "antibac"
 	
 	//Index 4 - LWristSore
 	bodypart ,= "left arm"
@@ -141,6 +146,7 @@ FirstBootHealth{
 	timestatus ,= "healed"
 	conditionpreposition ,= "restraint sores on"
 	injurystatus ,= "seems to have healed well"
+	wheninfected ,= "antibac"
 	
 	//Index 5 - RWristSore
 	bodypart ,= "right arm"
@@ -150,6 +156,7 @@ FirstBootHealth{
 	timestatus ,= "healed"
 	conditionpreposition ,= "restraint sores on"
 	injurystatus ,= "seems to have healed well"
+	wheninfected ,= "antibac"
 	
 	//Index 6 - TwistedAnkle
 	bodypart ,= "left leg"
@@ -159,6 +166,7 @@ FirstBootHealth{
 	timestatus ,= "healed"
 	conditionpreposition ,= "ankle I twisted"
 	injurystatus ,= "seems to have healed well"
+	wheninfected ,= "washcloth"
 	
 	
 	//Configure Health based on each body part and the like
@@ -209,7 +217,12 @@ ConfigureHealth{
 	
 	//average of part health
 	//head health & consciousness is weighted
-	overallhealth = (awareness*2 + headhealth*2 + larmhealth + rarmhealth + lleghealth + rleghealth)/8
+	overallhealth = (awareness*4 + headhealth*2 + larmhealth + rarmhealth + lleghealth + rleghealth)/10
+}
+
+//Configure health works independently to make sure awareness is always valid
+getAwareness{
+	awareness
 }
 
 //Configure health works independently to make sure awareness is always valid
@@ -234,12 +247,14 @@ OnDayPassHealth{
 			visualstatus[_i] = 4
 			severity[_i] += severity[_i]*.25
 			injurystatus[_i] = "got infected"
+			injuryrequires[_i] = wheninfected[_i]
 		}
 		when "infected"{
 			timestatus[_i] = "infected"
 			visualstatus[_i] = 4
 			severity[_i] += severity[_i]*.25
 			injurystatus[_i] = "is infected pretty bad"
+			injuryrequires[_i] = wheninfected[_i] //still needs to be reset
 		}
 		when "sanitized"{
 			if RAND(2){
@@ -252,6 +267,7 @@ OnDayPassHealth{
 				visualstatus[_i] = 4
 				severity[_i] += severity[_i]*.25
 				injurystatus[_i] = "is getting infected"
+				injuryrequires[_i] = wheninfected[_i]
 			}
 		}
 		when "bandaged"{
@@ -273,16 +289,6 @@ OnDayPassHealth{
 		}
 		
 		}
-	}
-}
-
-//calculate head health
-// _argv[0] - health percentage variable
-// _argv[1] - injury array
-ConfigurePartHealth{
-	_argv[0] = 100 	//start at max
-	for _i = 0; _i < ARRAYSIZE(_argv[1]) ; _i++{
-		_argv[0] -= (_argv[1])[_i] * 2
 	}
 }
 
@@ -351,23 +357,54 @@ MouseDoubleClick0RWristSore{
 
 OnExperiment0FaceCut{
 	case itemgrabbed{
-	
 	//Antibacterial
 	when 4{
-		if injuryrequires[0] == "antibac"{
-			ANTIBAC(0)
-			--
-			injuryrequires[0] = "bandaid"
-			"\0%(tsaNeutral)Oh... ouch, that stings a little, be careful."
-		}elseif timestatus[0] == "sanitized"{
-			"\0%(tsaNeutral)You already saniztized it..."
+		if awareness > HIGHCONSC{
+			if injuryrequires[0] == "antibac"{
+				ANTIBAC(0)
+				--
+				injuryrequires[0] = "bandaid"
+				"\0%(tsaNeutral)%(tsaOw)Oh... ouch, that stings a little, be careful."
+			}elseif timestatus[0] == "sanitized"{
+				"\0%(tsaNeutral)You already saniztized it..."
+			}else{
+				"\0It doesn't need sanitizing."
+			}
+		}elseif awareness > LOWCONSC{
+			if injuryrequires[0] == "antibac"{
+				ANTIBAC(0)
+				--
+				injuryrequires[0] = "bandaid"
+				"\0%(tsaNeutral)%(tsaOw)Ouch%(ellps) hurts(ellps)"
+			}elseif timestatus[0] == "sanitized"{
+				"\0%(tsaNeutral)It's clean, %(username)%(ellps)"
+			}else{
+				"%(tsaNeutral)huh%(ellps)?"
+			}					
 		}else{
-			"\0It doesn't need sanitizing."
+			if injuryrequires[0] == "antibac"{
+				ANTIBAC(0)
+				--
+				injuryrequires[0] = "bandaid"
+				"\0%(tsaNeutral)%(nrrtr)(You place a bandaid on it. This will protect it.)"
+			}elseif timestatus[0] == "sanitized"{
+				"\0%(tsaNeutral)%(nrrtr)(You already sanitized it.)"
+			}else{
+				"%(nrrtr)(It doesn't need to be sanitized.)"
+			}
 		}
+		
 	}
 	//Washcloth
 	when 5{
-		"\0%(tsaNeutral)I don't think it's dirty..."
+		if awareness > HIGHCONSC{
+			"\0%(tsaNeutral)I don't think it's dirty..."
+		}elseif awareness > LOWCONSC{
+			"%(tsaNeutral)What%(ellps)? No%(ellps)"
+		}else{
+			"%(nrrtr)(What is that supposed to be for?)"
+		}
+		
 	}
 	//Bandaid
 	when 6{
@@ -385,7 +422,17 @@ OnExperiment0FaceCut{
 	}
 	//Gauze
 	when 7{
-		"\0%(tsaNeutral)It's a face... that's gonna be a little difficult to put on. "
+		if awareness > HIGHCONSC{
+			"\0%(tsaNeutral)It's a face... that's gonna be a little difficult to put on. "
+		}elseif awareness > LOWCONSC{
+			"%(tsaNeutral)What%(ellps)? No%(ellps) too big%(ellps)"
+		}else{
+			"%(nrrtr)(What is that supposed to be for? It's just a cut.)"
+		}
+		
+	}
+	when 8{
+		PANACEA(0)
 	}
 	others{
 		woundpokes++
@@ -393,12 +440,131 @@ OnExperiment0FaceCut{
 		if woundpokes > 15{
 			trust--
 		}
-		"\0Ow, don't poke at it..."
+		
+		if awareness > HIGHCONSC{
+			"\0%(tsaOw)Ow, don't poke at it..."
+			"\0%(tsaOw)Leave it be."
+		}elseif awareness > LOWCONSC{
+			"%(tsaOw)Ow%(ellps)"
+		}else{
+			"%(nrrtr)(They whimper as you poke at it.)"
+		}
 	}
+	}
+}
+
+OnExperiment0Concussion{
+	if usermadeconcussion{
+		OnUserConcussionInteract
+	}else{
+		case itemgrabbed{
+		//Antibacterial
+		when 4{
+			if awareness > HIGHCONSC{
+				if injuryrequires[0] == "antibac"{
+					ANTIBAC(0)
+					--
+					injuryrequires[0] = "bandaid"
+					"\0%(tsaNeutral)%(tsaOw)Oh... ouch, that stings a little, be careful."
+				}elseif timestatus[0] == "sanitized"{
+					"\0%(tsaNeutral)You already saniztized it..."
+				}else{
+					"\0It doesn't need sanitizing."
+				}
+			}elseif awareness > LOWCONSC{
+				if injuryrequires[0] == "antibac"{
+					ANTIBAC(0)
+					--
+					injuryrequires[0] = "bandaid"
+					"\0%(tsaNeutral)%(tsaOw)Ouch%(ellps) hurts%(ellps)"
+				}elseif timestatus[0] == "sanitized"{
+					"\0%(tsaNeutral)It's clean, %(username)%(ellps)"
+				}else{
+					"%(tsaNeutral)huh%(ellps)?"
+				}					
+			}else{
+				if injuryrequires[0] == "antibac"{
+					ANTIBAC(0)
+					--
+					injuryrequires[0] = "bandaid"
+					"\0%(tsaNeutral)%(nrrtr)(You place a bandaid on it. This will protect it.)"
+				}elseif timestatus[0] == "sanitized"{
+					"\0%(tsaNeutral)%(nrrtr)(You already sanitized it.)"
+				}else{
+					"%(nrrtr)(It doesn't need to be sanitized.)"
+				}
+			}
+			
+		}
+		//Washcloth
+		when 5{
+			if awareness > HIGHCONSC{
+				"\0%(tsaNeutral)I don't think it's dirty..."
+			}elseif awareness > LOWCONSC{
+				"%(tsaNeutral)What%(ellps)? No%(ellps)"
+			}else{
+				"%(nrrtr)(What is that supposed to be for?)"
+			}
+			
+		}
+		//Bandaid
+		when 6{
+			if injuryrequires[0] == "bandaid"{
+				BANDAID(0)
+				--
+				injuryrequires[0] = "none"
+				"\0%(tsaNeutral)Ah... thanks. \w[840]I suppose now it really won't get infected."
+			}elseif injuryrequires[0] == "antibac"{
+				"%(tsaNeutral)Ouch%(ellps) I think you're supposed to clean wounds first."
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)One bandaid is good enough%(ellps)"
+			}
+		}
+		//Gauze
+		when 7{
+			if awareness > HIGHCONSC{
+				"\0%(tsaNeutral)It's a face... that's gonna be a little difficult to put on. "
+			}elseif awareness > LOWCONSC{
+				"%(tsaNeutral)What%(ellps)? No%(ellps) too big%(ellps)"
+			}else{
+				"%(nrrtr)(What is that supposed to be for? It's just a cut.)"
+			}
+			
+		}
+		when 8{
+			PANACEA(0)
+		}
+		others{
+			woundpokes++
+			//You should know better.
+			if woundpokes > 15{
+				trust--
+			}
+			
+			if awareness > HIGHCONSC{
+				"\0%(tsaOw)Ow, don't poke at it..."
+				"\0%(tsaOw)Leave it be."
+			}elseif awareness > LOWCONSC{
+				"%(tsaOw)Ow%(ellps)"
+			}else{
+				"%(nrrtr)(They whimper as you poke at it.)"
+			}
+		}
+		}
 	
 	}
-
+	
 }
+
+OnUserConcussionInteract{
+	"ow!"
+}
+
+OnGiveConcussion{
+	conditionpreposition[1] = "concussion you gave me"
+	"%(tsaNeutral)damnnn bro concussion time\e"
+}	
 
 
 
@@ -444,6 +610,8 @@ MouseDoubleClick2
 	AYATEMPLATE.MenuItem("Bandaids","OnSelectBandaids")
 	--
 	AYATEMPLATE.MenuItem("Gauze","OnSelectGauze")
+	--
+	AYATEMPLATE.MenuItem("Panacea","OnSelectPanacea")
 	--
 	AYATEMPLATE.MenuItem("Empty hand","OnUnselectMedItem")
 	--
@@ -512,6 +680,12 @@ OnSelectGauze{
 
 }
 
+OnSelectPanacea{
+	itemgrabbed = 8
+	"%(medkit)"
+
+}
+
 OnUnselectMedItem{
 	itemgrabbed = 0
 	"%(medkit)"
@@ -569,4 +743,95 @@ BANDAGE{
 	injurystatus[_argv[0]] = "is bandaged up"
 	buffawareness
 	ConfigureHealth
+}
+
+PANACEA{
+
+}
+
+
+//These assign more than they need to, but for the sake of 100% ensuring continuity even through updates, this is best.
+
+APPLYFACECUT{
+	//Index 0 - FaceCut
+	bodypart[0] = "face"
+	severity[0] = 4
+	injuryrequires[0] = "antibac"
+	visualstatus[0] = 4
+	timestatus[0] = "fresh"
+	conditionpreposition[0] = "cut on"
+	injurystatus[0] = "looks shallow enough"
+	wheninfected[0] = "antibac"
+}
+
+APPLYCONCUSSION{
+	//Index 1 - Concussion
+	bodypart[1] = "head"
+	severity[1] = 8
+	injuryrequires[1] = "washcloth"
+	visualstatus[1] = 4
+	timestatus[1] = "fresh"
+	conditionpreposition[1] = "concussion I got"
+	injurystatus[1] = "seems to have healed well"
+	wheninfected[1] = "washcloth"
+}
+
+APPLYEYEPROC{
+	//Index 2 - EyeProcedure
+	bodypart[2] = "face"
+	severity[2] = 12
+	injuryrequires[2] = "washcloth"
+	visualstatus[2] = 4
+	timestatus[2] = "fresh"
+	conditionpreposition[2] = "procedure %(TheScientist) did"
+	injurystatus[2] = "seems to have healed well"
+	wheninfected[2] = "washcloth"
+}
+
+APPLYINJECTION{
+	//Index 3 - InjectionSite
+	bodypart[3] = "left arm"
+	severity[3] = 4
+	injuryrequires[3] = "antibac"
+	visualstatus[3] = 4
+	timestatus[3] = "fresh"
+	conditionpreposition[3] = "botched IV wound on"
+	injurystatus[3] = "seems to have healed well"
+	wheninfected[3] = "antibac"
+}
+
+APPLYLWRISTSORE{
+	//Index 4 - LWristSore
+	bodypart[4] = "left arm"
+	severity[4] = 6
+	injuryrequires[4] = "antibac"
+	visualstatus[4] = 4
+	timestatus[4] = "fresh"
+	conditionpreposition[4] = "restraint sores on"
+	injurystatus[4] = "seems to have healed well"
+	wheninfected[4] = "antibac"
+}
+
+APPLYRWRISTSORE{
+	//Index 5 - RWristSore
+	bodypart[5] = "right arm"
+	severity[5] = 6
+	injuryrequires[5] = "antibac"
+	visualstatus[5] = 4
+	timestatus[5] = "fresh"
+	conditionpreposition[5] = "restraint sores on"
+	injurystatus[5] = "seems to have healed well"
+	wheninfected[5] = "antibac"
+}
+
+APPLYTWISTEDANKLE{
+	//Index 6 - TwistedAnkle
+	bodypart[6] = "left leg"
+	severity[6] = 9
+	injuryrequires[6] = "washcloth"
+	visualstatus[6] = 4
+	timestatus[6] = "fresh"
+	conditionpreposition[6] = "ankle I twisted"
+	injurystatus[6] = "seems to have healed well"
+	wheninfected[6] = "washcloth"
 }

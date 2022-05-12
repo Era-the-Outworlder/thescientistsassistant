@@ -1,6 +1,14 @@
 Charset,UTF-8
+<<<<<<< HEAD
 install,705644627
 surfacecount,16
 firstboot,705656524
 commitmemorysize,129128
 lastboot,705665145
+=======
+install,705129846
+surfacecount,52
+firstboot,705129852
+commitmemorysize,336632
+lastboot,705660188
+>>>>>>> main

@@ -1,6 +1,10 @@
 delete.txtd39349cacf977400efd576d9e72be366size=50date=2022-01-24T09:54:14charset=OSNative
 ghost/master/descript.txtd437113fa8f52dafd9fc2e202bba694bsize=464date=2022-05-11T10:35:40
+<<<<<<< HEAD
 ghost/master/icon.ico6580606e88ea6c29cd35b3963dc707c9size=1718date=2022-01-24T09:54:14
+=======
+ghost/master/icon.ico8dd65961479777ac81c3f1b4695d4612size=197381date=2022-05-11T21:31:52
+>>>>>>> main
 ghost/master/messagetxt/classical-chinese.txt10f4b85eff273e9179ee86df61a3ad64size=5252date=2022-01-24T09:54:14
 ghost/master/messagetxt/english.txtae0885393f76b7c35cc094f43fd6fafesize=7379date=2022-01-24T09:54:14
 ghost/master/messagetxt/japanese.txtc1dee8bf729ac413cb94a374b3253868size=9497date=2022-01-24T09:54:14
@@ -28,6 +32,7 @@ ghost/master/system/yaya_optional.dicd2782442535c2ad426b4a82f33d142cfsize=9886
 ghost/master/system/yaya_shiori3.dicf877e00a6a1758140d1076cc888c382csize=49971date=2022-01-24T09:54:14
 ghost/master/system_config.txt9c0bf039595535c407623722a6c1690dsize=792date=2022-01-24T09:54:14
 ghost/master/time_check.dll07b7dabf0de6b5ea0a23178efc4d1c4fsize=105472date=2020-07-27T17:05:28
+<<<<<<< HEAD
 ghost/master/tsa_aitalk.txtf092295f32e943de28e1987d6fca83e0size=10623date=2022-05-11T18:41:31
 ghost/master/tsa_bootend.txt4b37912778a6a5d0733c59d0d7198ad2size=10563date=2022-05-11T18:41:31
 ghost/master/tsa_change.txtecf0b95a50b671cc9cc969eb8c4c94c5size=3486date=2022-05-11T18:57:42
@@ -41,6 +46,21 @@ ghost/master/tsa_string.txtc95829514859a58501cec3c6588aec3bsize=3899date=2022
 ghost/master/tsa_surfacing.txt59bb22a28d3e858f62e0f4e7d64a1ba0size=2442date=2022-05-11T21:11:06
 ghost/master/tsa_vitals.txtc611576aaa8baee19efb3ce4e9d2a9acsize=12716date=2022-05-11T21:10:01
 ghost/master/tsa_word.txt0ed1ada1460feec373e9af73940e4622size=2295date=2022-05-11T13:42:35
+=======
+ghost/master/tsa_aitalk.txtb9856c658f8adf3631c9e808d470933dsize=10689date=2022-05-12T10:19:02
+ghost/master/tsa_bootend.txt27929ac8c50c0b59a0f2e5d6d8997e29size=10604date=2022-05-12T10:19:02
+ghost/master/tsa_change.txtecf0b95a50b671cc9cc969eb8c4c94c5size=3486date=2022-05-11T18:57:42
+ghost/master/tsa_communicate.txtfce451de738459164a869cdcac9cb9d1size=4313date=2022-05-11T22:59:35
+ghost/master/tsa_emerg_dic.txt2866e2d330f8a5398e8a519c7bf0c7eesize=636date=2022-05-07T14:58:02
+ghost/master/tsa_etc.txt8ffd1f48821793a7a60ad9b8b8e310fesize=17679date=2022-05-11T19:17:22
+ghost/master/tsa_homeurl.txt84f2b6647e2951bdc7248cc0395ec255size=661date=2022-05-11T10:07:02
+ghost/master/tsa_menu.txtc36e825d61a21b5a6f9e944f8d3da7a1size=12464date=2022-05-12T10:31:54
+ghost/master/tsa_mouse.txt660cacf003ce5a17f243dabf3b8dfc4fsize=6681date=2022-05-12T10:25:53
+ghost/master/tsa_string.txtc95829514859a58501cec3c6588aec3bsize=3899date=2022-05-06T10:41:17
+ghost/master/tsa_surfacing.txt64413b7330f72d3a3f5b2a4794a6b2bbsize=3986date=2022-05-12T10:10:17
+ghost/master/tsa_vitals.txt8cb786a4b188a9518b46a69e3a421948size=19379date=2022-05-12T11:07:10
+ghost/master/tsa_word.txt8d12a51bea267a48643cc56685061ef8size=2265date=2022-05-12T03:20:53
+>>>>>>> main
 ghost/master/vitalsymbol.png45d0ea8a3bcc079c3ae457d9de7f31f9size=233date=2022-05-11T16:17:28
 ghost/master/yaya.dll702158a7d6ab3e934c2991b955545d27size=794624date=2022-01-24T09:54:14
 ghost/master/yaya.txtb87cd95e2b5d535a95f5d34c0d1cea5esize=2639date=2022-05-08T12:11:09
@@ -60,15 +80,62 @@ shell/master/surface100600.png7261c7a9d3f912d1aa271cf7196f699dsize=2747date=2
 shell/master/surface100700.png27418c14c5b34c7b200ceef46ac188d4size=1698date=2022-05-11T10:10:21
 shell/master/surface100800.pnga7f109861fd6c4538e35ccfeba0f32fasize=1772date=2022-05-11T16:39:44
 shell/master/surface102000.pngbf0a82ec6700d0719e7e6c5a61ea7e7csize=2162date=2022-05-11T10:06:02
+<<<<<<< HEAD
 shell/master/surface102001.pngb7a25c7ae6a00b695bc2692b6404a1e2size=1189date=2022-05-11T11:53:13
 shell/master/surface102012.png55356e32d0214a04ff5864e92bdadbd7size=1212date=2022-05-11T12:01:36
 shell/master/surface102300.pngc6fdec6a80637f6ea790429c37345d7fsize=1341date=2022-05-11T10:06:57
 shell/master/surface102500.pngaed5d8750f7a47af9f663baf375d76c7size=1146date=2022-05-11T10:07:44
+=======
+shell/master/surface102310.pngeac8b978d0103a7d1890cc6dee890caesize=1427date=2022-05-12T01:39:02
+shell/master/surface102311.png1208bdb605e4fca87e5a6f2733d32cf2size=1420date=2022-05-12T01:39:16
+shell/master/surface102312.pngd9bf62c6cc1a1b4aa794f1888d70d1c5size=1385date=2022-05-12T01:40:36
+shell/master/surface102320.pngfc41f6eae6ebb51f948d882f7cae0b25size=1502date=2022-05-12T01:41:26
+shell/master/surface102321.pngf6b78b53afac78316cd7392375120d39size=1499date=2022-05-12T01:41:38
+shell/master/surface102322.pnge74fd8bb59f8604f2aad35c6b74304c1size=1442date=2022-05-12T01:41:52
+shell/master/surface102330.pngaf76bf6aff77f37a03ab6417d5a343b7size=1505date=2022-05-12T01:42:14
+shell/master/surface102331.png916321f2b2415319b295c6d2d0ed7e62size=1515date=2022-05-12T01:42:29
+shell/master/surface102332.pngd405a34e1761a6894c6dbdb3671bded5size=1509date=2022-05-12T01:42:58
+shell/master/surface102340.png8ce2a582aa1114e1dba0b38afb566809size=1447date=2022-05-12T01:43:33
+shell/master/surface102350.pnge76bb31d311498f772a8acdd6fc98e4fsize=1455date=2022-05-12T01:43:54
+shell/master/surface102351.pngc641bb5628119461c1665e60b9f18ad9size=1453date=2022-05-12T01:44:14
+shell/master/surface102352.pngf38fdd532990de3f7378c321fbe95adasize=1441date=2022-05-12T01:45:42
+shell/master/surface102360.png386650602564e462428c5879ede28978size=1474date=2022-05-12T01:46:47
+shell/master/surface102361.pngfa9d185b034c15f597bd64d5cfb3373asize=1475date=2022-05-12T01:47:02
+shell/master/surface102362.png623fdc3a284e06de894dcc43786df2f0size=1478date=2022-05-12T01:47:15
+shell/master/surface102370.png2f20102006b3cf71ab5fa90335216581size=1420date=2022-05-12T01:48:23
+shell/master/surface102371.png9331e37c0d78265be054897d7ebcd157size=1383date=2022-05-12T01:48:38
+shell/master/surface102380.png917c1c40100e47198ebc02b46dfa5a86size=1407date=2022-05-12T01:48:50
+shell/master/surface102381.png7a77ba1f54a65209655bde707737bfa4size=1396date=2022-05-12T01:49:35
+shell/master/surface102382.pngae264ac1a9d6cb93da15ba138f0e839bsize=1395date=2022-05-12T01:49:46
+shell/master/surface102390.png7a77ba1f54a65209655bde707737bfa4size=1396date=2022-05-12T01:50:16
+shell/master/surface102391.pngae264ac1a9d6cb93da15ba138f0e839bsize=1395date=2022-05-12T01:50:29
+shell/master/surface102400.png71aecaee84291f5362ca0491a43a0a0esize=1420date=2022-05-12T01:51:13
+shell/master/surface102410.png522f4bdef7f328bba55c8528541624e1size=1392date=2022-05-12T01:51:31
+shell/master/surface102500.pngaed5d8750f7a47af9f663baf375d76c7size=1146date=2022-05-11T10:07:44
+shell/master/surface102510.png5d3efc423fd0e9f0d77f9306676b8778size=1247date=2022-05-12T00:39:16
+shell/master/surface102511.png9f6d080f3b30fd9d93d0aa678d67edfdsize=1265date=2022-05-12T00:40:41
+shell/master/surface102520.png0a3fa1f04c89e6964ddf7297c3482454size=1247date=2022-05-12T00:43:47
+shell/master/surface102521.png976b9d40d4fcf33db1dcdf5c727bc3f5size=1265date=2022-05-12T00:43:57
+shell/master/surface102530.png88dcc3b9cb25cae1caee5678be576469size=1255date=2022-05-12T00:45:31
+shell/master/surface102531.png71d48a6c53082804cc6390cb3b8cbb33size=1266date=2022-05-12T00:45:45
+shell/master/surface102540.png71d48a6c53082804cc6390cb3b8cbb33size=1266date=2022-05-12T00:45:59
+shell/master/surface102541.png88dcc3b9cb25cae1caee5678be576469size=1255date=2022-05-12T00:46:31
+shell/master/surface102550.png795cac4d0e3e578d60ebb55b205bc74bsize=1270date=2022-05-12T00:46:54
+shell/master/surface102551.png88dcc3b9cb25cae1caee5678be576469size=1255date=2022-05-12T00:47:11
+shell/master/surface102560.png44b796124edce3c9aadc516395dd0262size=1254date=2022-05-12T00:47:26
+shell/master/surface102561.png58b5249d4a0a587d7278de1971471a8fsize=1260date=2022-05-12T00:47:48
+shell/master/surface102701.pngb7a25c7ae6a00b695bc2692b6404a1e2size=1189date=2022-05-11T11:53:13
+shell/master/surface102712.png55356e32d0214a04ff5864e92bdadbd7size=1212date=2022-05-11T12:01:36
+>>>>>>> main
 shell/master/surface200000.png59d90569d2e3f6d8a8434a7b000b3a1fsize=569date=2022-05-08T15:08:15
 shell/master/surface200100.png17667745b6b01dfc6ae4628d2852e3c1size=682date=2022-05-08T15:10:27
 shell/master/surface200400.pngef32e71dfc69cbe5a56a459756a12f72size=383date=2022-05-08T15:11:34
 shell/master/surface200500.png1976eec355423509d26045c21999e91esize=425date=2022-05-08T15:11:45
 shell/master/surface200600.png3776ba14e48f1acb8dc625b4752297b9size=469date=2022-05-08T15:11:21
 shell/master/surface200700.pnga6640b56f4cd46119412c03d45aa29d8size=421date=2022-05-08T15:12:20
+<<<<<<< HEAD
 shell/master/surfaces.txtb646830f4a8fd39d7cb50f7ed25e2d23size=3910date=2022-05-11T18:06:12
+=======
+shell/master/surfaces.txt2e4b58ab14c46d33afdedc655d286425size=11879date=2022-05-12T10:09:51
+>>>>>>> main
 shell/master/surfacetable.txta902d269845f0b7405ea47f144e99bcfsize=474date=2022-05-08T10:38:33
