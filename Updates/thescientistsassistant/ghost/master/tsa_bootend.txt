@@ -52,6 +52,7 @@ ONFIRSTBOOTVARS{
 	trust 				= 0
 	punches				= 0
 	woundpokes			= 0
+	pets				= 0
 	medkitopen 		 	= 0
 	itemgrabbed 	 	= 0
 	timenoises 		 	= 1
@@ -65,44 +66,9 @@ ONFIRSTBOOTVARS{
 	
 	//See Google Sheets document for details & examples on the upcoming
 	FirstBootHealth
-	
-	
-	
-	/*
-	//INJURY ARRAYS - a 0 means no injury, 1 means healing, 2 means bandaged, 3 means medicated, 4 means cleaned, 5 is active injury, 6 is as well but its more severe
-	//Health is calculated based on these.
-	armhealth = 100
-	arminjuries = IARRAY
-	//crook of arm
-	arminjuries ,= 0
-	//body of arm
-	arminjuries ,= 0
-	//wrist
-	arminjuries ,= 0
-	
-	headhealth = 100
-	headinjuries = IARRAY
-	//Cut on face
-	headinjuries ,= 4
-	//Injured eye
-	headinjuries ,= 0
-	
-	//Run processing on injuries
-	ConfigureHealth
-	*/
 
 
 }
-
-/*
-//calculate head health
-ConfigureHeadHealth{
-	headhealth = 100 	//start at max
-	for _i = 0; _i < ARRAYSIZE(headinjuries) ; _i++{
-		headhealth -= headinjuries[_i] * 2
-	}
-}
-*/
 
 getTodaysDate{
 	_result = IARRAY
@@ -116,8 +82,7 @@ getTodaysDate{
 	
 	_result
 	
-	//_diff = FUNCTIONEX("time_check.dll","check_expiration",)
-	
+
 }
 
 //this was for testing
@@ -205,7 +170,7 @@ OnBoot
 		}else{
 		//They're Out.
 			if trust > TRUSTGOOD{ //good trust
-				"(pose)hmmmm%(ellps)(pose) %(nrrtr)(%(TheAssistant) seems fairly relaxed, considering their condition.)"
+				"%(tsaCurledUp)hmmmm%(ellps)%(tsaOpen) %(nrrtr)(%(TheAssistant) seems fairly relaxed, considering their condition.)"
 			}
 			elseif trust > TRUSTBAD{ //middling/no trust
 				"%(tsaNeutral)H-hey%(ellps)\w4%(ellps) welcome \w4back \w4to \w2the \w2party."
@@ -229,13 +194,21 @@ OnBoot
 	}
 }
 
+
 //Sets boot variables and returns their current state.
 ONBOOTVARS{
 	//if it's been more than a day
 	lastbootdate = thisbootdate
 	thisbootdate = getTodaysDate
+	_daychange = dateCheck
+	
+	//heals so many days
+	for _i = 0; _i < _daychange; _i++{
+		OnDayPassHealth
+	}
+	
 	//if a day has passed, it's been long enough for them to return, or its a signaled return
-	if dateCheck != 0 || (awayforscientist == 1 && hour > lastbootdate[3]) || returnsignal{
+	if _daychange != 0 || (awayforscientist == 1 && hour > lastboot[3]) || returnsignal{
 		returnsignal = 0
 		timesinceexperiment = 0					//minutes since they got back from an experiment
 		willleaveafter		= 60 * 10 + RAND(120)	//When timesinceexperiment equals this, they Leave
@@ -264,9 +237,9 @@ OnGenerateExperiment{
 	
 	case experimentcode{
 		when 0{
-			awarenessbuff = 10 - RAND(20)
-			headinjuries[0] = 4
-			ConfigurePartHealth(&headhealth,&headinjuries)
+		//	awarenessbuff = 10 - RAND(20)
+		//	headinjuries[0] = 4
+		//	ConfigurePartHealth(&headhealth,&headinjuries)
 		}
 	}
 
@@ -300,7 +273,7 @@ OnClose
 		//この部分には\eつけないでね！
 		_timeslot = GetTimeSlot
 		
-		{case _timeslot{
+		case _timeslot{
 		when "Morning"
 		{
 			"Have a nice morning."
@@ -323,7 +296,8 @@ OnClose
 			//Midnight
 			"O-oh... good night."
 		}
-		}}
+		}
+		
 		
 		if awareness > HIGHCONSC{
 		//Alert.
@@ -374,20 +348,30 @@ OnClose
 		
 	}
 	--
-		"\w9\w9\-\e"
+	"\w9\w9\-\e"
 }
+
+
 
 
 //******************************************************************************
 //Restore from minimization OnWindowStateRestore
 //******************************************************************************
 
+//gonna be honest I don't even think this triggers
 OnWindowStateRestore
 {
 	"%(tsaNeutral)%(medkit)"
 	--
 	if !awayforscientist{
-		"%(tsaNeutral)Oh.\w4.\w4. it's less dark, now."
+		if awareness > HIGHCONSC{
+			"%(tsaNeutral)Oh.\w4.\w4. it's less dark, now."
+		}elseif awareness > LOWCONSC{
+		    "%(tsaNeutral)It's bright again%(ellps) sun%(ellps) I miss it%(ellps)"
+		}else{
+			"%(tsaCurledUp)%(nrrtr)(Did they even notice it ended?)"
+		}
+		
 	}
 	
 }

@@ -22,7 +22,7 @@ RandomTalkEx : nonoverlap
 {
 	if !awayforscientist{
 		
-		if awareness > HIGHCONSC{
+		if getAwareness > HIGHCONSC{
 		//Alert.
 			if trust > TRUSTGOOD{ //good trust
 			"My-- well. %(TheScientist) has been focused on the human body a lot lately."
@@ -30,13 +30,14 @@ RandomTalkEx : nonoverlap
 			"I've been wondering what kind of uses might still be discovered for %(oldChemicals)..."
 			}
 			elseif trust > TRUSTBAD{ //middling/no trust
-					"%(tsaNeutral)Need to be careful handling %(oldChemicals)."
+				"%(tsaNeutral)Need to be careful handling %(oldChemicals)."
+				"%(nrrtr)(They mutter about alchemy under their breath.)%(br)%(tsaNeutral)%(ellps)%(mundaneAndLaterMetals), %(alchemicalCompounds), %(planetaryMetals), and %(oldChemicals)%(ellps)"
 					
 			}else{ //negative trust
-				
+				"%(tsaNeutral)If I get %(alchemicalCompounds) and %(oldChemicals) together, \w4maybe, \w4just maybe%(ellps)"
 			}
 			
-		}elseif awareness > LOWCONSC{
+		}elseif getAwareness > LOWCONSC{
 		//They're doin ok.
 			if trust > TRUSTGOOD{ //good trust
 				"This could be worse. It could- It could be- right?"
@@ -47,8 +48,8 @@ RandomTalkEx : nonoverlap
 				
 			}else{ //negative trust
 				"%(ellps)"
-				"%(ellps) %(nrrtr)(They watch you warily.)"
-				if teachname {"%(ellps) %(nrrtr)(%(TheAssistant) watches you very warily.)"}
+				"%(ellps) %(br)%(nrrtr)(They watch you warily.)"
+				if teachname {"%(ellps) %(br)%(nrrtr)(%(TheAssistant) watches you very warily.)"}
 			}
 			
 		}else{
@@ -84,6 +85,8 @@ RandomTalkEx : nonoverlap
 		"%(tsaNeutral)"
 	}
 	
+
+	
 }
 
 //******************************************************************************
@@ -108,6 +111,9 @@ OnKeyPress
 		}
 		when "r" {
 			'\![reload,shiori](RELOAD SHIORI)'
+		}
+		when "s"{
+			'\![reload,shell]%(tsaNeutral)(RELOAD SHELL)'
 		}
 		when "m" {
 			if ISFUNC('OpenMenu') {
@@ -160,7 +166,7 @@ OnMinuteChange
 	timesinceexperiment++
 	
 	//making sure they are slowly waking up no matter what
-	if awareness - awarenessbuff < 50{
+	if getAwareness < 50{
 		awarenessbuff-= .75
 		//Not efficient to run this here, but... won't hurt anything.
 		ConfigureHealth
@@ -219,7 +225,15 @@ OnSecondChange
 //------------------------------------------------------------------------------
 MikireTalk
 {
-	"\0%(tsaNeutral)It's... tingly.\e"
+	if awareness > HIGHCONSC{
+		"%(tsaNeutral)What%(ellps)? It feels \w3tingly."
+       
+    }elseif awareness > LOWCONSC{
+        "%(tsaNeutral)It's%(ellps) tingly.\e"
+    }else{
+		"%(tsaCurledUp)%(nrrtr)(They uncomfortably mumble.)"
+    }
+	
 }
 
 //------------------------------------------------------------------------------
@@ -227,7 +241,15 @@ MikireTalk
 //------------------------------------------------------------------------------
 EndMikireTalk
 {
-	"\0%(tsaNeutral)Oh, the tingly feeling is gone.\e"
+	if awareness > HIGHCONSC{
+    
+        "%(tsaNeutral)Oh, the tingly feeling is gone.\e"
+    }elseif awareness > LOWCONSC{
+        "%(tsaNeutral)Ah, this is%(ellps) more normal%(ellps)"
+    }else{
+		"%(nrrtr)(They make a strange noise. You assume they feel less weird now.)"
+    }
+	
 	//\e:chain=mikirego"
 }
 

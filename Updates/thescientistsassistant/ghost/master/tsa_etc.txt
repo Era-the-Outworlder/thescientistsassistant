@@ -16,7 +16,15 @@ OnShellChanging
 	"%(tsaNeutral)%(medkit)"
 	--
 	if !awayforscientist{
-		"What..? I feel weird...\e"
+		
+		if awareness > HIGHCONSC{
+			"What..? I feel weird...\e"
+			
+		}elseif awareness > LOWCONSC{
+		   "%(nrrtr)(They look confused.)%(br)%(tsaNeutral)Huh%(ellps)?"
+		}else{
+			"%(nrrtr)(They look vaguely uncomfortable.)"
+		}
 	}
 	
 }
@@ -29,7 +37,14 @@ OnShellChanged
 	"%(tsaNeutral)%(medkit)"
 	--
 	if !awayforscientist{
-		"I feel different...\e"
+		
+		if awareness > HIGHCONSC{
+			"I feel different...\e"
+		}elseif awareness > LOWCONSC{
+		   "%(nrrtr)(They look down at themself, confused.)"
+		}else{
+			"%(nrrtr)(You don't think they noticed the change.)"
+		}
 	}
 	
 }
@@ -467,7 +482,8 @@ OnUpdatedataCreated
 //------------------------------------------------------------------------------
 OnNarCreating
 {
-	"What did you want...?%(br)(Their eyes glaze over. Where should the NAR data be created?)"
+	//"What did you want...?%(br)(Their eyes glaze over. Where should the NAR data be created?)"
+	"%(nrrtr)(Processing...)"
 	zonedout = 1
 }
 
@@ -476,7 +492,12 @@ OnNarCreating
 //------------------------------------------------------------------------------
 OnNarCreated
 {
-	"(They blink, coming back to the present.)%(br)Something's new. Something was added... %(br)(Nar of %(reference0) created at %(reference1).)\e"
+	if awareness > LOWCONSC{
+		"(They blink, coming back to the present.)%(br)Something's new. Something was added... %(br)"
+	   
+	}
+	"%(nrrtr)(Nar of %(reference0) created at %(reference1).)\e"
+	
 	zonedout = 0
 }
 
