@@ -41,7 +41,8 @@ dic, tsa_communicate.txt 	// Communicate dictionary
 dic, tsa_mouse.txt 		    // mouse input related dictionary
 dic, tsa_menu.txt 			// menu processing dictionary
 dic, tsa_etc.txt 			// various event dictionary
-dic, tsa_vitals.txt			//health related code
+dic, tsa_vitals.txt			// health related code
+dic, tsa_meddialogue.txt	// Dialogue for treating wounds.
 dic, tsa_surfacing.txt 		// Images and shell code
 
 //------------------------------------------------------------------------------

@@ -14,7 +14,8 @@ sakura.cursor
 	mouseup3,InjectionSite,system:cross
 	mouseup4,LWristSore,system:cross
 	mouseup5,RWristSore,system:cross
-	mouseup6,TwistedAnkle,system:cross
+	mouseup6,RTwistedAnkle,system:cross
+	mouseup6,LTwistedAnkle,system:cross
 
 }
 
@@ -36,12 +37,13 @@ sakura.tooltips
 	Head,Their hair is very messy.
 	Face,Do they even sleep?
 	FaceCut,Looks like it hurts.
-	Concussion,That can't be healthy.
+	Concussion,They might have a concussion...
 	EyeProcedure,You don't even want to know...
-	InjectionSite,What did The Scientist do??
-	LWristSore,A symbol of an unfortunate procedure.
-	RWristSore,A symbol of an unfortunate procedure.
-	TwistedAnkle,That's not a normal laboratory injury.
+	InjectionSite,Is that from an injection?
+	LWristSore,What would cause marks like this?
+	RWristSore,It looks like it was from some sort of band.
+	RTwistedAnkle,That's not a normal lab injury.
+	LTwistedAnkle,How'd they manage to get a twisted ankle?
 }
 
 char2.tooltips
@@ -64,15 +66,7 @@ surface100
 {
 	//All the content is in appends actually.
 }
-surface101
-{
-	//All the content is in appends actually.
-}
 surface110
-{
-	//All the content is in appends actually.
-}
-surface111
 {
 	//All the content is in appends actually.
 }
@@ -80,15 +74,7 @@ surface120
 {
 	//All the content is in appends actually.
 }
-surface121
-{
-	//All the content is in appends actually.
-}
 surface130
-{
-	//All the content is in appends actually.
-}
-surface131
 {
 	//All the content is in appends actually.
 }
@@ -105,14 +91,44 @@ surface.append110,111,130,131{
 	animation800.interval,runonce
 	animation800.pattern0,overlay,100800,0,0,0
 	
+	//larm sore
+	animation810.interval,never
+	animation810.pattern0,overlay,100810,0,0,0
+	animation810.collision1,208,226,229,243,InjectionSite
+
+	//larm sore bandages
+	animation812.interval,never
+	animation812.pattern0,overlay,100812,0,0,0
+	animation812.collision1,208,226,229,243,InjectionSite
+	
+	//larm sore
+	animation820.interval,never
+	animation820.pattern0,overlay,100820,0,0,0
+	animation820.collision1,216,235,240,262,LWristSore
+
+	//larm sore bandages
+	animation822.interval,never
+	animation822.pattern0,overlay,100822,0,0,0
+	animation822.collision1,216,235,240,262,LWristSore
+	
 }
 
 //Arm on legs + injuries
-surface.append100,101,20,121{
+surface.append100,101,120,121{
 	
 	//left arm - curled in
-	animation700.interval,runonce
-	animation700.pattern0,overlay,100700,0,0,0
+	animation800.interval,runonce
+	animation800.pattern0,overlay,100700,0,0,0
+	
+	//larm sore
+	animation820.interval,never
+	animation820.pattern0,overlay,100720,0,0,0
+	animation820.collision1,157,193,194,224,LWristSore
+
+	//larm sore bandages
+	animation822.interval,never
+	animation822.pattern0,overlay,100722,0,0,0
+	animation822.collision1,157,193,194,224,LWristSore
 	
 }
 
@@ -124,6 +140,16 @@ surface.append120-139{
 	animation200.interval,runonce
 	animation200.pattern0,overlay,100200,0,0,0
 	
+	//rarm sore
+	animation210.interval,never
+	animation210.pattern0,overlay,100210,0,0,0
+	animation210.collision1,95,182,124,200,RWristSore
+
+	//rarm sore bandages
+	animation212.interval,never
+	animation212.pattern0,overlay,100212,0,0,0
+	animation212.collision1,95,182,124,200,RWristSore
+	
 }
 
 
@@ -134,6 +160,26 @@ surface.append99-299
 	//torso
 	animation600.interval,runonce
 	animation600.pattern0,overlay,100600,0,0,0
+	
+	//rleg twist
+	animation610.interval,never
+	animation610.pattern0,overlay,100610,0,0,0
+	animation610.collision1,98,259,127,289,RTwistedAnkle
+
+	//rleg twist bandages
+	animation612.interval,never
+	animation612.pattern0,overlay,100612,0,0,0
+	animation612.collision1,98,259,127,289,RTwistedAnkle
+	
+	//lleg twist
+	animation620.interval,never
+	animation620.pattern0,overlay,100620,0,0,0
+	animation620.collision1,128,270,160,288,LTwistedAnkle
+
+	//lleg twist bandages
+	animation622.interval,never
+	animation622.pattern0,overlay,100622,0,0,0
+	animation622.collision1,128,270,160,288,LTwistedAnkle
 	
 }
 
@@ -156,7 +202,7 @@ surface.append99-299
 	
 	//neutral/happy eyes
 	animation2310.interval,runonce
-	animation2310.pattern0,parallelstop,(2320,2321,2330,2331,2340,2350,2351,2360,2361,2370,2371,2380,2381,2390,2391,2400,2410)
+	animation2310.pattern0,parallelstop,(2320,2321,2330,2331,2340,2350,2351,2360,2361,2370,2371,2380,2381,2390,2391,2400,2410,2420)
 	animation2310.pattern1,start,2311
 	animation2310.pattern2,overlay,102310,0,0,0
 	
@@ -170,7 +216,7 @@ surface.append99-299
 	
 	//nervous/alert eyes
 	animation2320.interval,never
-	animation2320.pattern0,parallelstop,(2310,2311,2330,2331,2340,2350,2351,2360,2361,2370,2371,2380,2381,2390,2391,2400,2410)
+	animation2320.pattern0,parallelstop,(2310,2311,2330,2331,2340,2350,2351,2360,2361,2370,2371,2380,2381,2390,2391,2400,2410,2420)
 	animation2320.pattern1,start,2321
 	animation2320.pattern2,overlay,102320,0,0,0
 	
@@ -184,7 +230,7 @@ surface.append99-299
 	
 	//nervous eyes
 	animation2330.interval,never
-	animation2330.pattern0,parallelstop,(2310,2311,2320,2321,2340,2350,2351,2360,2361,2370,2371,2380,2381,2390,2391,2400,2410)
+	animation2330.pattern0,parallelstop,(2310,2311,2320,2321,2340,2350,2351,2360,2361,2370,2371,2380,2381,2390,2391,2400,2410,2420)
 	animation2330.pattern1,start,2331
 	animation2330.pattern2,overlay,102330,0,0,0
 	
@@ -198,12 +244,12 @@ surface.append99-299
 	
 	//relieved eyes
 	animation2340.interval,never
-	animation2340.pattern0,parallelstop,(2310,2311,2330,2331,2320,2321,2350,2351,2360,2361,2370,2371,2380,2381,2390,2391,2400,2410)
+	animation2340.pattern0,parallelstop,(2310,2311,2330,2331,2320,2321,2350,2351,2360,2361,2370,2371,2380,2381,2390,2391,2400,2410,2420)
 	animation2340.pattern1,overlay,102340,0,0,0
 	
 	//dazed eyes
 	animation2350.interval,never
-	animation2350.pattern0,parallelstop,(2310,2311,2330,2331,2340,2320,2321,2360,2361,2370,2371,2380,2381,2390,2391,2400,2410)
+	animation2350.pattern0,parallelstop,(2310,2311,2330,2331,2340,2320,2321,2360,2361,2370,2371,2380,2381,2390,2391,2400,2410,2420)
 	animation2350.pattern1,start,2351
 	//animation2350.pattern2,overlay,102350,0,0,0
 	
@@ -217,7 +263,7 @@ surface.append99-299
 	
 	//mega dazed eyes
 	animation2360.interval,never
-	animation2360.pattern0,parallelstop,(2310,2311,2330,2331,2340,2350,2351,2320,2321,2370,2371,2380,2381,2390,2391,2400,2410)
+	animation2360.pattern0,parallelstop,(2310,2311,2330,2331,2340,2350,2351,2320,2321,2370,2371,2380,2381,2390,2391,2400,2410,2420)
 	animation2360.pattern1,start,2361
 	
 	
@@ -227,13 +273,13 @@ surface.append99-299
 	animation2361.pattern1,overlay,102361,450,0,0
 	animation2361.pattern2,overlay,102362,450,0,0
 	animation2361.pattern3,overlay,102361,450,0,0
-	animation2361.pattern2,overlay,102360,450,0,0
-	animation2361.pattern1,start,2361
+	animation2361.pattern4,overlay,102360,450,0,0
+	animation2361.pattern5,start,2361
 	//animation2361.pattern4,overlay,-1,0,0,0
 	
 	//depression eyes
 	animation2370.interval,never
-	animation2370.pattern0,parallelstop,(2310,2311,2330,2331,2340,2350,2351,2360,2361,2320,2321,2380,2381,2390,2391,2400,2410)
+	animation2370.pattern0,parallelstop,(2310,2311,2330,2331,2340,2350,2351,2360,2361,2320,2321,2380,2381,2390,2391,2400,2410,2420)
 	animation2370.pattern1,start,2371
 	animation2370.pattern2,overlay,102370,0,0,0
 	
@@ -245,7 +291,7 @@ surface.append99-299
 	
 	//mega depression eyes
 	animation2380.interval,never
-	animation2380.pattern0,parallelstop,(2310,2311,2330,2331,2340,2350,2351,2360,2361,2370,2371,2320,2321,2390,2391,2400,2410)
+	animation2380.pattern0,parallelstop,(2310,2311,2330,2331,2340,2350,2351,2360,2361,2370,2371,2320,2321,2390,2391,2400,2410,2420)
 	animation2380.pattern1,start,2381
 	animation2380.pattern2,overlay,102380,0,0,0
 	
@@ -259,7 +305,7 @@ surface.append99-299
 	
 	//Big Sad eyes
 	animation2390.interval,never
-	animation2390.pattern0,parallelstop,(2310,2311,2330,2331,2340,2350,2351,2360,2361,2370,2371,2380,2381,2320,2321,2400,2410)
+	animation2390.pattern0,parallelstop,(2310,2311,2330,2331,2340,2350,2351,2360,2361,2370,2371,2380,2381,2320,2321,2400,2410,2420)
 	animation2390.pattern1,start,2391
 	animation2390.pattern2,overlay,102390,0,0,0
 	
@@ -271,27 +317,53 @@ surface.append99-299
 	
 	//ouch! eyes
 	animation2400.interval,never
-	animation2400.pattern0,parallelstop,(2310,2311,2330,2331,2340,2350,2351,2360,2361,2370,2371,2380,2381,2390,2391,2320,2320,2410)
+	animation2400.pattern0,parallelstop,(2310,2311,2330,2331,2340,2350,2351,2360,2361,2370,2371,2380,2381,2390,2391,2320,2320,2410,2420)
 	animation2400.pattern1,overlay,102400,0,0,0
 
 	//oow eyes
 	animation2410.interval,never
-	animation2410.pattern0,parallelstop,(2310,2311,2330,2331,2340,2350,2351,2360,2361,2370,2371,2380,2381,2390,2391,2320,2320,2400)
+	animation2410.pattern0,parallelstop,(2310,2311,2330,2331,2340,2350,2351,2360,2361,2370,2371,2380,2381,2390,2391,2320,2320,2400,2420)
 	animation2410.pattern1,overlay,102410,0,0,0
+	
+	//annoyed eyes
+	animation2420.interval,never
+	animation2420.pattern0,parallelstop,(2310,2311,2330,2331,2340,2350,2351,2360,2361,2370,2371,2380,2381,2390,2391,2320,2320,2400,2410)
+	animation2420.pattern1,overlay,102420,0,0,0
 
 	//default mouth
-	animation2500.interval,runonce
-	animation2500.pattern0,overlay,102500,0,0,0
+	//animation2500.interval,runonce
+	//animation2500.pattern0,overlay,102500,0,0,0
 
 	//face cut
-	animation2701.interval,never
-	animation2701.pattern0,overlay,102701,0,0,0
-	animation2701.collision1,169,120,199,150,FaceCut
+	animation2700.interval,never
+	animation2700.pattern0,overlay,102700,0,0,0
+	animation2700.collision1,169,120,199,150,FaceCut
 
 	//bandaid on face cut
+	animation2702.interval,never
+	animation2702.pattern0,overlay,102702,0,0,0
+	animation2702.collision1,169,120,199,150,FaceCut
+	
+	//Concussion
+	animation2710.interval,never
+	animation2710.pattern0,overlay,102710,0,0,0
+	animation2710.collision1,136,79,203,106,Concussion
+
+	//concussion bandages
 	animation2712.interval,never
-	animation2712.pattern0,overlay,102712,0,0,0
-	animation2712.collision1,169,120,199,150,FaceCut
+	animation2710.pattern0,start,2710
+	animation2712.pattern1,overlay,102712,0,0,0
+	animation2712.collision2,136,79,203,106,Concussion
+	
+	//eye procedure
+	animation2720.interval,never
+	animation2720.pattern0,overlay,102720,0,0,0
+	animation2720.collision1,158,97,194,130,EyeProcedure
+
+	//eye procedure bandages
+	animation2722.interval,never
+	animation2722.pattern0,overlay,102722,0,0,0
+	animation2722.collision1,169,120,199,150,EyeProcedure
 	
 }
 
@@ -403,10 +475,10 @@ surface2000
 surface2100
 {
 	//collision1,96,97,159,147,Lid
-	collision1,21,55,42,80,Bandaids
-	collision2,44,56,65,86,Washcloth
-	collision3,60,55,87,85,Gauze
-	collision4,80,52,106,95,Antibacterial
+	collision1,40,47,73,86,Bandaids
+	collision2,7,64,42,98,Washcloth
+	collision3,73,64,94,86,Gauze
+	collision4,73,37,107,64,Antibacterial
 	
 	
 	//base

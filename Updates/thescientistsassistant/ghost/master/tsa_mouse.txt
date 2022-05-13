@@ -29,18 +29,19 @@ MouseMove0Head
 	if (visualstate[1] < 2){
 	
 		if awareness > HIGHCONSC{
-			awarenessbuff++
-			ConfigureHealth
 		
 			if trust > TRUSTGOOD{
-				"%(tsaOpen)Ah, that's nice."
+				"%(tsaOpen)%(tsaRelieved)It's still a little weird, you know."
+				"%(tsaOpen)%(tsaAnnoyed)You're going to keep petting me?"
+				"%(tsaAnnoyed)I appreciate your company, but this is still a little%(ellps) %(tsaGesture)demeaning, \w4I guess? \w8%(tsaRelieved)It could be worse%(ellps)"
+				"%(tsaGesture)%(tsaAnnoyed)I hope you like it. \w8I imagine my hair is in pretty bad condition%(ellps)"
 			}elseif trust > TRUSTBAD{
 				if pets < 20{
-					"%(tsaCurled)What are you--?"
-					"%(tsaCurled)This is a little childish, \w4don't you think?"
-					"%(tsaCurled)Hey, \w4that tickles."
+					"%(tsaCurled)%(tsaScared)What are you--?"
+					"%(tsaCurled)%(tsaAnnoyed)This is a little childish, \w4don't you think?"
+					"%(tsaCurled)%(tsaAnnoyed)Hey, \w4that tickles."
 				}else{
-					"%(tsaOpen)Always you with the petting%(ellps)"
+					"%(tsaGesture)%(tsaAnnoyed)Always you with the petting%(ellps)"
 				}
 				
 			}else{
@@ -54,7 +55,7 @@ MouseMove0Head
 				"%(nrrtr)(Maybe this will help them feel better.)"
 				"%(nrrtr)(Hopefully they find this soothing.)"
 				"%(tsaCurled)%username%(ellps)?"
-				"%(tsaCurled)What are you doing%(ellps)?"
+				"%(tsaCurled)%(tsaAnnoyed)What are you doing%(ellps)?"
 			}else{
 				"%(nrrtr)(They're aware of you.)"
 				"%(nrrtr)(They tremble underneath your cursor.)"
@@ -128,7 +129,7 @@ MouseDoubleClick0Head
 		//*bonk* *bonk* forget
 	}
 	//hit 'em in the head and they Conk
-	awarenessbuff+= 3
+	awarenessbuff+= 1
 	
 	ConfigureHealth
 	"\![sound,play,sounds/slap.wav,--volume=85]"

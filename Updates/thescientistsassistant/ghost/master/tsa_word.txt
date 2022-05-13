@@ -22,7 +22,8 @@
 
 TheAssistant{
 	"%tsanickname"
-	if trust > TRUSTHIGH{
+	"The Assistant"
+	if theyaremoby{
 		"Moby"
 	}else{
 		"The Assistant"

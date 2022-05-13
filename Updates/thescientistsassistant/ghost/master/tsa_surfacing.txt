@@ -26,23 +26,14 @@ tsaNeutral : all {
 	
 		case SHIORI3FW.LastSurface[0]{
 			when 110, 130{
-				"\0\s[110]"
+				"\0\s[110]\w[2]"
 			}
 			others{
-				"\0\s[100]"
+				"\0\s[100]\w[2]"
 			}
 		}
 		--
-		//FaceCut -- no clean state
-		if visualstatus[0] >= 3{
-			//call the wound img here
-			"\i[2701]"
-		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
-			//bandages
-			"\i[2712]"
-		}
-		--
-		"\w[0]"
+		tsaInjuryCheck
 		--
 		if awareness > HIGHCONSC{
 			"%(tsaNeutralFace)"
@@ -61,17 +52,9 @@ tsaNeutral : all {
 tsaCurledUp : all{
 	if !awayforscientist{
 	
-		"\0\s[100]"
-		//FaceCut -- no clean state
-		if visualstatus[0] >= 3{
-			//call the wound img here
-			"\i[2701]"
-		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
-			//bandages
-			"\i[2712]"
-		}
+		"\0\s[100]\w[2]"
 		--
-		"\w[0]"
+		tsaInjuryCheck
 		--
 		
 		if awareness > HIGHCONSC{
@@ -89,15 +72,10 @@ tsaCurledUp : all{
 tsaOpen : all{
 	if !awayforscientist{
 	
-		"\0\s[110]"
-		//FaceCut -- no clean state
-		if visualstatus[0] >= 3{
-			//call the wound img here
-			"\i[2701]"
-		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
-			//bandages
-			"\i[2712]"
-		}
+		"\0\s[110]\w[2]"
+		--
+		tsaInjuryCheck
+		--
 		if awareness > HIGHCONSC{
 			"%(tsaAlert)"
 		}elseif awareness > LOWCONSC{
@@ -114,21 +92,12 @@ tsaGesture : all{
 	if !awayforscientist{
 	
 		if trust > TRUSTGOOD || awareness < LOWCONSC{
-			"\0\s[130]"
+			"\0\s[130]\w[2]"
 		}else{
-			"\0\s[120]"
-		}
-		
-		//FaceCut -- no clean state
-		if visualstatus[0] >= 3{
-			//call the wound img here
-			"\i[2701]"
-		}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
-			//bandages
-			"\i[2712]"
+			"\0\s[120]\w[2]"
 		}
 		--
-		"\w[1]"
+		tsaInjuryCheck
 		--
 		if awareness > HIGHCONSC{
 			"%(tsaAlert)"
@@ -141,6 +110,78 @@ tsaGesture : all{
 		"\0\s[-1]"
 	}
 }
+
+
+
+tsaInjuryCheck : all{
+	//FaceCut -- no clean state
+	if visualstatus[0] >= 3{
+		//call the wound img here
+		"\i[2700]"
+	}elseif visualstatus[0] < 3 && visualstatus[0] != 0{
+		//bandages
+		"\i[2702]"
+	}
+	//Concussion -- no clean state
+	if visualstatus[1] >= 3{
+		//call the wound img here
+		"\i[2710]"
+	}elseif visualstatus[1] < 3 && visualstatus[1] != 0{
+		//bandages
+		"\i[2712]"
+	}
+	//EyeProcedure -- no clean state
+	if visualstatus[2] >= 3{
+		//call the wound img here
+		"\i[2720]"
+	}elseif visualstatus[2] < 3 && visualstatus[2] != 0{
+		//bandages
+		"\i[2722]"
+	}
+	//InjectionSite -- no clean state
+	if visualstatus[3] >= 3{
+		//call the wound img here
+		"\i[810]"
+	}elseif visualstatus[3] < 3 && visualstatus[3] != 0{
+		//bandages
+		"\i[810]\i[812]"
+	}
+	//LWristSore -- no clean state
+	if visualstatus[4] >= 3{
+		//call the wound img here
+		"\i[820]"
+	}elseif visualstatus[4] < 3 && visualstatus[4] != 0{
+		//bandages
+		"\i[822]"
+	}
+	//RWristSore -- no clean state
+	if visualstatus[5] >= 3{
+		//call the wound img here
+		"\i[210]"
+	}elseif visualstatus[5] < 3 && visualstatus[5] != 0{
+		//bandages
+		"\i[212]"
+	}
+	//LTwistedAnkle -- no clean state
+	if visualstatus[6] >= 3{
+		//call the wound img here
+		"\i[610]"
+	}elseif visualstatus[6] < 3 && visualstatus[6] != 0{
+		//bandages
+		"\i[612]"
+	}
+	//RTwistedAnkle -- no clean state
+	if visualstatus[7] >= 3{
+		//call the wound img here
+		"\i[620]"
+	}elseif visualstatus[7] < 3 && visualstatus[7] != 0{
+		//bandages
+		"\i[622]"
+	}
+
+}
+
+
 
 
 tsaNeutralFace{
@@ -219,19 +260,30 @@ tsaSuperDepressed{
 	--
 	"\i[2390]\i[2510]"
 }
+
 tsaOw{
 	"\w[1]"
 	--
-	"\i[2341]"
-	"\i[2340]"
+	"\i[2410]"
+	"\i[2400]"
 	--
 	"\i[2530]"
 	"\i[2540]"
 	"\i[2550]"
 }
 
+tsaAnnoyed{
+	"\w[1]"
+	--
+	"\i[2420]"
+	--
+	"\i[2510]"
+	"\i[2520]"
+	"\i[2550]"
+}
+
 tsaHeadDown{
-	//stub
+	"%(tsaCurledUp)%(tsaSuperDazed)"
 }
 
 

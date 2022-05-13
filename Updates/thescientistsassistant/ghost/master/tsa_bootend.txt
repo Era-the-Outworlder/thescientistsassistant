@@ -65,6 +65,8 @@ ONFIRSTBOOTVARS{
 	lastbootdate 		= getTodaysDate
 	thisbootdate 		= getTodaysDate
 	soundeffects		= 1
+	theyaremoby			= 0
+	usermadeconcussion	= 0
 	
 	
 	//See Google Sheets document for details & examples on the upcoming
@@ -204,6 +206,8 @@ ONBOOTVARS{
 	lastbootdate = thisbootdate
 	thisbootdate = getTodaysDate
 	_daychange = dateCheck
+	//they don't care anymore (forgot about it lol)
+	usermadeconcussion	= 0
 	
 	//heals so many days
 	for _i = 0; _i < _daychange; _i++{
@@ -235,18 +239,64 @@ ONBOOTVARS{
 
 //Grabs an experiment code, then runs config for it.
 OnGenerateExperiment{
-	experimentcode = RAND(2) //so 0 for no experiment, 1 for dud, 2 tentacles
-
+	//experimentcode = RAND(2) //so 0 for no experiment, 1 for dud, 2 tentacles
+	_randomgen = RAND(50)
 	
+	//Half the time nothing happens
+	if _randomgen % 2 == 0{
+		experimentcode = 0
+	}else{
+		experimentcode = 1
+	}
+	
+	
+}
+
+InitializeExperiment{
+	_randomgen = RAND(75)
 	case experimentcode{
+		//No experiment occured; apply random injuries
 		when 0{
-		//	awarenessbuff = 10 - RAND(20)
-		//	headinjuries[0] = 4
-		//	ConfigurePartHealth(&headhealth,&headinjuries)
+			awarenessbuff = 10 - RAND(10)
+			
+			if _randomgen % 2{
+				APPLYFACECUT
+				APPLYLWRISTSORE
+			}
+			if randomgen % 7{
+				APPLYRWRISTSORE
+				APPLYLTWISTEDANKLE
+			}
+			if randomgen % 8{
+				if timestatus[2] == "healed"{
+					APPLYCONCUSSION
+				}
+				APPLYINJECTION
+				APPLYRTWISTEDANKLE
+			}
+		}
+		when 1{
+			awarenessbuff = 35 - RAND(10)
+			APPLYLWRISTSORE
+			APPLYRWRISTSORE
+			APPLYINJECTION
+			if _randomgen % 2{
+				APPLYFACECUT
+			}
+			if randomgen % 5{
+				APPLYRTWISTEDANKLE
+				APPLYLTWISTEDANKLE
+			}
+			if randomgen % 6{
+				if timestatus[1] == "healed"{
+					APPLYEYEPROC
+				}
+				
+				
+			}
 		}
 	}
-
-
+	ConfigureHealth
 }
 
 //------------------------------------------------------------------------------

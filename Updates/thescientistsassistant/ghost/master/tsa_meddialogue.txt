@@ -1,0 +1,967 @@
+//******************************************************************************
+// First Aid Reactions For The Scientist's Assistant
+// Handling each injury based on what experiment occured (0 is default)
+//******************************************************************************
+
+
+
+//******************************************************************************
+// Default/Backup Reactions
+//******************************************************************************
+OnExperiment0FaceCut{
+	case itemgrabbed{
+	//Antibacterial
+	when 4{
+		if awareness > HIGHCONSC{
+			if injuryrequires[0] == "antibac"{
+				ANTIBAC(0)
+				--
+				injuryrequires[0] = "bandaid"
+				"\0%(tsaNeutral)%(tsaOw)Oh... ouch, that stings a little, be careful."
+			}elseif timestatus[0] == "sanitized"{
+				"\0%(tsaNeutral)You already saniztized it..."
+			}else{
+				"\0It doesn't need sanitizing."
+			}
+		}elseif awareness > LOWCONSC{
+			if injuryrequires[0] == "antibac"{
+				ANTIBAC(0)
+				--
+				injuryrequires[0] = "bandaid"
+				"\0%(tsaNeutral)%(tsaOw)Ouch%(ellps) hurts%(ellps)"
+			}elseif timestatus[0] == "sanitized"{
+				"\0%(tsaNeutral)It's clean, %(username)%(ellps)"
+			}else{
+				"%(tsaNeutral)huh%(ellps)?"
+			}					
+		}else{
+			if injuryrequires[0] == "antibac"{
+				ANTIBAC(0)
+				--
+				injuryrequires[0] = "bandaid"
+				"%(tsaSuperDazed)%(nrrtr)(They aren't aware enough to appreciate it, but soon they'll be feeling better.)"
+			}elseif timestatus[0] == "sanitized"{
+				"\0%(tsaNeutral)%(nrrtr)(You already sanitized it.)"
+			}else{
+				"%(nrrtr)(It doesn't need to be sanitized.)"
+			}
+		}
+		
+	}
+	//Washcloth
+	when 5{
+		if awareness > HIGHCONSC{
+			"\0%(tsaNeutral)I don't think it's dirty..."
+		}elseif awareness > LOWCONSC{
+			"%(tsaNeutral)What%(ellps)? No%(ellps)"
+		}else{
+			"%(nrrtr)(What is that supposed to be for?)"
+		}
+		
+	}
+	//Bandaid
+	when 6{
+		if awareness > HIGHCONSC{
+			if injuryrequires[0] == "bandaid"{
+				BANDAID(0)
+				--
+				injuryrequires[0] = "none"
+				"\0%(tsaNeutral)Ah... thanks. \w[840]I suppose now it really won't get infected."
+			}elseif injuryrequires[0] == "antibac"{
+				"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you're supposed to clean wounds first."
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)One bandaid is good enough%(ellps)"
+			}
+		}elseif awareness > LOWCONSC{
+			if injuryrequires[0] == "bandaid"{
+				BANDAID(0)
+				--
+				injuryrequires[0] = "none"
+				"\0%(tsaNeutral)Ah... thanks. \w[840]Safe now%(ellps)"
+			}elseif injuryrequires[0] == "antibac"{
+				"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you%(ellps) clean wounds first%(ellps)"
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)One bandaid is%(ellps)"
+			}
+		}else{
+			if injuryrequires[0] == "bandaid"{
+				BANDAID(0)
+				--
+				injuryrequires[0] = "none"
+				"\0%(tsaNeutral)%(nrrtr)(You place a bandaid on it. This will protect it.)"
+				"\0%(tsaNeutral)Ah... %(br)%(nrrtr)(The bandaid will help.)"
+			}elseif injuryrequires[0] == "antibac"{
+				"%(ellps)mnn%(ellps) wrong%(ellps)"
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)%(nrrtr)(Why would you want multiple bandaids?)"
+			}
+			
+		}
+		
+	}
+	//Gauze
+	when 7{
+		if awareness > HIGHCONSC{
+			"\0%(tsaNeutral)It's a face... that's gonna be a little difficult to put on. "
+		}elseif awareness > LOWCONSC{
+			"%(tsaNeutral)What%(ellps)? No%(ellps) too big%(ellps)"
+		}else{
+			"%(nrrtr)(What is that supposed to be for? It's just a cut.)"
+		}
+		
+	}
+	when 8{
+		PANACEA(0)
+	}
+	others{
+		woundpokes++
+		//You should know better.
+		if woundpokes > 15{
+			trust--
+		}
+		
+		if awareness > HIGHCONSC{
+			"\0%(tsaOw)Ow, don't poke at it..."
+			"\0%(tsaOw)Leave it be."
+		}elseif awareness > LOWCONSC{
+			"%(tsaOw)Ow%(ellps)"
+		}else{
+			"%(nrrtr)(They whimper as you poke at it.)"
+		}
+	}
+	}
+}
+
+OnExperiment0Concussion{
+	if usermadeconcussion{
+		OnUserConcussionInteract
+	}else{
+		case itemgrabbed{
+		//Antibacterial
+		when 4{
+			
+			if awareness > HIGHCONSC{
+				"\0%(tsaNeutral)I don't think that would help much..."
+			}elseif awareness > LOWCONSC{
+				"%(tsaNeutral)What%(ellps)? Needs cleaning%(ellps) but more for the blood%(ellps) try the %(injuryrequires[1])%(ellps)"
+			}else{
+				"%(nrrtr)(Maybe you should try something else.)"
+			}
+			
+		}
+		//Washcloth
+		when 5{
+			if awareness > HIGHCONSC{
+				if injuryrequires[1] == "washcloth"{
+					WASHCLOTH(1)
+					--
+					injuryrequires[1] = "gauze"
+					"\0%(tsaNeutral)%(tsaOw)Oh... ouch, that stings a little. It's catching in my hair%(ellps)"
+				}elseif timestatus[1] == "sanitized"{
+					"\0%(tsaNeutral)You already cleaned it..."
+				}else{
+					"\0It doesn't need cleaning."
+				}
+			}elseif awareness > LOWCONSC{
+				if injuryrequires[1] == "washcloth"{
+					WASHCLOTH(1)
+					--
+					injuryrequires[1] = "gauze"
+					"\0%(tsaNeutral)%(tsaOw)Ouch%(ellps) hurts%(ellps) lighten up%(ellps)"
+				}elseif timestatus[1] == "sanitized"{
+					"\0%(tsaNeutral)It's clean already, %(username)%(ellps)"
+				}else{
+					"%(tsaNeutral)huh%(ellps)? Wha%(ellps)?"
+				}					
+			}else{
+				if injuryrequires[1] == "washcloth"{
+					WASHCLOTH(1)
+					--
+					injuryrequires[1] = "gauze"
+					"\0%(tsaNeutral)%(nrrtr)(You dab at the crusted blood on their head.)"
+				}elseif timestatus[1] == "sanitized"{
+					"\0%(tsaNeutral)%(nrrtr)(You already cleaned their little head.)"
+				}else{
+					"%(nrrtr)(It doesn't need to be cleaned more.)"
+				}
+			}
+		}
+		//Bandaid
+		when 6{
+		if awareness > HIGHCONSC{
+				"\0%(tsaNeutral)That's a%(ellps) bit small for a whole head. "
+			}elseif awareness > LOWCONSC{
+				"%(tsaNeutral)What%(ellps)? I don't think that's gonna work%(ellps)"
+			}else{
+				"%(nrrtr)(What is that supposed to be for? Not major head trauma.)"
+			}
+			
+		}
+		//Gauze
+		when 7{
+			
+			if awareness > HIGHCONSC{
+				if injuryrequires[1] == "gauze"{
+					GAUZE(1)
+					--
+					injuryrequires[1] = "none"
+					"\0%(tsaNeutral)Ah... thanks. \w[840]Protecting wounds is%(ellps) step one. \w3Wait. \w5Two? \w9Three?"
+					"%(tsaNeutral)Thanks for helping%(ellps) this time I just tripped. \w8Kind of funny with everything else that happens in my life%(ellps)"
+					"%(tsaOw)Ouch! \w8\w8%(br)%(tsaNeutral)Ah%(ellps) %(tsaRelieved)Thank you for all the help. \w8%(tsaNervous)People need to keep the lab cleaner than they do%(ellps) and stop stacking things so precariously%(ellps)"
+				}elseif injuryrequires[1] == "washcloth"{
+					"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you're supposed to clean wounds first."
+				}else{
+					//otherwise, there's already a bandaid on it.
+					"%(tsaNeutral)I think you wrapped it well enough%(ellps)"
+				}
+			}elseif awareness > LOWCONSC{
+				if injuryrequires[1] == "gauze"{
+					GAUZE(1)
+					--
+					injuryrequires[1] = "none"
+					"\0%(tsaNeutral)Ah... thanks. \w[840]Safe now%(ellps)"
+					
+				}elseif injuryrequires[1] == "washcloth"{
+					"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you%(ellps) clean wounds first%(ellps)"
+				}else{
+					//otherwise, there's already a bandaid on it.
+					"%(tsaNeutral)You wrapped%(ellps)"
+				}
+			}else{
+				if injuryrequires[1] == "gauze"{
+					GAUZE(1)
+					--
+					injuryrequires[1] = "none"
+					"\0%(tsaNeutral)Ah... %(br)%(nrrtr)(The gauze will help keep them safe.)"
+					"\0%(tsaNeutral)%(nrrtr)(You wrap their head snugly in bandages. Best to protect it.)"
+				}elseif injuryrequires[1] == "washcloth"{
+					"%(ellps)mnn%(ellps) wrong%(ellps)"
+				}else{
+					//otherwise, there's already a bandaid on it.
+					"%(tsaNeutral)%(nrrtr)(You wrapped it well enough already.)"
+				}
+				
+			}
+			
+		}
+		when 8{
+			PANACEA(1)
+		}
+		others{
+			woundpokes++
+			//You should know better.
+			if woundpokes > 15{
+				trust--
+			}
+			
+			if awareness > HIGHCONSC{
+				"\0%(tsaOw)Ow, don't poke at it..."
+				"\0%(tsaOw)Leave my skull be."
+			}elseif awareness > LOWCONSC{
+				"%(tsaOw)Ow%(ellps) stop that%(ellps)"
+			}else{
+				"%(nrrtr)(They groan helplessly as you prod at their head.)"
+			}
+		}
+		}
+	
+	}
+	
+}
+
+
+OnExperiment0InjectionSite{
+	case itemgrabbed{
+	//Antibacterial
+	when 4{
+		if awareness > HIGHCONSC{
+			if injuryrequires[3] == "antibac"{
+				ANTIBAC(3)
+				--
+				injuryrequires[3] = "bandaid"
+				"\0%(tsaNeutral)%(tsaOw)Oh... ouch, that stings a little, be careful."
+			}elseif timestatus[3] == "sanitized"{
+				"\0%(tsaNeutral)You already saniztized it..."
+			}else{
+				"\0It doesn't need sanitizing. %(tsaDepressed)Won't fix the rest, though."
+			}
+		}elseif awareness > LOWCONSC{
+			if injuryrequires[3] == "antibac"{
+				ANTIBAC(3)
+				--
+				injuryrequires[3] = "bandaid"
+				"\0%(tsaNeutral)%(tsaOw)Ouch%(ellps) hurts%(ellps)"
+			}elseif timestatus[3] == "sanitized"{
+				"\0%(tsaNeutral)It's clean, %(username)%(ellps) still aches but%(ellps)"
+			}else{
+				"%(tsaNeutral)huh%(ellps)?"
+			}					
+		}else{
+			if injuryrequires[3] == "antibac"{
+				ANTIBAC(3)
+				--
+				injuryrequires[3] = "bandaid"
+					"%(tsaNeutral)%(nrrtr)(Sanitizing it is the first thing, at least.)"
+			}elseif timestatus[3] == "sanitized"{
+				"\0%(tsaNeutral)%(nrrtr)(You already sanitized it.)"
+			}else{
+				"%(nrrtr)(It doesn't need to be sanitized.)"
+			}
+		}
+		
+	}
+	//Washcloth
+	when 5{
+		if awareness > HIGHCONSC{
+			"\0%(tsaNeutral)I don't think it's dirty... \w8Lot of other things, though."
+		}elseif awareness > LOWCONSC{
+			"%(tsaNeutral)What%(ellps)? No%(ellps)"
+		}else{
+			"%(nrrtr)(What is that supposed to be for?)"
+		}
+		
+	}
+	//Bandaid
+	when 6{
+		if awareness > HIGHCONSC{
+			if injuryrequires[3] == "bandaid"{
+				BANDAID(3)
+				--
+				injuryrequires[3] = "none"
+				"\0%(tsaNeutral)Ah... thanks. \w[840]I suppose now it really won't get any more%(ellps) weird."
+			}elseif injuryrequires[3] == "antibac"{
+				"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you're supposed to clean%(ellps) it%(ellps) first."
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)One bandaid is good enough%(ellps)"
+			}
+		}elseif awareness > LOWCONSC{
+			if injuryrequires[3] == "bandaid"{
+				BANDAID(3)
+				--
+				injuryrequires[0] = "none"
+				"\0%(tsaNeutral)Ah%(ellps) %(tsaRelieved)thanks. \w[840]Protected%(ellps)"
+			}elseif injuryrequires[3] == "antibac"{
+				"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you%(ellps) clean wounds first%(ellps)"
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)One bandaid is%(ellps)"
+			}
+		}else{
+			if injuryrequires[3] == "bandaid"{
+				BANDAID(3)
+				--
+				injuryrequires[3] = "none"
+				"\0%(tsaNeutral)%(nrrtr)(You place a bandaid on it. This will protect it, but it can't change whatever is in their veins now.)"
+				"\0%(tsaNeutral)Ah... %(br)%(nrrtr)(The bandaid will help. But it can't change whatevever %(TheScientist) packed into them%(ellps))"
+			}elseif injuryrequires[3] == "antibac"{
+				"%(ellps)mnn%(ellps) wrong%(ellps)"
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)%(nrrtr)(Why would you want multiple bandaids? It won't change what occured.)"
+			}
+			
+		}
+		
+	}
+	//Gauze
+	when 7{
+		if awareness > HIGHCONSC{
+			"\0%(tsaNeutral)That might be annoying on a joint. Could we do a bandaid?"
+		}elseif awareness > LOWCONSC{
+			"%(tsaNeutral)What%(ellps)? No%(ellps) too big for something so small%(ellps)"
+		}else{
+			"%(nrrtr)(What is that supposed to be for? It's just a swollen poke mark.)"
+		}
+		
+	}
+	when 8{
+		PANACEA(3)
+	}
+	others{
+		woundpokes++
+		//You should know better.
+		if woundpokes > 15{
+			trust--
+		}
+		
+		if awareness > HIGHCONSC{
+			"\0%(tsaOw)Ow, don't poke at it..."
+			"\0%(tsaOw)Leave it be."
+		}elseif awareness > LOWCONSC{
+			"%(tsaOw)Ow%(ellps)"
+		}else{
+			"%(nrrtr)(They whimper as you poke at it. Who knows what it holds...)"
+		}
+	}
+	}
+}
+
+
+OnExperiment0LWristSore{
+	OnExperiment0WristSore(4)
+}
+
+OnExperiment0RWristSore{
+	OnExperiment0WristSore(5)
+}
+
+
+OnExperiment0WristSore{
+	case itemgrabbed{
+	//Antibacterial
+	when 4{
+		
+		if awareness > HIGHCONSC{
+			if injuryrequires[_argv[0]] == "antibac"{
+				ANTIBAC(_argv[0])
+				--
+				injuryrequires[_argv[0]] = "gauze"
+				"\0%(tsaNeutral)%(tsaOw)Oh... ouch, that stings a little. %(tsaNervous)I should have learned my lesson long ago%(ellps)"
+			}elseif timestatus[_argv[0]] == "sanitized"{
+				"\0%(tsaNeutral)You already cleaned it..."
+			}else{
+				"\0It doesn't need that."
+			}
+		}elseif awareness > LOWCONSC{
+			if injuryrequires[_argv[0]] == "antibac"{
+				ANTIBAC(_argv[0])
+				--
+				injuryrequires[_argv[0]] = "gauze"
+				"\0%(tsaNeutral)%(tsaOw)Ouch%(ellps) hurts%(ellps) everything clean hurts%(ellps)"
+			}elseif timestatus[_argv[0]] == "sanitized"{
+				"\0%(tsaNeutral)It's clean already, %(username)%(ellps)"
+			}else{
+				"%(tsaNeutral)huh%(ellps)? Wha%(ellps)?"
+			}					
+		}else{
+			if injuryrequires[_argv[0]] == "antibac"{
+				ANTIBAC(_argv[0])
+				--
+				injuryrequires[_argv[0]] = "gauze"
+				"\0%(tsaNeutral)%(nrrtr)(You spritz the antibacterial spray on. Hopefully this will keep it from healing poorly.)"
+			}elseif timestatus[_argv[0]] == "sanitized"{
+				"\0%(tsaNeutral)%(nrrtr)(You already cleaned this wrist.)"
+			}else{
+				"%(nrrtr)(It doesn't need to be cleaned more.)"
+			}
+		}
+		
+	}
+	//Washcloth
+	when 5{
+		if awareness > HIGHCONSC{
+			"\0%(tsaNeutral)Maybe something else, \w4rather than a washcloth%(ellps)"
+		}elseif awareness > LOWCONSC{
+			"%(tsaNeutral)What%(ellps)? Needs%(ellps)\w4%(ellps) but%(ellps) try the %(injuryrequires[_argv[0]])%(ellps)"
+		}else{
+			"%(nrrtr)(Maybe you should try something else.)"
+		}
+		
+	}
+	//Bandaid
+	when 6{
+	if awareness > HIGHCONSC{
+			"\0%(tsaNeutral)That's a%(ellps) bit small to fit my wrist. "
+		}elseif awareness > LOWCONSC{
+			"%(tsaNeutral)What%(ellps)? I don't think that's gonna work%(ellps)"
+		}else{
+			"%(nrrtr)(Maybe gauze wrappings would fit this wound better.)"
+		}
+		
+	}
+	//Gauze
+	when 7{
+		
+		if awareness > HIGHCONSC{
+			if injuryrequires[_argv[0]] == "gauze"{
+				GAUZE(_argv[0])
+				--
+				injuryrequires[_argv[0]] = "none"
+				"\0%(tsaNeutral)Ah... thanks. \w[840]Wish I had some sort of padding there before%(ellps) She probably would have removed it%(ellps)"
+			}elseif injuryrequires[_argv[0]] == "antibac"{
+				"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you're supposed to clean wounds first."
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)I think you wrapped it well enough%(ellps)"
+			}
+		}elseif awareness > LOWCONSC{
+			if injuryrequires[_argv[0]] == "gauze"{
+				GAUZE(_argv[0])
+				--
+				injuryrequires[_argv[0]] = "none"
+				"\0%(tsaNeutral)Ah... thanks. \w[840]Safe now%(ellps) %(tsaSuperDepressed)for now%(ellps)"
+				
+			}elseif injuryrequires[_argv[0]] == "antibac"{
+				"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you%(ellps) clean wounds first%(ellps)"
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)You wrapped%(ellps) it%(ellps)?"
+			}
+		}else{
+			if injuryrequires[_argv[0]] == "gauze"{
+				GAUZE(_argv[0])
+				--
+				injuryrequires[_argv[0]] = "none"
+				"\0%(tsaNeutral)Ah... %(br)%(nrrtr)(The gauze will help keep them safe.)"
+				"\0%(tsaNeutral)%(nrrtr)(You wrap their wrist up in bandages. Still going to sting for a while... injuries by joints are never fun.)"
+			}elseif injuryrequires[_argv[0]] == "antibac"{
+				"%(ellps)mnn%(ellps) wrong%(ellps)"
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)%(nrrtr)(You wrapped it well enough already.)"
+			}
+			
+		}
+		
+	}
+	when 8{
+		PANACEA(_argv[0])
+	}
+	others{
+		woundpokes++
+		//You should know better.
+		if woundpokes > 15{
+			trust--
+		}
+		
+		if awareness > HIGHCONSC{
+			"\0%(tsaOw)Ow, don't poke at it..."
+			"\0%(tsaOw)Leave it alone."
+		}elseif awareness > LOWCONSC{
+			"%(tsaOw)Ow%(ellps) stop that%(ellps)"
+		}else{
+			"%(nrrtr)(They groan helplessly as you prod at their wrist.)"
+		}
+	}
+	}
+}
+
+
+OnExperiment0LTwistedAnkle{
+	OnExperiment0TwistedAnkle(7)
+}
+
+OnExperiment0RTwistedAnkle{
+	OnExperiment0TwistedAnkle(6)
+}
+
+
+OnExperiment0TwistedAnkle{
+	case itemgrabbed{
+	//Antibacterial
+	when 4{
+		if awareness > HIGHCONSC{
+			"\0%(tsaNeutral)I think this one is a little too grimy for the spray%(ellps)"
+		}elseif awareness > LOWCONSC{
+			"%(tsaNeutral)What%(ellps)? %(ellps)try the %(injuryrequires[_argv[0]])%(ellps)"
+		}else{
+			"%(nrrtr)(Maybe you should try something else.)"
+		}
+		
+		
+	}
+	//Washcloth
+	when 5{
+		if awareness > HIGHCONSC{
+			if injuryrequires[_argv[0]] == "washcloth"{
+				WASHCLOTH(_argv[0])
+				--
+				injuryrequires[_argv[0]] = "gauze"
+				"\0%(tsaNeutral)%(tsaOw)Oh... ouch, that stings a little. %(tsaNeutral)Maybe be a little lighter handed? w9Please?"
+			}elseif timestatus[_argv[0]] == "sanitized"{
+				"\0%(tsaNeutral)You already cleaned it..."
+			}else{
+				"\0It doesn't need that."
+			}
+		}elseif awareness > LOWCONSC{
+			if injuryrequires[_argv[0]] == "washcloth"{
+				WASHCLOTH(_argv[0])
+				--
+				injuryrequires[_argv[0]] = "gauze"
+				"\0%(tsaNeutral)%(tsaOw)Ouch%(ellps) hurts%(ellps) everything clean hurts%(ellps) why%(ellps)"
+			}elseif timestatus[_argv[0]] == "sanitized"{
+				"\0%(tsaNeutral)It's clean already, %(honor)%(ellps) I%(ellps)I don't%(ellps)"
+			}else{
+				"%(tsaNeutral)huh%(ellps)? Wha%(ellps)?"
+			}					
+		}else{
+			if injuryrequires[_argv[0]] == "washcloth"{
+				WASHCLOTH(_argv[0])
+				--
+				injuryrequires[_argv[0]] = "gauze"
+				"\0%(tsaNeutral)%(nrrtr)(With a bit of tender care, maybe you can prevent it from getting messed up more.)"
+			}elseif timestatus[_argv[0]] == "sanitized"{
+				"\0%(tsaNeutral)%(nrrtr)(You already cleaned this ankle.)"
+			}else{
+				"%(nrrtr)(It doesn't need to be cleaned more.)"
+			}
+		}
+		
+	}
+	//Bandaid
+	when 6{
+	if awareness > HIGHCONSC{
+			"\0%(tsaNeutral)That's a%(ellps) bit small to go around my leg%(ellps)"
+		}elseif awareness > LOWCONSC{
+			"%(tsaNeutral)What%(ellps)? I don't think that's gonna work%(ellps)"
+		}else{
+			"%(nrrtr)(Maybe gauze wrappings would fit this wound better.)"
+		}
+		
+	}
+	//Gauze
+	when 7{
+		
+		if awareness > HIGHCONSC{
+			if injuryrequires[_argv[0]] == "gauze"{
+				GAUZE(_argv[0])
+				--
+				injuryrequires[_argv[0]] = "none"
+				"\0%(tsaNeutral)Ah... thanks. \w[840]Wish I had some sort of padding there before%(ellps) She probably would have removed it%(ellps)"
+			}elseif injuryrequires[_argv[0]] == "washcloth"{
+				"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you're supposed to clean wounds first."
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)I think you wrapped it well enough%(ellps)"
+			}
+		}elseif awareness > LOWCONSC{
+			if injuryrequires[_argv[0]] == "gauze"{
+				GAUZE(_argv[0])
+				--
+				injuryrequires[_argv[0]] = "none"
+				"\0%(tsaNeutral)Ah... thanks. \w[840]Safe now%(ellps) %(tsaSuperDepressed)for now%(ellps)"
+				
+			}elseif injuryrequires[_argv[0]] == "washcloth"{
+				"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you%(ellps) clean wounds first%(ellps)"
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)You wrapped%(ellps) %(bodypart[_argv[0]])%(ellps)"
+			}
+		}else{
+			if injuryrequires[_argv[0]] == "gauze"{
+				GAUZE(_argv[0])
+				--
+				injuryrequires[_argv[0]] = "none"
+				"\0%(tsaNeutral)Ah... %(br)%(nrrtr)(The gauze will help keep them safe.)"
+				"\0%(tsaNeutral)%(nrrtr)(Hopefully it will help protect it from further dirt%(ellps) Labs are clean, right?)"
+			}elseif injuryrequires[_argv[0]] == "washcloth"{
+				"%(ellps)mnn%(ellps) wrong%(ellps)"
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)%(nrrtr)(You wrapped it well enough already.)"
+			}
+			
+		}
+		
+	}
+	when 8{
+		PANACEA(_argv[0])
+	}
+	others{
+		woundpokes++
+		//You should know better.
+		if woundpokes > 15{
+			trust--
+		}
+		
+		if awareness > HIGHCONSC{
+			"\0%(tsaOw)Ow, don't poke at it..."
+			"\0%(tsaOw)Leave it alone."
+		}elseif awareness > LOWCONSC{
+			"%(tsaOw)Ow%(ellps) stop that%(ellps)"
+			"%(nrrtr)(They groan as you prod at their ankle.)%(br)%(tsaOw)%(honor), that hurts%(ellps)"
+		}else{
+			"%(nrrtr)(They groan helplessly as you prod at their ankle.)%(br)%(tsaOw)%(honor)%(ellps)"
+		}
+	}
+	}
+	
+	
+}
+
+
+
+
+
+
+
+//A whole bonus set for if the user is the one giving it and patching it up.
+OnUserConcussionInteract{
+	case itemgrabbed{
+	//Antibacterial
+	when 4{
+		
+		if awareness > HIGHCONSC{
+			"\0%(tsaNeutral)Hnmg... what are you even trying to do%(ellps)? You did this%(ellps)"
+		}elseif awareness > LOWCONSC{
+			"%(tsaCurledUp)%(tsaScared)What are you trying to do%(ellps)?"
+		}else{
+			"%(nrrtr)(Maybe you should try something else.)"
+		}
+		
+	}
+	//Washcloth
+	when 5{
+		if awareness > HIGHCONSC{
+			if injuryrequires[1] == "washcloth"{
+				WASHCLOTH(1)
+				--
+				injuryrequires[1] = "gauze"
+				"\0%(tsaCurledUp)%(tsaOw)What are you doing%(ellps)? Are you seriously trying to treat it%(ellps)?"
+			}elseif timestatus[1] == "sanitized"{
+				"\0%(tsaScared)%(ellps)"
+			}else{
+				"%(ellps)"
+			}
+		}elseif awareness > LOWCONSC{
+			if injuryrequires[1] == "washcloth"{
+				WASHCLOTH(1)
+				--
+				injuryrequires[1] = "gauze"
+				"\0%(tsaCurledUp)%(tsaOw)Ouch%(ellps) hurts%(ellps) stop that%(ellps) your fault%(ellps)"
+			}elseif timestatus[1] == "sanitized"{
+				"\0%(tsaNeutral)It's clean%(ellps) what are you%(ellps)?"
+			}else{
+				"%(tsaNeutral)huh%(ellps)? Wha%(ellps)? No%(ellps)"
+			}					
+		}else{
+			if injuryrequires[1] == "washcloth"{
+				WASHCLOTH(1)
+				--
+				injuryrequires[1] = "gauze"
+				"\0%(tsaCurledUp)%(tsaScared)%(nrrtr)(You dote as they daze away, unknowingly. The blunt head trauma made sure of that.)"
+			}elseif timestatus[1] == "sanitized"{
+				"\0%(tsaCurledUp)%(nrrtr)(You already cleaned their cute little head. You do as you wish.)"
+			}else{
+				"%(nrrtr)(You already cleaned up your mess. There's other things to do now.)"
+			}
+		}
+	}
+	//Bandaid
+	when 6{
+	if awareness > HIGHCONSC{
+			"\0%(tsaScared)What are you%(ellps)? \w8That one won't even work well. \w8n line with \w2you, \w4though."
+		}elseif awareness > LOWCONSC{
+			"%(tsaNeutral)What%(ellps)? \w8I don't think that's even gonna work%(ellps) but it is you, \w6so%(ellps)"
+		}else{
+			"%(nrrtr)(What is that supposed to be for? \w8Not major head trauma.)"
+		}
+		
+	}
+	//Gauze
+	when 7{
+		
+		if awareness > HIGHCONSC{
+			if injuryrequires[1] == "gauze"{
+				GAUZE(1)
+				--
+				injuryrequires[1] = "none"
+				"\0%(tsaCurledUp)%(tsaScared)What do you want from me? \w8\w4You keep%(ellps) doing things. \w8You can't do this to me and then try to patch me up%(ellps)"
+			}elseif injuryrequires[1] == "washcloth"{
+				"%(tsaCurledUp)%(tsaOw)Ouch%(ellps) that's not right. \w8Back off."
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaScared)You already%(ellps)"
+			}
+		}elseif awareness > LOWCONSC{
+			if injuryrequires[1] == "gauze"{
+				GAUZE(1)
+				--
+				injuryrequires[1] = "none"
+				"\0%(tsaCurledUp)W-Why do you do things like%(ellps) this to me%(ellps)? Why%(ellps)"
+				
+			}elseif injuryrequires[1] == "washcloth"{
+				"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you%(ellps) clean wounds first%(ellps) or would if you weren't the one who%(ellps)"
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)You wrapped%(ellps) %(tsaNervous)%(ellps)"
+			}
+		}else{
+			if injuryrequires[1] == "gauze"{
+				GAUZE(1)
+				--
+				injuryrequires[1] = "none"
+				"\0%(tsaCurledUp)Ah... %(br)%(nrrtr)(The gauze will protect the wound. Not like you're a complete monster, huh?)"
+				"\0%(tsaNeutral)%(nrrtr)(You wrap their head snugly in bandages. The final product of your ministrations. You give and you take.)"
+			}elseif injuryrequires[1] == "washcloth"{
+				"%(nrrtr)(You need to wash it before you bandage it.)"
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)%(nrrtr)(You wrapped it up already. No need for more. Don't want to be too gracious, either.)"
+			}
+			
+		}
+		
+	}
+	when 8{
+		PANACEA(1)
+	}
+	others{
+		woundpokes++
+		//You should know better.
+		if woundpokes > 15{
+			trust--
+		}
+		
+		if awareness > HIGHCONSC{
+			"\0%(tsaOw)You can't just leave it alone, \w3huh?"
+			"\0%(tsaScared)Are you proud of it%(ellps)?"
+			"\0%(tsaOw)Stop it%(ellps) stop it all%(ellps)"
+		}elseif awareness > LOWCONSC{
+			"%(tsaOw)Ow%(ellps) stop that%(ellps)"
+		}else{
+			"%(nrrtr)(They groan helplessly as you prod at their head. You have the power here.)"
+			"%(nrrtr)(They groan helplessly. You can do whatever you please.)"
+			"%(nrrtr)(You think it's funny, don't you? To hit and injure.)"
+		}
+	}
+	}
+}
+
+
+
+
+
+//**************************************************************************************
+// Dud experiment
+//**************************************************************************************
+
+
+OnExperiment1EyeProcedure{
+	case itemgrabbed{
+	//Antibacterial
+	when 4{
+		
+		if awareness > HIGHCONSC{
+			"\0%(tsaNeutral)I don't think that would help much..."
+		}elseif awareness > LOWCONSC{
+			"%(tsaNeutral)What%(ellps)? I don't think that's it%(ellps) not gonna help what she did%(ellps)"
+		}else{
+			"%(nrrtr)(Maybe you should try something else.)"
+		}
+		
+	}
+	//Washcloth
+	when 5{
+		if awareness > HIGHCONSC{
+			if injuryrequires[2] == "washcloth"{
+				WASHCLOTH(2)
+				--
+				injuryrequires[2] = "antibac"
+				"\0%(tsaNeutral)%(tsaOw)Oh... ouch, that stings a little. It's catching on the stitch%(ellps)"
+			}elseif timestatus[2] == "sanitized"{
+				"\0%(tsaNeutral)You already cleaned it..."
+			}else{
+				"\0It doesn't need cleaning."
+			}
+		}elseif awareness > LOWCONSC{
+			if injuryrequires[2] == "washcloth"{
+				WASHCLOTH(2)
+				--
+				injuryrequires[2] = "antibac"
+				"\0%(tsaNeutral)%(tsaOw)Ouch%(ellps) hurts%(ellps) be more careful, it runs deep%(ellps)"
+			}elseif timestatus[2] == "sanitized"{
+				"\0%(tsaNeutral)It's clean already, %(username)%(ellps)"
+			}else{
+				"%(tsaNeutral)huh%(ellps)? Wha%(ellps)?"
+			}					
+		}else{
+			if injuryrequires[2] == "washcloth"{
+				WASHCLOTH(2)
+				--
+				injuryrequires[2] = "antibac"
+				"\0%(tsaNeutral)%(nrrtr)(You wrap their head snugly in bandages. Best to go wide.)"
+			}elseif timestatus[2] == "sanitized"{
+				"\0%(tsaNeutral)%(nrrtr)(You already cleaned their face up.)"
+			}else{
+				"%(nrrtr)(It doesn't need to be cleaned more.)"
+			}
+		}
+	}
+	//Bandaid
+	when 6{
+	if awareness > HIGHCONSC{
+			"\0%(tsaNeutral)That's a%(ellps) bit small to cover it. "
+		}elseif awareness > LOWCONSC{
+			"%(tsaNeutral)What%(ellps)? I don't think that's gonna work%(ellps)"
+		}else{
+			"%(nrrtr)(What is that supposed to be for? Not for fixing... \w4some sort of eye surgery)"
+		}
+		
+	}
+	//Gauze
+	when 7{
+		
+		if awareness > HIGHCONSC{
+			if injuryrequires[2] == "gauze"{
+				GAUZE(2)
+				--
+				injuryrequires[2] = "none"
+				"\0%(tsaNeutral)Ah... thanks. \w[840]Protecting incisions is%(ellps) step one. \w3Wait. \w5Two? \w9Three?"
+				"%(tsaOw)Ouch! \w8\w8%(br)%(tsaNeutral)Ah%(ellps) %(tsaRelieved)Thank you for all the help%(ellps) I don't know why %(TheScientist) didn't clean this thing up%(ellps)"
+			}elseif injuryrequires[1] == "washcloth"{
+				"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you're supposed to clean it first."
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)I think you wrapped it well enough%(ellps)"
+			}
+		}elseif awareness > LOWCONSC{
+			if injuryrequires[2] == "gauze"{
+				GAUZE(2)
+				--
+				injuryrequires[2] = "none"
+				"\0%(tsaNeutral)Ah... thanks. \w[840]Safe now%(ellps)"
+				
+			}elseif injuryrequires[1] == "washcloth"{
+				"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you%(ellps) clean wounds first%(ellps)"
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)You wrapped%(ellps)"
+			}
+		}else{
+			if injuryrequires[2] == "gauze"{
+				GAUZE(2)
+				--
+				injuryrequires[2] = "none"
+				"\0%(tsaNeutral)Ah... %(br)%(nrrtr)(The gauze will help keep them safe.)"
+				"\0%(tsaNeutral)%(nrrtr)(You wrap their face and eye snugly in bandages. Best to protect it.)"
+			}elseif injuryrequires[2] == "washcloth"{
+				"%(ellps)mnn%(ellps) wrong%(ellps)"
+			}else{
+				//otherwise, there's already a bandaid on it.
+				"%(tsaNeutral)%(nrrtr)(You wrapped it well enough already.)"
+			}
+			
+		}
+		
+	}
+	when 8{
+		PANACEA(2)
+	}
+	others{
+		woundpokes++
+		//You should know better.
+		if woundpokes > 15{
+			trust--
+		}
+		
+		if awareness > HIGHCONSC{
+			"%(tsaCurledUp)%(tsaOw)Ow ow ow ow ow!"
+			"%(tsaCurledUp)%(tsaOw)oh that hurts, \w3it hurts! \w6Stop it!"
+		}elseif awareness > LOWCONSC{
+			"%(tsaCurledUp)%(tsaOw)Ow%(ellps) hnnnngh%(ellps)"
+		}else{
+			"%(tsaCurledUp)%(nrrtr)(They groan helplessly as you prod at their tender eye.)"
+			"%(tsaCurledUp)%(nrrtr)(They moan as you probe at their eye. It looks like they had an operation on it.)"
+			"%(tsaCurledUp)%(nrrtr)(You wonder what sort of operation happened to it. Did %(TheScientist) try to give them a laser eye, maybe?)"
+		}
+	}
+	}
+	
+}
+
+

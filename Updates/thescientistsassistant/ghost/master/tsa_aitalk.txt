@@ -24,14 +24,29 @@ RandomTalkEx : nonoverlap
 		
 		if getAwareness > HIGHCONSC{
 		//Alert.
-			if trust > TRUSTGOOD{ //good trust
-			"My-- well. %(TheScientist) has been focused on the human body a lot lately."
-			"The other day I thought I saw a homunculus in the lab.\n[200] It was just a poppet someone had dropped."
-			"I've been wondering what kind of uses might still be discovered for %(oldChemicals)..."
+		
+			if trust > TRUSTHIGH && username == "you"
+			{
+				"%(tsaOpen)Hey, um%(ellps) I don't think I've gotten your name. \_w[2000]%(tsaAlert)\n[200]Which is a little embarrassing. \_w[800] So I figured I'd ask%(ellps) What's your name?"
+				--
+				"\![open,inputbox,OnNameSet,0]"
+			}
+			elseif trust > TRUSTGOOD{ //good trust
+				
+				"My-- well. %(TheScientist) has been focused on the human body a lot lately."
+				"The other day I thought I saw a homunculus in the lab.\n[200] It was just a poppet someone had dropped."
+				"I've been wondering what kind of uses might still be discovered for %(oldChemicals)..."
+				"%(tsaNeutral)Need to be careful handling %(oldChemicals)."
+				"%(nrrtr)(They mutter about alchemy under their breath.)%(br)%(tsaNeutral)%(ellps)%(mundaneAndLaterMetals), %(alchemicalCompounds), %(planetaryMetals), and %(oldChemicals)%(ellps)"
+				"%(tsaNeutral)Maybe combining %(oldChemicals) and %(alchemicalCompounds) by %(alchemicalProcesses)%(ellps)? "
+				
 			}
 			elseif trust > TRUSTBAD{ //middling/no trust
 				"%(tsaNeutral)Need to be careful handling %(oldChemicals)."
 				"%(nrrtr)(They mutter about alchemy under their breath.)%(br)%(tsaNeutral)%(ellps)%(mundaneAndLaterMetals), %(alchemicalCompounds), %(planetaryMetals), and %(oldChemicals)%(ellps)"
+				"%(tsaNeutral)Maybe combining %(mundaneAndLaterMetals) and %(alchemicalCompounds) by %(alchemicalProcesses)%(ellps)?"
+				
+				
 					
 			}else{ //negative trust
 				"%(tsaNeutral)If I get %(alchemicalCompounds) and %(oldChemicals) together, \w4maybe, \w4just maybe%(ellps)"
@@ -49,7 +64,8 @@ RandomTalkEx : nonoverlap
 			}else{ //negative trust
 				"%(ellps)"
 				"%(ellps) %(br)%(nrrtr)(They watch you warily.)"
-				if teachname {"%(ellps) %(br)%(nrrtr)(%(TheAssistant) watches you very warily.)"}
+				if username != "you"
+				{"%(ellps) %(br)%(nrrtr)(%(TheAssistant) watches you very warily.)"}
 			}
 			
 		}else{
@@ -71,7 +87,8 @@ RandomTalkEx : nonoverlap
 				"%(ellps)peppy%(ellps)bunny%(ellps) cute li'l ears%(ellps)\e Ruby, rabbit Villager"
 				"%(ellps)odd names%(ellps) for lab mice%(ellps)\e Pinky and the Brain"
 			}else{ //negative trust
-				if teachname {"%(ellps) (It's hard to tell, but%(TheAssistant) is trembling ever-so-slightly.)"}
+				if username != "you"
+				{"%(ellps) (It's hard to tell, but %(TheAssistant) is trembling ever-so-slightly.)"}
 				"%(ellps) (It's hard to tell, but they're trembling ever-so-slightly.)"
 				
 
@@ -89,6 +106,12 @@ RandomTalkEx : nonoverlap
 	
 }
 
+OnNameSet
+{
+	username = reference0
+	
+	"%(tsaOpen)%(tsaHappy)%(username). \_w[1000]I like it. It suits you."
+}
 //******************************************************************************
 //key pressed.
 //******************************************************************************
@@ -325,3 +348,4 @@ OnTranslateInternal
 	_text
 }
 */
+

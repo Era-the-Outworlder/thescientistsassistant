@@ -29,21 +29,21 @@ menu.background.bitmap.filename,menu_background.png
 menu.foreground.bitmap.filename,menu_foreground.png
 menu.sidebar.bitmap.filename,menu_sidebar.png
 
-menu.background.font.color.r,96
-menu.background.font.color.g,96
-menu.background.font.color.b,160
+menu.background.font.color.r,146
+menu.background.font.color.g,125
+menu.background.font.color.b,113
 
-menu.foreground.font.color.r,255
-menu.foreground.font.color.g,255
-menu.foreground.font.color.b,255
+menu.foreground.font.color.r,100
+menu.foreground.font.color.g,106
+menu.foreground.font.color.b,75
 
-menu.disable.font.color.r,192
-menu.disable.font.color.g,192
-menu.disable.font.color.b,255
+menu.disable.font.color.r,97
+menu.disable.font.color.g,59
+menu.disable.font.color.b,106
 
-menu.separator.color.r,96
-menu.separator.color.g,96
-menu.separator.color.b,160
+menu.separator.color.r,160
+menu.separator.color.g,134
+menu.separator.color.b,145
 
 menu.background.alignment,lefttop
 menu.foreground.alignment,lefttop

@@ -37,9 +37,9 @@ OnGhostChangingOther
 	if reference2 = "The Scientist's Assistant"
 	{
 		if !awayforscientist{
-			"%(nrrtr)(They probably don't even notice being %CHR(34)reloaded%CHR(34).)"
+			"%(tsaNeutral)%(medkit)%(nrrtr)(They probably don't even notice being %CHR(34)reloaded%CHR(34).)"
 		}else{
-			"%(nrrtr)(They probably can't feel being %CHR(34)reloaded%CHR(34) from where they are.)"
+			"%(tsaNeutral)%(medkit)%(nrrtr)(They probably can't feel being %CHR(34)reloaded%CHR(34) from where they are.)"
 		}
 	}
 	else
