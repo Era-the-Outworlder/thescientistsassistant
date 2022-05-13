@@ -30,7 +30,7 @@ file,ghost/master/system/yaya_shiori3.dicf877e00a6a1758140d1076cc888c382csize=
 file,ghost/master/system_config.txt9c0bf039595535c407623722a6c1690dsize=792date=2022-01-24T09:54:14
 file,ghost/master/time_check.dll07b7dabf0de6b5ea0a23178efc4d1c4fsize=105472date=2020-07-27T17:05:28
 file,ghost/master/tsa_aitalk.txt591980bc5988eca232cc78f14ffb14dasize=11622date=2022-05-12T21:32:36
-file,ghost/master/tsa_bootend.txt731683d7b280215cc0828f39caf9e712size=11471date=2022-05-12T21:46:35
+file,ghost/master/tsa_bootend.txt38c5be427968621b36f1b77cc20b111esize=11652date=2022-05-12T22:18:09
 file,ghost/master/tsa_change.txt1855f45ca2f90846b5676879c747db0fsize=3530date=2022-05-12T19:20:36
 file,ghost/master/tsa_communicate.txtfce451de738459164a869cdcac9cb9d1size=4313date=2022-05-11T22:59:35
 file,ghost/master/tsa_emerg_dic.txt2866e2d330f8a5398e8a519c7bf0c7eesize=636date=2022-05-07T14:58:02
@@ -38,10 +38,10 @@ file,ghost/master/tsa_etc.txt096cb0d60b56eecab04970106e4051b3size=17661date=2
 file,ghost/master/tsa_homeurl.txt84f2b6647e2951bdc7248cc0395ec255size=661date=2022-05-11T10:07:02
 file,ghost/master/tsa_meddialogue.txtc57a398a3f2ec24473c19d33b74a2186size=29654date=2022-05-12T21:51:39
 file,ghost/master/tsa_menu.txt42179879c2df7866dae9ddcb029615a4size=22800date=2022-05-12T20:30:45
-file,ghost/master/tsa_mouse.txtda0c2f1f910b82ab6dab2cfe1e45939fsize=7074date=2022-05-12T20:03:04
+file,ghost/master/tsa_mouse.txte3020f36623d5b8409821bbe3084ea21size=7674date=2022-05-12T22:42:43
 file,ghost/master/tsa_string.txtc95829514859a58501cec3c6588aec3bsize=3899date=2022-05-06T10:41:17
-file,ghost/master/tsa_surfacing.txtbf38e805feaec294663c41870452f6adsize=4958date=2022-05-12T21:12:41
-file,ghost/master/tsa_vitals.txte03ce4e8f6e21b27edbbbfa5991bcecesize=15703date=2022-05-12T21:51:39
+file,ghost/master/tsa_surfacing.txtc72a6c0170d7cfcc92346b135fa73382size=4963date=2022-05-12T22:13:21
+file,ghost/master/tsa_vitals.txtbdba9ae295afad10cd3e3963909db744size=15713date=2022-05-12T22:22:53
 file,ghost/master/tsa_word.txt775ffab14bf52c88c805cace5c02d5ebsize=2276date=2022-05-12T20:12:51
 file,ghost/master/vitalsymbol.png45d0ea8a3bcc079c3ae457d9de7f31f9size=233date=2022-05-11T16:17:28
 file,ghost/master/yaya.dll702158a7d6ab3e934c2991b955545d27size=794624date=2022-01-24T09:54:14
@@ -50,7 +50,7 @@ file,ghost/master/yaya_config.txt539f2e3fc99a27c73fa530a011405fd9size=3799dat
 file,ghost/master/yaya_emerg.txt762febf70ad53b191964f96c84d66993size=1130date=2022-05-06T01:03:21
 file,ghost/master/yaya_tmpl_util.txt7baa363d10a28812eb8a8d0b1879d8ebsize=8388date=2022-05-10T15:52:02
 file,install.txtcfce6bf9edda2894803de03096c1ed8fsize=89date=2022-05-06T00:55:28
-file,readme.txt168982ebd30fdefe04b0d1cf69b2e5e5size=847date=2022-05-12T19:24:03
+file,readme.txt051c7e41dbbcd955bbe3df33f858ce98size=914date=2022-05-12T22:15:22
 file,shell/master/descript.txt1642ef52f23b41bb9005924a93dbc8ffsize=1181date=2022-05-12T21:23:44
 file,shell/master/menu_background.pngb6e29c1e3cca1fc2bff22d8494487658size=780date=2022-05-09T23:39:54
 file,shell/master/menu_foreground.png8cf9d973c4a4f36769993bc6b0966865size=3156date=2022-05-09T23:40:26

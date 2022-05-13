@@ -537,6 +537,7 @@ buffawareness{
 	if awareness < 98{
 		awarenessbuff-=3
 	}
+	trust++
 }
 
 //_argv[0] - index of what is being cleaned

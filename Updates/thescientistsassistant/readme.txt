@@ -30,3 +30,10 @@ Perhaps you're all they'll have.
 Made with the Konno Yayame template by umeici with changes by ukiya, ponapalt, and other contributors
 https://github.com/ponapalt/konnoyayame
 
+
+CHANGELOG:
+
+	*5/12/2022
+		Version 1.0.0 Release
+		Ghost Jam 2022
+

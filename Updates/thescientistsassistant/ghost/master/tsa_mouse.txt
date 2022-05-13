@@ -31,23 +31,37 @@ MouseMove0Head
 		if awareness > HIGHCONSC{
 		
 			if trust > TRUSTGOOD{
-				"%(tsaOpen)%(tsaRelieved)It's still a little weird, you know."
-				"%(tsaOpen)%(tsaAnnoyed)You're going to keep petting me?"
-				"%(tsaAnnoyed)I appreciate your company, but this is still a little%(ellps) %(tsaGesture)demeaning, \w4I guess? \w8%(tsaRelieved)It could be worse%(ellps)"
-				"%(tsaGesture)%(tsaAnnoyed)I hope you like it. \w8I imagine my hair is in pretty bad condition%(ellps)"
+				trust+= .25
+					if pets > 40{
+						"%(tsaOpen)%(tsaRelieved)Okay, it can be kind of nice%(ellps)"
+						"%(tsaOpen)%(tsaRelieved)Only because it's you%(ellps)"
+						"%(tsaOpen)%(tsaRelieved)It's such%(ellps) %(tsaAlert)a kind touch?"
+						"%(tsaOpen)%(tsaHappy)Okay, \w4that one felt really nice%(ellps)"
+					}else{
+						"%(tsaOpen)%(tsaRelieved)It's still a little weird, you know."
+						"%(tsaOpen)%(tsaAnnoyed)You're going to keep petting me?"
+						"%(tsaAnnoyed)I appreciate your company, but this is still a little%(ellps) %(tsaGesture)demeaning, \w4I guess? \w8%(tsaRelieved)It could be worse%(ellps)"
+						"%(tsaGesture)%(tsaAnnoyed)I hope you like it. \w8I imagine my hair is in pretty bad condition%(ellps)"
+					}
+					
 			}elseif trust > TRUSTBAD{
 				if pets < 20{
 					"%(tsaCurled)%(tsaScared)What are you--?"
 					"%(tsaCurled)%(tsaAnnoyed)This is a little childish, \w4don't you think?"
 					"%(tsaCurled)%(tsaAnnoyed)Hey, \w4that tickles."
+					"%(tsaCurled)Huh%(ellps)"
 				}else{
 					"%(tsaGesture)%(tsaAnnoyed)Always you with the petting%(ellps)"
+					"%(tsaGesture)%(tsaAnnoyed)More pets%(ellps)?"
+					"%(tsaNeutral)%(tsaAnnoyed)You're still petting me?"
+					"%(tsaCurledUp)I don't know if I like this or not%(ellps)"
 				}
 				
 			}else{
 				"%(tsaCurledUp)Why are you?"
 				"%(tsaNeutral)Stop that."
 				"%(tsaScared)%(nrrtr)(They give you a scared look.)"
+				"%(tsaScared)%(nrrtr)(They look concerned.)"
 				trust--
 			}
 		}elseif awareness > LOWCONSC{

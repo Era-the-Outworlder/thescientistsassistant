@@ -10,6 +10,8 @@
 OnFirstBoot
 {
 	ONFIRSTBOOTVARS
+	experimentcode = 3
+	InitializeExperiment
 
 	//True first boot
 	if reference[0] == 0
@@ -20,7 +22,7 @@ OnFirstBoot
 		--
 		"\_w[3000]\cIt has been a%(ellps) well. \_w[1000] \n%(tsaCurledUp).\_w[200].\_w[200].\_w[200].\_w[200].\_w[200].\_w[700]"
 		--
-		"%(tsaHeadDown)\_w[3000]\n[300]%(nrrtr)(It almost appears that they have fallen asleep.)"
+		"%(tsaSuperDazed)\_w[3000]\n[300]%(nrrtr)(It almost appears that they have fallen asleep.)"
 		--
 		"\n[200]\_w[2000]%(tsaOw)Haaah-hn?\_w[500] You're%(ellps)%(tsaOpen)%(tsaAlert) are those medical-?\_w[1000]%(tsaOw) Could you?"
 		--
@@ -36,7 +38,7 @@ OnFirstBoot
 		--
 		"\_w[3000]\cIt has been a%(ellps) well. \_w[1000] \n%(tsaCurledUp).\_w[200].\_w[200].\_w[200].\_w[200].\_w[200].\_w[700]"
 		--
-		"%(tsaHeadDown)\_w[3000]\n[300]%(nrrtr)(It almost appears that they have fallen asleep.)"
+		"%(tsaSuperDazed)\_w[3000]\n[300]%(nrrtr)(It almost appears that they have fallen asleep.)%(br)"
 		--
 		"\_w[1000]%(tsaOw)Nnnnnggg%(ellps)\_w[500] You have%(ellps)%(tsaOpen)%(tsaAlert) I was right.\_w[1000]%(tsaOw) Could you?"
 		--
@@ -276,7 +278,7 @@ InitializeExperiment{
 			}
 		}
 		when 1{
-			awarenessbuff = 35 - RAND(10)
+			awarenessbuff = 35
 			APPLYLWRISTSORE
 			APPLYRWRISTSORE
 			APPLYINJECTION
@@ -294,6 +296,14 @@ InitializeExperiment{
 				
 				
 			}
+		}
+		when 3{
+			awarenessbuff = 35 - RAND(10)
+			APPLYLWRISTSORE
+			APPLYRWRISTSORE
+			APPLYINJECTION
+			APPLYFACECUT
+			APPLYLTWISTEDANKLE
 		}
 	}
 	ConfigureHealth

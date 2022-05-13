@@ -283,7 +283,7 @@ tsaAnnoyed{
 }
 
 tsaHeadDown{
-	"%(tsaCurledUp)%(tsaSuperDazed)"
+	"%(tsaCurledUp)\w[1]%(tsaSuperDazed)"
 }
 
 
