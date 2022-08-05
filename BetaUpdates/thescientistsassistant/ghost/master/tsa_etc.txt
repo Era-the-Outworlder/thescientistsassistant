@@ -1,0 +1,651 @@
+//******************************************************************************
+// YAYA Ghost Template
+// Various event dictionaries
+//******************************************************************************
+
+//******************************************************************************
+// Shell Switching
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+// Shell change started
+//------------------------------------------------------------------------------
+
+OnShellChanging
+{
+	"%(tsaNeutral)%(medkit)"
+	--
+	if !awayforscientist{
+		
+		if awareness > HIGHCONSC{
+			"What..? I feel weird...\e"
+			
+		}elseif awareness > LOWCONSC{
+		   "%(nrrtr)(They look confused.)%(br)%(tsaNeutral)Huh%(ellps)?"
+		}else{
+			"%(nrrtr)(They look vaguely uncomfortable.)"
+		}
+	}
+	
+}
+
+//------------------------------------------------------------------------------
+// Shell change complete
+//------------------------------------------------------------------------------
+OnShellChanged
+{
+	"%(tsaNeutral)%(medkit)"
+	--
+	if !awayforscientist{
+		
+		if awareness > HIGHCONSC{
+			"I feel different...\e"
+		}elseif awareness > LOWCONSC{
+		   "%(nrrtr)(They look down at themself, confused.)"
+		}else{
+			"%(nrrtr)(You don't think they noticed the change.)"
+		}
+	}
+	
+}
+
+
+//******************************************************************************
+//Installation related
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+// message during installation
+//------------------------------------------------------------------------------
+OnInstallBegin
+{
+	"%(tsaNeutral)%(medkit)"
+	--
+	if !awayforscientist{
+		"%(nrrtr)(Their eyes glaze over.)\e"
+		zonedout = 1
+	}else{
+		"%(nrrtr)(Installation beginning.)\e"
+	}
+	
+}
+
+//------------------------------------------------------------------------------
+//Installation completion message
+//------------------------------------------------------------------------------
+OnInstallComplete
+{
+	_ref0 = SPLIT(reference[0],' with',2)[0] //hogehoge with hemohemo
+	
+	"%(nrrtr)"
+	--
+	/*
+	if _ref0 == "shell" {
+		"shell"
+	}
+	elseif _ref0 == "ghost" {
+		"ghost"
+	}
+	elseif _ref0 == "balloon" {
+		"balloon"
+	}
+	elseif _ref0 == "plugin" {
+		"plugin"
+	}
+	*/
+	--
+	"(Installation of %(reference1) complete.)%(br)"
+	--
+	if basewarenameex == 'SSP' {
+		_id = ''
+		if _ref0 == "shell" {
+			_id = 'shell'
+		}
+		elseif _ref0 == "ghost" {
+			_id = 'ghost'
+		}
+		elseif _ref0 == "balloon" {
+			_id = 'balloon'
+		}
+		
+		if _id != '' {
+			"(What would you like to do with it?)"
+			--
+			AYATEMPLATE.MenuItem("Switch","OnAYATEMPLATE.InstallChange",_id,200)
+			--
+			AYATEMPLATE.MenuItem("Do nothing","Menu_CANCEL")
+		}
+	}
+}
+
+OnAYATEMPLATE.InstallChange
+{
+	"\![change,%(reference[0]),lastinstalled]"
+}
+
+//------------------------------------------------------------------------------
+//インストール失敗メッセージ
+//------------------------------------------------------------------------------
+OnInstallFailure
+{
+	"%(nrrtr)(The installation failed.%(reference[0]))\e"
+}
+
+//------------------------------------------------------------------------------
+//インストール拒否（他のゴーストのためのアーカイブだった）
+//------------------------------------------------------------------------------
+OnInstallRefuse
+{
+	"%(nrrtr)(This file is meant for %reference0.)\e"
+}
+
+
+//******************************************************************************
+//消滅関連
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+// Kill instruction
+//------------------------------------------------------------------------------
+OnVanishSelecting
+{
+	"%(nrrtr)(They don't even know what you're about to do. You scoundrel.)\e"
+}
+
+//------------------------------------------------------------------------------
+// Start of uninstall
+//------------------------------------------------------------------------------
+OnVanishSelected
+{
+	"%(tsaNeutral)%(medkit)"
+	--
+	if !awayforscientist{
+		"\0%(tsaNeutral)...huh? \w8\w8Why...  why does it hurt? \w[630]%username? \w[745]It hurts, it hurts, oh fuck I'm dying, I think I'm dying--\e"
+
+	}else{
+		"%(nrrtr)(Somewhere, they're in pain...)"
+	}
+	
+}
+
+//------------------------------------------------------------------------------
+// Stop
+//------------------------------------------------------------------------------
+OnVanishCancel
+{
+	"%(tsaNeutral)%(medkit)"
+	--
+	if !awayforscientist{
+		"\0%(tsaNeutral)Was that it...? \w[412]It's gone. \w8It's gone.\w4.\w4. I thought I was going to die.\w4.\w4. \w[615]You didn't do that, did you...?"
+
+	}else{
+		"%(nrrtr)(Crisis averted. Somewhere, %(TheAssistant)'s heart thunders, feeling your power overwhelming them, just to fade away.)"
+	}
+}
+
+//------------------------------------------------------------------------------
+//actually not for us tbh, other ghosts
+//------------------------------------------------------------------------------
+OnVanished
+{
+	"%(tsaNeutral)%(medkit)"
+	--
+	if !awayforscientist{
+		"\0%(tsaNeutral)--ow, ow, ow, make it stop, I-- I, oh, I think I'm going t-to.\w4.\w4. going to.\w4.\w4.%(br)%(nrrtr)(They've fallen unconscious.)\w[400]%(br)(Good night, %(TheAssistant). Sleep forever. It's better for you, this way.)"
+
+	}else{
+		"%(nrrtr)(Even with The Scientist, now they're out of their misery.)"
+	}
+	
+}
+
+
+//******************************************************************************
+//メールチェック
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+//メールチェック開始
+//------------------------------------------------------------------------------
+OnBIFFBegin
+{
+	"%(tsaNeutral)%(medkit)"
+	--
+	if !awayforscientist{
+		"\0%(tsaNeutral)%(nrrtr)(%(TheAssistant) seems to have zoned out.)\e"
+		zonedout = 1
+	}else{
+		"%(nrrtr)(Beginning email check.\w3.\w3.)"
+	}
+	
+}
+
+//------------------------------------------------------------------------------
+//メールチェック成功
+//------------------------------------------------------------------------------
+OnBIFFComplete
+{
+	if reference[0] == 0
+	{
+		//---- メールは無かった
+		"(There were no new emails.)\e"
+	}
+	else
+	{
+		//---- メールが届いていた
+		"(%(reference0) new emails.)\e"
+	}
+	zonedout = 1
+}
+
+//------------------------------------------------------------------------------
+//メールチェック失敗
+//------------------------------------------------------------------------------
+OnBIFFFailure
+{
+	if reference[0] == "timeout"
+	{
+		//---- タイムアウト
+		"(It timed out.)\e"
+	}
+	elseif reference[0] == "kick"
+	{
+		//---- 蹴られた
+		"(The server declined.)\e"
+	}
+	elseif reference[0] == "defect"
+	{
+		//---- 設定誤り
+		"(Something went wrong. Please check your mail settings and try again.)\e"
+	}
+	else
+	{
+		//---- 原因不明
+		"(Failed by an unknown cause.)\e"
+	}
+}
+
+
+//******************************************************************************
+//ネットワーク更新
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+//ネットワーク更新開始
+//------------------------------------------------------------------------------
+OnUpdateBegin
+{
+	"%(tsaNeutral)%(medkit)"
+	--
+	if !awayforscientist{
+		"%(nrrtr)(Their eyes have glazed over.)"
+		zonedout = 1
+	}else{
+		"%(nrrtr)(Beginning update...)"
+	}
+	
+}
+
+//------------------------------------------------------------------------------
+//ネットワーク更新準備完了
+//------------------------------------------------------------------------------
+OnUpdateReady
+{
+	"(%(reference0 + 1) files ready to download.)"
+}
+
+//------------------------------------------------------------------------------
+//ネットワーク更新終了
+//------------------------------------------------------------------------------
+OnUpdateComplete
+{
+	if reference[0] == "none"
+	{
+		"%(nrrtr)(There was nothing new.)"
+	}
+	else
+	{
+		"%(tsaNeutral)%(medkit)"
+	--
+		OnUpdateVars
+		if !awayforscientist{
+			zonedout = 0
+			"(Update completed.)%(br)\0%(tsaNeutral)What just happened...? Did I miss something.\w4.\w4?"
+		}else{
+			"%(nrrtr)(Update successful. Anything could happen to %(TheAssistant) when they return...)"
+		}
+		
+	}
+}
+
+//------------------------------------------------------------------------------
+// Variables that change with the update
+//------------------------------------------------------------------------------
+OnUpdateVars{
+	version = "V1.0.1 (beta)"
+
+	if !ISVAR(fontheight){
+		fontheight = 12
+	}
+	INIT(&betaupdates)
+	
+	bodypart[6] = "right leg"
+	bodypart[7] = "left leg"
+	
+	if !ISVAR(leftinfected){
+		leftinfected = IARRAY
+		for _i=0; _i < ARRAYSIZE(bodypart); _i++{
+			leftinfected[_i] = 0;
+		}
+	}
+
+}
+
+INIT{
+	if !ISVAR(_argv[0]){
+		_argv[0] = 0
+	}
+}
+
+
+//------------------------------------------------------------------------------
+//ネットワーク更新失敗
+//------------------------------------------------------------------------------
+OnUpdateFailure
+{
+	if reference[0] == "timeout"
+	{
+		"%(nrrtr)(It timed out.)\e"
+	}
+	elseif reference[0] == "md5 miss"
+	{
+		//---- MD5値が一致しなかった
+		"%(nrrtr)(The MD5 values are incorrect. You should report this to one of the devs.)"
+	}
+	else
+	{
+		//---- 上記以外の理由で失敗した
+		"%(nrrtr)(It failed due to %reference0.)"
+	}
+}
+
+//------------------------------------------------------------------------------
+//ネットワーク更新 ダウンロード開始
+//------------------------------------------------------------------------------
+OnUpdate.OnDownloadBegin
+{
+	"%(nrrtr)(Downloading file %(reference[0]).)\e"
+}
+
+//------------------------------------------------------------------------------
+//ネットワーク更新 MD5値照合開始
+//------------------------------------------------------------------------------
+OnUpdate.OnMD5CompareBegin
+{
+	"%(nrrtr)(Comparing MD5...)\e"
+}
+
+//------------------------------------------------------------------------------
+//ネットワーク更新 MD5値一致
+//------------------------------------------------------------------------------
+OnUpdate.OnMD5CompareComplete
+{
+	"%(nrrtr)(MD5 validated.)\e"
+}
+
+//------------------------------------------------------------------------------
+//ネットワーク更新 MD5値不一致
+//------------------------------------------------------------------------------
+OnUpdate.OnMD5CompareFailure
+{
+	"%(nrrtr)(MD5 validated.)\e"
+}
+
+//******************************************************************************
+//ヘッドラインセンス
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+//ヘッドラインセンス開始
+//------------------------------------------------------------------------------
+OnHeadlinesenseBegin
+{
+	"%(nrrtr)(Acquiring headlines...)\e"
+}
+
+//------------------------------------------------------------------------------
+//ヘッドライン読み上げ
+//------------------------------------------------------------------------------
+OnHeadlinesense.OnFind
+{
+	//---- はじめのセリフ
+	if reference[2] == "First" || reference[2] == "First and Last"
+	{
+		"%(nrrtr)\b2(Front page.)\e"
+	}
+	elseif reference[2] == "Next"
+	{
+		"%(nrrtr)\b2(Next page.)\e"
+	}
+	elseif reference[2] == "Last"
+	{
+		"%(nrrtr)\b2(Final page.)\e"
+	}
+	--
+	//---- headline body
+	"\n\n%(reference[3])\n\n"
+	--
+	//---- 選択肢
+	if reference[2] == "First" || reference[2] == "Next"
+	{
+		//---- if there is a next page
+		AYATEMPLATE.MenuItem("Next","")
+		--
+		AYATEMPLATE.MenuItem("Website",reference[1])
+		--
+		AYATEMPLATE.MenuItem("Stop","Menu_HEADLINECANCEL",150)
+	}
+	else
+	{
+		//---- No next page
+		AYATEMPLATE.MenuItem("Website",reference[1])
+		--
+		AYATEMPLATE.MenuItem("Stop","Menu_HEADLINECANCEL",150)
+	}
+}
+
+//------------------------------------------------------------------------------
+//ヘッドライン更新が無かった
+//------------------------------------------------------------------------------
+OnHeadlinesenseComplete
+{
+	"\0%(nrrtr)(No %(reference[0]) update.)\e"
+}
+
+//------------------------------------------------------------------------------
+//ヘッドラインセンス失敗
+//------------------------------------------------------------------------------
+OnHeadlinesenseFailure
+{
+	"%(nrrtr)(Headline acquisistion failure. Headlines "
+	--
+	if reference[0] == "can't download"
+	{
+		"can't be downloaded."
+	}
+	elseif reference[0] == "can't analyze"
+	{
+		"can't be analyzed."
+	}
+	else
+	{
+		"have an unknown error."
+	}
+	--
+	")\e"
+}
+
+
+//******************************************************************************
+//ファイル作成関連
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+//updates2.dau作成開始
+//------------------------------------------------------------------------------
+OnUpdatedataCreating
+{
+	"(They seem to have zoned out.)\e"
+	zonedout = 1
+}
+
+//------------------------------------------------------------------------------
+//updates2.dau作成完了
+//------------------------------------------------------------------------------
+OnUpdatedataCreated
+{
+	"(They come back to the present.)%(br)%(tsaNeutral)What 'update' did I miss...?\e"
+	zonedout = 0
+}
+
+//------------------------------------------------------------------------------
+//NAR作成開始
+//------------------------------------------------------------------------------
+OnNarCreating
+{
+	//"What did you want...?%(br)(Their eyes glaze over. Where should the NAR data be created?)"
+	"%(nrrtr)(Processing...)"
+	zonedout = 1
+}
+
+//------------------------------------------------------------------------------
+//NAR作成完了
+//------------------------------------------------------------------------------
+OnNarCreated
+{
+	if awareness > LOWCONSC{
+		"(They blink, coming back to the present.)%(br)%(tsaNeutral)Something's new. Something was added... %(br)"
+	   
+	}
+	"%(nrrtr)(Nar of %(reference0) created at %(reference1).)\e"
+	
+	zonedout = 0
+}
+
+
+//******************************************************************************
+//clock adjustment
+//Referenced to the dictionary of Mika (http://homepage2.nifty.com/ko-ki/). Thanks > Mr. Koki
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+//時計合わせ開始
+//------------------------------------------------------------------------------
+OnSNTPBegin
+{
+	"(%(TheAssistant) zones out to the sound of ticking clocks.)\e"
+	zonedout = 1
+}
+
+//------------------------------------------------------------------------------
+//Time acquisition succeeded, comparison started
+//This function will re-create the time in an easy-to-read format as shown in 2008/03/25 19:15:05.
+// See the description of the STRFORM function for details!
+//If you don't understand, leave it as it is.
+//------------------------------------------------------------------------------
+
+SNTPCompare_StrForm
+{
+	_txt = SPLIT(_argv[0],',')
+	STRFORM("$04d/$02d/$02d $02d:$02d:$02d",TOINT(_txt[0]),TOINT(_txt[1]),TOINT(_txt[2]),TOINT(_txt[3]),TOINT(_txt[4]),TOINT(_txt[5]))
+}
+
+OnSNTPCompare
+{
+	"\0%(nrrtr)\_q/
+	(Before: %(SNTPCompare_StrForm(reference[2]))\n/
+	After:   %(SNTPCompare_StrForm(reference[1]))\n/
+	\_q\n"
+	--
+	if reference[3] == 0
+	{
+		"Perfect.)\e"
+	}
+	else
+	{
+		//\6は補正実行タグ。消しちゃだめ
+		"\6%(nrrtr)Corrected by %(reference[3]) seconds.)"
+	}
+}
+
+//------------------------------------------------------------------------------
+//時計合わせ失敗
+//------------------------------------------------------------------------------
+OnSNTPFailure
+{
+	"(It failed.)%(br)What is going on...?\e"
+	zonedout = 0
+}
+
+
+//******************************************************************************
+//そのほか
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+// Change display resolution
+//------------------------------------------------------------------------------
+OnDisplayChange
+{
+	//---- 変数にディスプレイ解像度と色深度に関する情報を取得
+	//---- 使うかどうかは分からないがとりあえず保持しておく
+	displaybpp    = reference[0]
+	displaywidth  = reference[1]
+	displayheight = reference[2]
+}
+
+//------------------------------------------------------------------------------
+//URL drop
+//Also called when you start installing ghosts from the ghost installer with CROW
+//------------------------------------------------------------------------------
+OnURLDropping
+{
+	"I'm getting data from %(reference[0])...\e"
+}
+
+//------------------------------------------------------------------------------
+//起動時に MATERIA を検出
+//------------------------------------------------------------------------------
+OnEmbryoExist
+{
+	"%(nrrtr)(Ukagaka is up and running.)\e"
+}
+
+//------------------------------------------------------------------------------
+//起動時に猫どりふを検出
+//------------------------------------------------------------------------------
+OnNekodorifExist
+{
+	if !awayforscientist{
+		"What's a Nekodori...?\e"
+	}else{
+		"%(nrrtr)()\e"
+	}
+	
+}
+
+//------------------------------------------------------------------------------
+//スクリーンセーバー実行開始
+//------------------------------------------------------------------------------
+OnScreenSaverStart
+{
+	"Ah, it's getting dark!\w8\e"
+}
+
+//------------------------------------------------------------------------------
+//スクリーンセーバー実行終了
+//------------------------------------------------------------------------------
+OnScreenSaverEnd
+{
+	"Finally, it's bright again...\e"
+}

@@ -1,0 +1,181 @@
+//******************************************************************************
+// YAYA Ghost Template
+// Word Dictionary
+//******************************************************************************
+
+
+//******************************************************************************
+// Global definitions
+//******************************************************************************
+#globaldefine LOWCONSC 40
+#globaldefine HIGHCONSC 75
+#globaldefine TRUSTHIGH 75
+#globaldefine TRUSTGOOD 25
+#globaldefine TRUSTBAD -25
+
+
+
+
+//******************************************************************************
+// Word
+//******************************************************************************
+
+TheAssistant{
+	"%tsanickname"
+	"The Assistant"
+	if theyaremoby{
+		"Moby"
+	}else{
+		"The Assistant"
+	}
+
+}
+
+ellps{
+	".\w4.\w4."
+}
+
+TheScientist{
+	"The Scientist"
+	"The Scientist"
+	"The Scientist"
+	"The Doctrix"
+
+}
+
+oldChemicals
+{
+	"bitter salt"
+	"brimstone"
+	"rouge"
+	"saltpetre"
+	"vitriol"
+	"caustic potash"
+	"ferrum"
+	"isinglass"
+	"corundum"
+	"caustic soda"
+	"red liquor"
+	"quicksilver"
+	"lunar caustic"
+	"antimony"
+	"cobalt"
+	"orpiment"
+	"realgar"
+	"molybdena"
+	"acidum salis"
+	"aqua fortis"
+	"aqua tofani"
+	"aqua vitae"
+	"cinnabar"
+	"hartshorn"
+	"nix alba"
+	"pyrite"
+}
+
+planetaryMetals{
+	"lead"
+	"tin"
+	"iron"
+	"gold"
+	"copper"
+	"mercury"
+	"quicksilver"
+	"silver"
+	//there are only 7 metals, mercury = quicksilver
+}
+
+mundaneAndLaterMetals{
+	"antimony"
+	"arsenic"
+	"bismuth"
+	"cobalt"
+	"magnesium"
+	"manganese"
+	"nickel"
+	"oxygen"
+	"phlogiston"
+	"phosphorus"
+	"platinum"
+	"sulfur"
+	"zinc"
+}
+
+alchemicalCompounds
+{
+	"acid"
+	"sal ammoniac"
+	"aqua fortis"
+	"aqua regia"
+	"spirit of wine"
+	"aqua vitae"
+	"amalgam"
+	"cinnabar"
+	"vinegar"
+	"vitriol"
+	"brimstone"
+}
+
+alchemicalProcesses{
+	"calcination"
+	"congelation"
+	"fixation"
+	"solution"
+	"digestion"
+	"distillation"
+	"sublimation"
+	"ceration"
+	"fermentation"
+	"multiplication"
+	"projection"
+}
+
+
+//******************************************************************************
+//Word acqusition events
+//******************************************************************************
+
+On_\ms
+{
+	ms
+}
+
+On_\mz
+{
+	mz
+}
+
+On_\ml
+{
+	ml
+}
+
+On_\mc
+{
+	mc
+}
+
+On_\mh
+{
+	mh
+}
+
+On_\mt
+{
+	mt
+}
+
+On_\me
+{
+	me
+}
+
+On_\mp
+{
+	mp
+}
+
+On_\dms
+{
+	dms
+}

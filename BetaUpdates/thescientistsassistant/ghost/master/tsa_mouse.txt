@@ -1,0 +1,240 @@
+//******************************************************************************
+// YAYA Ghost Template
+// Mouse input related dictionaries
+//******************************************************************************
+
+
+//******************************************************************************
+//Mouse Processing Section
+///
+//The following describes the actual talk. Function names follow the rules below.
+///[Type] + [Scope] + [Part].
+///Type is one of MouseMove, MouseDoubleClick, MouseWheelUp, MouseWheelDown.
+//Scope is a scope number such as \0,\1,}.
+//Scope indicates which part of the hit judgment is used. In the case of an event at a place where there is no hit judgment
+//There is no site.
+//******************************************************************************
+
+
+//******************************************************************************
+// stroke response
+//******************************************************************************
+MouseMove0Head
+{
+	pets++
+	
+	
+	//this causes harm if they have a head injury
+	
+	if (visualstate[1] < 2){
+	
+		if awareness < HIGHCONSC && RAND(4) > 0{
+			awarenessbuff--
+		}
+		
+		if awareness > HIGHCONSC{
+		
+			if trust > TRUSTGOOD{
+				//trust+= .25
+					if pets > 40{
+						"%(tsaOpen)%(tsaRelieved)Okay, it can be kind of nice%(ellps)"
+						"%(tsaOpen)%(tsaRelieved)Only because it's you%(ellps)"
+						"%(tsaOpen)%(tsaRelieved)It's such%(ellps) %(tsaAlert)a kind touch?"
+						"%(tsaOpen)%(tsaHappy)Okay, \w4that one felt really nice%(ellps)"
+					}else{
+						"%(tsaOpen)%(tsaRelieved)It's still a little weird, you know."
+						"%(tsaOpen)%(tsaAnnoyed)You're going to keep petting me?"
+						"%(tsaAnnoyed)I appreciate your company, but this is still a little%(ellps) %(tsaGesture)demeaning, \w4I guess? \w8%(tsaRelieved)It could be worse%(ellps)"
+						"%(tsaGesture)%(tsaAnnoyed)I hope you like it. \w8I imagine my hair is in pretty bad condition%(ellps)"
+					}
+					
+			}elseif trust > TRUSTBAD{
+				if pets < 20{
+					"%(tsaCurled)%(tsaScared)What are you--?"
+					"%(tsaCurled)%(tsaAnnoyed)This is a little childish, \w4don't you think?"
+					"%(tsaCurled)%(tsaAnnoyed)Hey, \w4that tickles."
+					"%(tsaCurled)Huh%(ellps)"
+				}else{
+					"%(tsaGesture)%(tsaAnnoyed)Always you with the petting%(ellps)"
+					"%(tsaGesture)%(tsaAnnoyed)More pets%(ellps)?"
+					"%(tsaNeutral)%(tsaAnnoyed)You're still petting me?"
+					"%(tsaCurledUp)I don't know if I like this or not%(ellps)"
+				}
+				
+			}else{
+				"%(tsaCurledUp)Why are you?"
+				"%(tsaNeutral)Stop that."
+				"%(tsaScared)%(nrrtr)(They give you a scared look.)"
+				"%(tsaScared)%(nrrtr)(They look concerned.)"
+				trust--
+			}
+		}elseif awareness > LOWCONSC{
+			if trust > TRUSTBAD{
+				"%(nrrtr)(Maybe this will help them feel better.)"
+				"%(nrrtr)(Hopefully they find this soothing.)"
+				"%(tsaCurled)%username%(ellps)?"
+				"%(tsaCurled)%(tsaAnnoyed)What are you doing%(ellps)?"
+			}else{
+				"%(nrrtr)(They're aware of you.)"
+				"%(nrrtr)(They tremble underneath your cursor.)"
+				"%(nrrtr)(They let out a choking groan.)"
+				"%(nrrtr)(Your cursor catches in one of their tangles, and they bite back a whimper.)"
+			}
+		}else{
+			
+			ConfigureHealth
+			if trust > TRUSTBAD{
+				"%(nrrtr)(Sometimes all you can do is stroke someone until they feel better.)"
+				"%(nrrtr)(If you can't hug them till they wake up, maybe this will do.)"
+				"%(nrrtr)(Will they wake up soon?)"
+				"%(nrrtr)(Things must have gone bad to have them nearly unconscious.)"
+				"%(nrrtr)(If you're here, maybe you can make things okay again.)"
+				"%(nrrtr)(It's okay, %(TheAssistant), you're here now.)"
+				"%(nrrtr)(With a little medicine and love, they can recover.)"
+				"%(nrrtr)(It takes work, but a kind hand can help.)"
+				"%(nrrtr)(You smooth the hair back from their nervously sweaty head.)"
+				"%(nrrtr)(Sometimes it's all you can do%(ellps) to respond to the aftermath of a horrible \w2disaster.)"
+			}else{
+				"%(nrrtr)(They don't know the ramifications of what has happened.)"
+				"%(nrrtr)(They're unaware of your ministrations.)"
+				"%(nrrtr)(They're so fragile.)"
+				"%(nrrtr)(It would be so easy to hurt them.)"
+				"%(nrrtr)(They don't know.)"
+				if trust < TRUSTBAD - 25{
+					"%(nrrtr)(Maybe it's you that's the disaster.)"
+				}
+			}
+		}
+	}else{
+	
+		//this causes them physical harm
+		awarenessbuff++
+		trust--
+		ConfigureHealth
+		if awareness > HIGHCONSC{
+			"%(tsaCurledUp)Ouch! That hurts!"
+			"%(tsaCurledUp)Why are you%(ellps)? My head hurts%(ellps)"
+		}elseif awareness > LOWCONSC{
+			"%(tsaCurledUp)My head%(ellps)"
+			"%(tsaCurledUp)It's all %(oldChemicals)%(ellps)"
+			"%(nrrtr)(Your cursor glazes over their head wound.)%(br)%(tsaNeutral)Ouch%(ellps) stop that%(ellps)"
+		}else{
+			"%(nrrtr)(They whimper pitifully, in pain.)"
+			"%(nrrtr)(Your cursor glazes over their head wound, and they let out a groan.)"
+			"%(nrrtr)(Maybe this isn't helping the head wound.)"
+		}
+	}
+}
+
+/*
+MouseMove0Face
+{
+	"sakura face pet"
+}
+*/
+//******************************************************************************
+// Poked and prodded response
+//******************************************************************************
+
+// Pecked response on the body side
+MouseDoubleClick0Head
+{
+	punches++
+	currentpunches++
+	trust--
+	if currentpunches % 3{
+		zonedout = 1
+		//*bonk* *bonk* forget
+	}
+	//hit 'em in the head and they Conk
+	awarenessbuff+= 1
+	
+	ConfigureHealth
+	"\![sound,play,sounds/slap.wav,--volume=85]"
+	--
+	//Also, at this rate, you're gonna give them a fuckin concussion. 
+	if currentpunches > 10{
+		OnGiveConcussion
+	}
+	//We do a line so we're certain the above hides the below
+	
+	--
+	if awareness > HIGHCONSC{
+		
+		if trust > TRUSTGOOD{
+			"%(tsaNeutral)Hey! What was that for%(ellps)?"
+			"%(tsaNeutral)%(tsaOuch)That's not like you!"
+		}elseif trust > TRUSTBAD{
+			"%(tsaNeutral)What was that for...?"
+			"%(tsaCurledUp)%(nrrtr)(They give you an incredulous look, but take it.)"
+		}else{
+			"%(tsaCurledUp)%(tsaHeadDown)%(nrrtr)(They take the hit.)"
+			"%(tsaCurledUp)%(tsaHeadDown)%(nrrtr)(They know how this works.)"
+			"%(tsaCurledUp)%(tsaHeadDown)%(nrrtr)(They can handle a punch.)"
+			"%(tsaHeadDown)%(nrrtr)(They huff in exasperation.)"
+		}
+	}elseif awareness > LOWCONSC{
+		
+		if trust > TRUSTBAD{
+			"%(nrrtr)(They whimper.)%(br)%(tsaNeutral)Why%(ellps)?"
+			"%(nrrtr)(They groan and give you a look.) %(br)%(tsaCurledUp)Why?"
+			
+		}else{
+			"%(tsaCurledUp)%(tsaHeadDown)%(nrrtr)(They take the hit and move to protect themself.)"
+			"%(tsaCurledUp)%(tsaHeadDown)%(nrrtr)(They do their best to protect themself.)"
+			"%(tsaCurledUp)%(tsaHeadDown)%(nrrtr)(They instinctually fold in.)"
+		}
+	}else{
+		"%(nrrtr)(They let out a low groan.)"
+		"%(tsaHeadDown)%(nrrtr)(They collapse inward.)"
+		"%(nrrtr)(They barely react, only letting out a groan.)"
+		
+	}
+}
+
+MouseDoubleClick0Face
+{
+	MouseDoubleClick0Head
+}
+
+
+MouseDoubleClick0
+{
+	OpenMenu
+}
+
+
+
+//******************************************************************************
+//Mouse processing section core
+//The second number in AYATEMPLATE.MouseMoveWheelFunc is the "sensitivity".
+//The first number (0 or 1) is used to determine whether it is Move or Wheel.
+//No need to change it.
+//******************************************************************************
+
+OnMouseMove
+{
+	AYATEMPLATE.MouseMoveWheelFunc(0,50,'MouseMove')
+}
+
+OnMouseWheel
+{
+	_result = ''
+	if TOINT(reference[2]) > 0 {
+		_result = AYATEMPLATE.MouseMoveWheelFunc(1,4,'MouseWheelUp')
+	}
+	else {
+		_result = AYATEMPLATE.MouseMoveWheelFunc(1,4,'MouseWheelDown')
+	}
+	
+	if _result == '' {
+		_result = AYATEMPLATE.MouseMoveWheelFunc(1,4,'MouseWheel')
+	}
+	
+	_result
+}
+
+OnMouseDoubleClick
+{
+	AYATEMPLATE.MouseEventExec('MouseDoubleClick');
+}

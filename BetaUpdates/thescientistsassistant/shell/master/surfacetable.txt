@@ -1,0 +1,62 @@
+charset,UTF-8
+version,1
+
+option,DisableNoDefineSurfaces
+
+group,__disabled
+{
+	1030,__parts
+	1031,__parts
+	1032,__parts
+	1033,__parts
+	1040,__parts
+	1041,__parts
+	1042,__parts
+	1043,__parts
+}
+
+group,TheAssistant
+{
+	scope,0
+	
+	1000,Neutral
+}
+
+group,Medkit
+{
+	scope,2
+	
+	2000,Closed
+	2000,Closed
+}
+
+group,Antibacterial
+{
+	scope,4
+	
+	4000,Bottle
+}
+
+group,Washcloth
+{
+	scope,5
+	
+	4100,Rag
+}
+
+group,Bandaid
+{
+	scope,6
+	
+	4200,Standard
+}
+
+group,Gauze
+{
+	scope,7
+	
+	4300,Bottle
+}
+
+
+

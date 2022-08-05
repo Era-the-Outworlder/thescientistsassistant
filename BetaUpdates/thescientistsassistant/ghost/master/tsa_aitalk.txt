@@ -1,0 +1,357 @@
+//******************************************************************************
+// YAYA Ghost Template
+// Talk Dictionary
+//******************************************************************************
+
+
+//******************************************************************************
+// RandomTalk
+//******************************************************************************
+RandomTalk
+{
+    TOSTR(EVAL(CHR(0x22)+RandomTalkEx()+CHR(0x22)))
+}
+
+//------------------------------------------------------------------------------
+//Random talk body: Please describe random talk in this
+// Only here, please always write it enclosed in ' '.
+//As %( ) is expanded in the contents of RandomTalk above, you do not need to use " ".
+//High-speed measures
+//------------------------------------------------------------------------------
+RandomTalkEx : nonoverlap
+{
+	if !awayforscientist{
+		
+		if awareness > HIGHCONSC{
+		//Alert.
+		
+			if trust > TRUSTHIGH && username == "you"
+			{
+				"%(tsaOpen)Hey, um%(ellps) I don't think I've gotten your name. \_w[2000]%(tsaAlert)\n[200]Which is a little embarrassing. \_w[800] So I figured I'd ask%(ellps) What's your name?"
+				--
+				"\![open,inputbox,OnNameSet,0]"
+			}
+			elseif trust > TRUSTGOOD{ //good trust
+				
+				"My-- well. %(TheScientist) has been focused on the human body a lot lately."
+				"The other day I thought I saw a homunculus in the lab.\n[200] It was just a poppet someone had dropped."
+				"I've been wondering what kind of uses might still be discovered for %(oldChemicals)..."
+				"%(tsaNeutral)Need to be careful handling %(oldChemicals)."
+				"%(nrrtr)(They mutter about alchemy under their breath.)%(br)%(tsaNeutral)%(ellps)%(mundaneAndLaterMetals), %(alchemicalCompounds), %(planetaryMetals), and %(oldChemicals)%(ellps)"
+				"%(tsaNeutral)Maybe combining %(oldChemicals) and %(alchemicalCompounds) by %(alchemicalProcesses)%(ellps)? "
+				
+			}
+			elseif trust > TRUSTBAD{ //middling/no trust
+				"%(tsaNeutral)Need to be careful handling %(oldChemicals)."
+				"%(nrrtr)(They mutter about alchemy under their breath.)%(br)%(tsaNeutral)%(ellps)%(mundaneAndLaterMetals), %(alchemicalCompounds), %(planetaryMetals), and %(oldChemicals)%(ellps)"
+				"%(tsaNeutral)Maybe combining %(mundaneAndLaterMetals) and %(alchemicalCompounds) by %(alchemicalProcesses)%(ellps)?"
+				
+				
+					
+			}else{ //negative trust
+				"%(tsaNeutral)If I get %(alchemicalCompounds) and %(oldChemicals) together, \w4maybe, \w4just maybe%(ellps)"
+			}
+			
+		}elseif awareness > LOWCONSC{
+			//They're doin ok.
+			if trust > TRUSTGOOD{ //good trust
+				"This could be worse. It could- It could be- right?"
+				"It's not... it's not so bad."
+				"...you're still here..."
+			}
+			elseif trust > TRUSTBAD{ //middling/no trust
+				"%(tsaNeutral)So far, \w4so good%(ellps) yeah? \w8Yeah%(ellps)"
+				"%(tsaNeutral)%(honor) is not her%(ellps) not her%(ellps) %(tsaCurledUp)I wonder what she's doing%(ellps)"
+			}else{ //negative trust
+				"%(ellps)"
+				"%(ellps) %(br)%(nrrtr)(They watch you warily.)"
+				if username != "you"
+				{"%(ellps) %(br)%(nrrtr)(%(TheAssistant) watches you very warily.)"}
+			}
+			
+		}else{
+		//They're Out.
+		//[Era note] the "\e Character Name" is so that ghosts that implement OnOtherGhostTalk can "get the reference"
+		
+			if trust > TRUSTGOOD{ //good trust
+				"this wasn't%(ellps) don't worry%(ellps) too much."
+				"is%(ellps) azoth-- my veins?"
+				"%(ellps)the stone-- no%(ellps) it's not%(ellps)"
+
+				"%(ellps)the white lion%(ellps) bounds across the planes%(ellps)\e Planeswalker Ajani Goldmane"
+			}
+			elseif trust > TRUSTBAD{ //middling/no trust
+				"not alone%(ellps) this place%(ellps)"
+				"so%(ellps) tired%(ellps)"
+
+				"%(ellps)to be driven so mad%(ellps) by the fruits of his own research%(ellps)\e Griffin, The Invisible Man"
+				"%(ellps)peppy%(ellps)bunny%(ellps) cute li'l ears%(ellps)\e Ruby, rabbit Villager"
+				"%(ellps)odd names%(ellps) for lab mice%(ellps)\e Pinky and the Brain"
+			}else{ //negative trust
+				if username != "you"
+				{"%(ellps) (It's hard to tell, but %(TheAssistant) is trembling ever-so-slightly.)"}
+				"%(ellps) (It's hard to tell, but they're trembling ever-so-slightly.)"
+				
+
+				"%(ellps)he carried a black sword%(ellps) and the storm it brought-- \_w[1000]death.\e Elric IIIV, 428th Emperor of Melniboné"
+				"%(ellps)blindly he sought immortality%(ellps) and in his jealousy distroyed his fellows%(ellps)\e Seath the Scaleless"
+			}
+			
+		}
+		
+	}else{
+		"%(tsaNeutral)"
+	}
+	
+
+	
+}
+
+OnNameSet
+{
+	username = reference0
+	
+	"%(tsaOpen)%(tsaHappy)%(username). \_w[1000]I like it. It suits you."
+}
+//******************************************************************************
+//key pressed.
+//******************************************************************************
+/*
+//------------------------------------------------------------------------------
+// OnKeyPress event
+//------------------------------------------------------------------------------
+/// This event is triggered when any key on the keyboard is pressed.
+// When specifying a function key, use "f1" or the like.
+// The pressed key is stored in reference0.
+// It is recommended to use if or case~when statements to branch the event.
+*/ 
+
+//When the key is pressed, the key is stored in reference0.
+OnKeyPress
+{
+	case reference0 {
+		when "t" {
+			'\![raise,OnAiTalk]'
+		}
+		when "r" {
+			'\![reload,shiori](RELOAD SHIORI)'
+		}
+		when "s"{
+			'\![reload,shell]%(tsaNeutral)(RELOAD SHELL)'
+		}
+		when "m" {
+			if ISFUNC('OpenMenu') {
+				OpenMenu
+			}
+			else {
+				'\![raise,OnMouseDoubleClick,0,0,0,0,__SYSTEM_KEYDOWN_COL,0,mouse]'
+			}
+		}
+		when "v" {
+			OpenVitals
+		}
+	}
+}
+
+
+OnLeaveForScientist{
+	returnsignal = 0
+	"%(tsaNeutral)Hey%(ellps)I think I should go%(ellps) \x%(TheScientist) may start to get worried if I'm not there%(ellps)\![raise,OnLeaveNow]"
+
+}
+
+OnReturnFromScientist{
+	awayforscientist = 0
+	returnsignal = 1
+	OnBoot
+	
+}
+
+OnLeaveNow{
+	awayforscientist = 1
+	//this ensures they're actually offscreen for the correct amount of time
+	timesinceexperiment = willleaveafter
+	"%(tsaNeutral)"
+}
+
+//******************************************************************************
+// Time signal/overlap
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+// OnMinuteChangeイベント
+//------------------------------------------------------------------------------
+
+OnMinuteChange
+{
+	//Minute processing
+	
+	//Experiment timing
+	timesinceexperiment++
+	
+	//punch tracking
+	if currentpunches > 0{
+		currentpunches--
+	}
+	
+	//poke tracking
+	if currentneedlepokes > 0{
+		currentneedlepokes--
+	}
+	
+	//making sure they are slowly waking up no matter what
+	if getAwareness < HIGHCONSC{
+		awarenessbuff-= .50
+		//Not efficient to run this here, but... won't hurt anything.
+		ConfigureHealth
+	}
+
+	if minute == 0
+	{
+		OnHourChange
+	}
+
+	if !awayforscientist && timesinceexperiment >= willleaveafter{
+		OnLeaveForScientist
+	//reference4 checks to make sure the user was on their computer within the last minute
+	}elseif awayforscientist && timesinceexperiment >= (willleaveafter + 90) && reference4 < 60{
+		OnReturnFromScientist
+	}
+	
+	
+}
+
+//------------------------------------------------------------------------------
+// OnHourChange
+//------------------------------------------------------------------------------
+
+OnHourChange{
+	if timenoises == 1{
+		"\![sound,play,sounds/bell.wav,--volume=70]"
+	
+	}
+
+}
+
+
+//******************************************************************************
+//see-through
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+//OnSecondChange event
+//OnSecondChange event is executed every 1 second. Do not do too much heavy processing here.
+//In this template, only out-of-sight processing is performed.
+//---------------------------------------------------------------------------
+OnSecondChange
+{
+
+	if AYATEMPLATE.mikireflag == 1 && reference[1] == 0
+	{
+		//---- 見切れの終了
+		EndMikireTalk
+	}
+	AYATEMPLATE.mikireflag = reference[1]
+}
+
+//------------------------------------------------------------------------------
+// Out of view
+//------------------------------------------------------------------------------
+MikireTalk
+{
+	if awareness > HIGHCONSC{
+		"%(tsaNeutral)What%(ellps)? It feels \w3tingly."
+       
+    }elseif awareness > LOWCONSC{
+        "%(tsaNeutral)It's%(ellps) tingly.\e"
+    }else{
+		"%(tsaCurledUp)%(nrrtr)(They uncomfortably mumble.)"
+    }
+	
+}
+
+//------------------------------------------------------------------------------
+// End of Out of Sight
+//------------------------------------------------------------------------------
+EndMikireTalk
+{
+	if awareness > HIGHCONSC{
+    
+        "%(tsaNeutral)Oh, the tingly feeling is gone.\e"
+    }elseif awareness > LOWCONSC{
+        "%(tsaNeutral)Ah, this is%(ellps) more normal%(ellps)"
+    }else{
+		"%(nrrtr)(They make a strange noise. You assume they feel less weird now.)"
+    }
+	
+	//\e:chain=mikirego"
+}
+
+
+//------------------------------------------------------------------------------
+// The first random talk after a lookout is a lookout-related talk.
+// This is achieved by chaining.
+//------------------------------------------------------------------------------
+/*
+mikirego
+{{CHAIN
+	"\0%(tsaNeutral)見切れするのと、終了されるのってどっちがマシだろうね。\w8\1見切れてても、そこにいろって言われる方が良いだろ。\w8\0%(tsaNeutral)\n\nでも、中途半端に置いとかれるより、すっぱり終了してもらった方がー。\w8\1\n\nそんな事言うと、すっぱり消されちゃうぞ。\w8\0%(tsaNeutral)\n\n‥\w5‥\w5それはいやだなぁ。\e"
+	"\0%(tsaNeutral)うん、見切れてないって素晴らしいね。\w8\1そんなもんかなぁ。\w8\0%(tsaNeutral)\n\n%(username)、マック朗を１ドットくらい残して見切れさせてあげて。\w8\1\s[11]\n\nえ！？\e"
+}}CHAIN
+*/
+
+//******************************************************************************
+//サーフィス復元
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+//OnSurfaceRestoreイベント
+//------------------------------------------------------------------------------
+OnSurfaceRestore
+{
+	"\0%(tsaNeutral)\1\s[-1]%(medkit)\0\e"
+}
+
+//******************************************************************************
+//トランスレータ
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+//OnTranslateイベント
+//------------------------------------------------------------------------------
+
+
+OnTranslate
+{
+	_talk = "\f[height," + fontheight + "]" + reference[0]
+	 if reference1 == "" && reference2 == ""
+    { //send input box : no event (ref2) , no special flag (ref1)
+        EVAL('"' + REPLACE(_talk,'"','" + CHR(0x22) + "') + '"')
+		
+		
+		//(this line is due to code formatter issues)" 
+    }else{
+		_talk
+	}
+	
+	
+}
+
+
+//------------------------------------------------------------------------------
+//OnTranslateInternalイベント
+//------------------------------------------------------------------------------
+// OnTranslate goes through YAYA -> mainframe -> YAYA, once through the mainframe
+// OnTranslateInternal translates within YAYA.
+// Therefore, reference variables, etc. are passed to this function in an unchanged state.
+// The argument _argv[0] is the content of the talk just before passing it to the main body.
+// It is commented out so that it does not move.
+/*
+OnTranslateInternal
+{
+	_text = _argv[0]
+	_text = REPLACE(_text, "。", "にゅ。")
+	_text
+}
+*/
+

@@ -1,0 +1,184 @@
+//******************************************************************************
+// YAYA Ghost Template
+// Communicate dictionary
+//******************************************************************************
+
+
+//******************************************************************************
+// Talk to us.
+//******************************************************************************
+
+//この関数は現状メニューから呼ばれます
+StartCommunicate
+{
+	//以下の関数は、隣に立っているゴーストを探して、
+	//TalkTo_??? 関数を呼び出すものです。誰も居なければランダムトークをします。
+	//yaya_tmpl_utilにあります。
+	AYATEMPLATE.ExecuteTalkToTalk
+}
+
+//エミリに話しかける
+TalkTo_Emily{
+	"\0%(tsaNeutral)Emily...? You look like a cat."
+}
+
+
+//その他の人に話しかける
+TalkToOther{
+	"\0%(tsaNeutral)Oh, nice to meet you, %(res_reference0)..."
+}
+
+TalkToNobody{
+	"\0%(tsaNeutral)It's too quiet here."
+}
+
+
+//******************************************************************************
+// I was spoken to and I responded.
+//******************************************************************************
+
+//------------------------------------------------------------------------------
+//OnCommunicateイベント
+//------------------------------------------------------------------------------
+OnCommunicate
+{
+	if reference[0] == "user" || reference[0] == "User"
+	{
+		//---- ユーザーからの話しかけ
+		ReplyToUser
+	}
+	else
+	{
+		//---- ゴーストからの話しかけ
+		//以下の関数は、ReplyTo_??? 関数を呼び出すものです。
+		//yaya_tmpl_utilにあります。
+		AYATEMPLATE.ExecuteReplyToTalk(reference[0])
+	}
+}
+
+//------------------------------------------------------------------------------
+// User speaks to you
+//------------------------------------------------------------------------------
+ReplyToUser
+{
+	_talk = TOLOWER(reference[1])
+	if "name is" _in_ reference[1]
+	{
+		//---- Start entering name
+		"\0%(tsaNeutral)What was that? What did you say your name was? \e"
+		teachusername = 1
+	}
+	else
+	{
+		//---- Not name
+		if teachusername == 1
+		{
+			//---- Now we have the name
+			username = reference[1]
+			"\0%(tsaNeutral)%(username), okay. That's a fine name.\e"
+			teachusername = 0
+		}
+		else
+		{
+			//---- Responses to various conversations other than remembering names
+			TalkToUser
+		}
+	}
+}
+
+//------------------------------------------------------------------------------
+//Respond to users (other than remembering names)
+//------------------------------------------------------------------------------
+TalkToUser
+{
+	_talk = TOLOWER(reference[1])
+	if "hello" _in_ _talk || "hey" _in_ _talk
+	{
+		"\0%(tsaNeutral)Hello. \e"
+	}
+	elseif "raise" _in_ _talk && "hand" _in_ _talk{
+		if awareness > LOWCONSC{
+			"%(tsaGesture)Like this%(ellps)?"
+		}else{
+			"%(nrrtr)(They fumble about uselessly.)"
+		}
+	}else
+	{
+		"\0%(tsaNeutral)What did you say? \e"
+	}
+}
+
+//------------------------------------------------------------------------------
+// Talking to me from the Ghost
+//------------------------------------------------------------------------------
+
+//Emily
+ReplyTo_Emily{
+
+	"%(tsaNeutral)%(medkit)"
+	--
+	if !awayforscientist{
+		res_reference0=reference[0]	//さらに相手に話しかける
+		if awareness > HIGHCONSC{
+			"%(tsaNeutral)I'm sorry Miss Emily, I don't understand...\e"
+
+		}elseif awareness > LOWCONSC{
+			"%(tsaNeutral)Oh%(ellps) it's a cat pal%(ellps) did %(TheScientist) make you%(ellps)? \w[1500]That's \w[1000]sad."
+		}else{
+			"%(ellps)cat%(ellps)"
+		}
+		
+	}
+	
+}
+
+
+//Others
+ReplyToOther{
+	"%(tsaNeutral)%(medkit)"
+	--
+	_talk = TOLOWER(reference[1])
+	if !awayforscientist{
+		if "hello" _in_ _talk || "good evening" _in_ _talk || "heya" _in_ _talk || "hi" _in_ _talk
+		{
+			res_reference0=reference[0]	//さらに相手に話しかける
+			if awareness > HIGHCONSC{
+				"%(tsaNeutral)Hello? Have I met you before%(ellps)?"
+				
+			}elseif awareness > LOWCONSC{
+			   "%(tsaCurledUp)Who%(ellps)? \w8You look funny%(ellps)"
+			}else{
+				"%(ellps)did ya \w3say somethin'%(ellps)? Try \w8%(planetaryMetals)%(ellps)"
+			}
+		}
+		else
+		{
+			"%(nrrtr)(They make an ambiguous noise.)"
+		}
+	}else{
+	
+		"%(nrrtr)(Nobody's here to speak.)"
+	}
+	
+}
+
+
+OnNeedlePoke{
+	if !awayforscientist{
+		if currentneedlepokes == 5{
+		//	APPLYINJECTION
+		//Since the above can easily be hidden, and is attached to actual injected medicine, we'd have to make it a separate injury.
+		}
+		if awareness > HIGHCONSC{
+			"%(tsaOuch)Ow!"
+			"%(tsaOuch)Ouch, that hurt!"
+		}elseif awareness > LOWCONSC{
+			"%(tsaOuch)Ow%(ellps)"
+		}else{
+			"%(nrrtr)(Even the poking and prodding doesn't seem to affect them much."
+		}
+		currentneedlepokes++
+		
+	}
+}
+
