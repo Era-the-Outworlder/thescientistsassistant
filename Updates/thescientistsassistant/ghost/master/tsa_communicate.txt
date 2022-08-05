@@ -164,6 +164,21 @@ ReplyToOther{
 
 
 OnNeedlePoke{
-	"%(tsaOuch)Ow!"
+	if !awayforscientist{
+		if currentneedlepokes == 5{
+		//	APPLYINJECTION
+		//Since the above can easily be hidden, and is attached to actual injected medicine, we'd have to make it a separate injury.
+		}
+		if awareness > HIGHCONSC{
+			"%(tsaOuch)Ow!"
+			"%(tsaOuch)Ouch, that hurt!"
+		}elseif awareness > LOWCONSC{
+			"%(tsaOuch)Ow%(ellps)"
+		}else{
+			"%(nrrtr)(Even the poking and prodding doesn't seem to affect them much."
+		}
+		currentneedlepokes++
+		
+	}
 }
 

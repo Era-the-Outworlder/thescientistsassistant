@@ -1,13 +1,12 @@
 Charset,UTF-8
 __system_settings_version__,2
 balloon,C:\Users\ihave\Desktop\Ukagaka\Ghost Jam 2022\balloon\ssp\
-scriptbox.left,3169
+scriptbox.left,2894
 shiori.debugnotify,0
-SurfaceTest.visible,1
-Char.VirtualDesktop,9a14b6e2-7c6c-4a9f-bbaf-e9f498b70f87
-Char2.center,3340
-Char0.center,3039
-scriptbox.top,509
+Char.VirtualDesktop,ddebc1e2-4386-4cd9-a251-5205236e1a13
+Char2.center,3483
+Char0.center,3677
+scriptbox.top,501
 shell,shell\master\
 FirstBoot,booted
 Char1.center,1470

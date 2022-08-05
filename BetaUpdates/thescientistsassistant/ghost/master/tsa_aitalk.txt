@@ -39,6 +39,7 @@ RandomTalkEx : nonoverlap
 				"%(tsaNeutral)Need to be careful handling %(oldChemicals)."
 				"%(nrrtr)(They mutter about alchemy under their breath.)%(br)%(tsaNeutral)%(ellps)%(mundaneAndLaterMetals), %(alchemicalCompounds), %(planetaryMetals), and %(oldChemicals)%(ellps)"
 				"%(tsaNeutral)Maybe combining %(oldChemicals) and %(alchemicalCompounds) by %(alchemicalProcesses)%(ellps)? "
+				"%(tsaCurledUp)%(tsaAnnoyed)There could be some chemical we could mix with the water still%(ellps)"
 				
 			}
 			elseif trust > TRUSTBAD{ //middling/no trust
@@ -50,6 +51,7 @@ RandomTalkEx : nonoverlap
 					
 			}else{ //negative trust
 				"%(tsaNeutral)If I get %(alchemicalCompounds) and %(oldChemicals) together, \w4maybe, \w4just maybe%(ellps)"
+				"%(tsaNeutral)Put %(oldChemicals) in the good water%(ellps)"
 			}
 			
 		}elseif awareness > LOWCONSC{
@@ -83,7 +85,7 @@ RandomTalkEx : nonoverlap
 			elseif trust > TRUSTBAD{ //middling/no trust
 				"not alone%(ellps) this place%(ellps)"
 				"so%(ellps) tired%(ellps)"
-
+				"no%(ellps) no water%(ellps)"
 				"%(ellps)to be driven so mad%(ellps) by the fruits of his own research%(ellps)\e Griffin, The Invisible Man"
 				"%(ellps)peppy%(ellps)bunny%(ellps) cute li'l ears%(ellps)\e Ruby, rabbit Villager"
 				"%(ellps)odd names%(ellps) for lab mice%(ellps)\e Pinky and the Brain"

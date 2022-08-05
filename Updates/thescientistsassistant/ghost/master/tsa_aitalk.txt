@@ -22,7 +22,7 @@ RandomTalkEx : nonoverlap
 {
 	if !awayforscientist{
 		
-		if getAwareness > HIGHCONSC{
+		if awareness > HIGHCONSC{
 		//Alert.
 		
 			if trust > TRUSTHIGH && username == "you"
@@ -39,6 +39,7 @@ RandomTalkEx : nonoverlap
 				"%(tsaNeutral)Need to be careful handling %(oldChemicals)."
 				"%(nrrtr)(They mutter about alchemy under their breath.)%(br)%(tsaNeutral)%(ellps)%(mundaneAndLaterMetals), %(alchemicalCompounds), %(planetaryMetals), and %(oldChemicals)%(ellps)"
 				"%(tsaNeutral)Maybe combining %(oldChemicals) and %(alchemicalCompounds) by %(alchemicalProcesses)%(ellps)? "
+				"%(tsaCurledUp)%(tsaAnnoyed)There could be some chemical we could mix with the water still%(ellps)"
 				
 			}
 			elseif trust > TRUSTBAD{ //middling/no trust
@@ -50,17 +51,19 @@ RandomTalkEx : nonoverlap
 					
 			}else{ //negative trust
 				"%(tsaNeutral)If I get %(alchemicalCompounds) and %(oldChemicals) together, \w4maybe, \w4just maybe%(ellps)"
+				"%(tsaNeutral)Put %(oldChemicals) in the good water%(ellps)"
 			}
 			
-		}elseif getAwareness > LOWCONSC{
-		//They're doin ok.
+		}elseif awareness > LOWCONSC{
+			//They're doin ok.
 			if trust > TRUSTGOOD{ //good trust
 				"This could be worse. It could- It could be- right?"
 				"It's not... it's not so bad."
 				"...you're still here..."
 			}
 			elseif trust > TRUSTBAD{ //middling/no trust
-				
+				"%(tsaNeutral)So far, \w4so good%(ellps) yeah? \w8Yeah%(ellps)"
+				"%(tsaNeutral)%(honor) is not her%(ellps) not her%(ellps) %(tsaCurledUp)I wonder what she's doing%(ellps)"
 			}else{ //negative trust
 				"%(ellps)"
 				"%(ellps) %(br)%(nrrtr)(They watch you warily.)"
@@ -82,7 +85,7 @@ RandomTalkEx : nonoverlap
 			elseif trust > TRUSTBAD{ //middling/no trust
 				"not alone%(ellps) this place%(ellps)"
 				"so%(ellps) tired%(ellps)"
-
+				"no%(ellps) no water%(ellps)"
 				"%(ellps)to be driven so mad%(ellps) by the fruits of his own research%(ellps)\e Griffin, The Invisible Man"
 				"%(ellps)peppy%(ellps)bunny%(ellps) cute li'l ears%(ellps)\e Ruby, rabbit Villager"
 				"%(ellps)odd names%(ellps) for lab mice%(ellps)\e Pinky and the Brain"
@@ -193,9 +196,14 @@ OnMinuteChange
 		currentpunches--
 	}
 	
+	//poke tracking
+	if currentneedlepokes > 0{
+		currentneedlepokes--
+	}
+	
 	//making sure they are slowly waking up no matter what
-	if getAwareness < 50{
-		awarenessbuff-= .75
+	if getAwareness < HIGHCONSC{
+		awarenessbuff-= .50
 		//Not efficient to run this here, but... won't hurt anything.
 		ConfigureHealth
 	}
@@ -317,7 +325,7 @@ OnSurfaceRestore
 
 OnTranslate
 {
-	_talk = reference[0]
+	_talk = "\f[height," + fontheight + "]" + reference[0]
 	 if reference1 == "" && reference2 == ""
     { //send input box : no event (ref2) , no special flag (ref1)
         EVAL('"' + REPLACE(_talk,'"','" + CHR(0x22) + "') + '"')

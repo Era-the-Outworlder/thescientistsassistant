@@ -111,6 +111,10 @@ surface.append110,111,130,131{
 	animation822.pattern0,overlay,100822,0,0,0
 	animation822.collision1,216,235,240,262,LWristSore
 	
+	//larm sore bandages
+	animation824.interval,never
+	animation824.pattern0,overlay,100824,0,0,0
+	
 }
 
 //Arm on legs + injuries
@@ -129,6 +133,10 @@ surface.append100,101,120,121{
 	animation822.interval,never
 	animation822.pattern0,overlay,100722,0,0,0
 	animation822.collision1,157,193,194,224,LWristSore
+	
+	//larm sore scar
+	animation824.interval,never
+	animation824.pattern0,overlay,100724,0,0,0
 	
 }
 
@@ -149,6 +157,10 @@ surface.append120-139{
 	animation212.interval,never
 	animation212.pattern0,overlay,100212,0,0,0
 	animation212.collision1,95,182,124,200,RWristSore
+	
+	//rarm sore scar
+	animation214.interval,never
+	animation214.pattern0,overlay,100214,0,0,0
 	
 }
 
@@ -171,6 +183,10 @@ surface.append99-299
 	animation612.pattern0,overlay,100612,0,0,0
 	animation612.collision1,98,259,127,289,RTwistedAnkle
 	
+	//rleg twist scar
+	animation614.interval,never
+	animation614.pattern0,overlay,100614,0,0,0
+	
 	//lleg twist
 	animation620.interval,never
 	animation620.pattern0,overlay,100620,0,0,0
@@ -180,6 +196,10 @@ surface.append99-299
 	animation622.interval,never
 	animation622.pattern0,overlay,100622,0,0,0
 	animation622.collision1,128,270,160,288,LTwistedAnkle
+	
+	//lleg twist scar
+	animation624.interval,never
+	animation624.pattern0,overlay,100624,0,0,0
 	
 }
 
@@ -201,7 +221,7 @@ surface.append99-299
 	//animation2300.pattern0,overlay,102300,0,0,0
 	
 	//neutral/happy eyes
-	animation2310.interval,runonce
+	animation2310.interval,never
 	animation2310.pattern0,parallelstop,(2320,2321,2330,2331,2340,2350,2351,2360,2361,2370,2371,2380,2381,2390,2391,2400,2410,2420)
 	animation2310.pattern1,start,2311
 	animation2310.pattern2,overlay,102310,0,0,0
@@ -268,12 +288,10 @@ surface.append99-299
 	
 	
 	//mega dazed blink
-	animation2361.interval,runonce + sometimes
+	animation2361.interval,sometimes
 	animation2361.pattern0,overlay,102360,0,0,0
 	animation2361.pattern1,overlay,102361,450,0,0
-	animation2361.pattern2,overlay,102362,450,0,0
-	animation2361.pattern3,overlay,102361,450,0,0
-	animation2361.pattern4,overlay,102360,450,0,0
+	animation2361.pattern4,overlay,102360,1750,0,0
 	animation2361.pattern5,start,2361
 	//animation2361.pattern4,overlay,-1,0,0,0
 	
@@ -344,6 +362,10 @@ surface.append99-299
 	animation2702.pattern0,overlay,102702,0,0,0
 	animation2702.collision1,169,120,199,150,FaceCut
 	
+	//facial scar
+	animation2704.interval,never
+	animation2704.pattern0,overlay,102704,0,0,0
+	
 	//Concussion
 	animation2710.interval,never
 	animation2710.pattern0,overlay,102710,0,0,0
@@ -351,9 +373,11 @@ surface.append99-299
 
 	//concussion bandages
 	animation2712.interval,never
-	animation2710.pattern0,start,2710
+	animation2712.pattern0,start,2710
 	animation2712.pattern1,overlay,102712,0,0,0
 	animation2712.collision2,136,79,203,106,Concussion
+	//ELEPHANT: probs not the problem but there's been some weirdness, so marking this for future investigation.
+	
 	
 	//eye procedure
 	animation2720.interval,never
@@ -363,7 +387,8 @@ surface.append99-299
 	//eye procedure bandages
 	animation2722.interval,never
 	animation2722.pattern0,overlay,102722,0,0,0
-	animation2722.collision1,169,120,199,150,EyeProcedure
+	animation2722.collision1,158,97,194,130,EyeProcedure
+	
 	
 }
 
@@ -373,7 +398,7 @@ surface.append100,110,120,130
 {
 	
 	//neutral/depressed mouth
-	animation2510.interval,runonce
+	animation2510.interval,never
 	animation2510.pattern0,parallelstop,(2520,2521,2530,2531,2540,2541,2550,2551,2560,2561)
 	animation2510.pattern1,start,2511
 	animation2510.pattern2,overlay,102510,0,0,0
@@ -456,9 +481,28 @@ surface.append100,110,120,130
 	animation2561.pattern3,overlay,102561,85,0,0
 	animation2561.pattern4,overlay,-1,0,0,0
 	
+	//Mildly dazed bubbles
+	animation9900.interval,never
+	animation9900.pattern0,overlay,999000,0,0,0
+	animation9900.pattern1,overlay,999001,650,0,0
+	animation9900.pattern2,overlay,999002,650,0,0
+	animation9900.pattern3,overlay,999000,650,0,0
+	animation9900.pattern4,start,9900
+	
+	//Very dazed bubbles
+	animation9901.interval,never
+	animation9901.pattern0,overlay,999010,0,0,0
+	animation9901.pattern1,overlay,999011,650,0,0
+	animation9901.pattern2,overlay,999012,650,0,0
+	animation9901.pattern3,overlay,999010,650,0,0
+	animation9901.pattern4,start,9901
+	
 	//Cancel talking animations
 	animation9999.interval,never
 	animation9999.pattern0,parallelstop,(2521,2531,2541,2551,2511,2561)
+	
+	
+	
 	
 }
 

@@ -69,6 +69,9 @@ ONFIRSTBOOTVARS{
 	soundeffects		= 1
 	theyaremoby			= 0
 	usermadeconcussion	= 0
+	fontsize			= 12
+	betaupdates			= 0
+	version				= "V1.1"
 	
 	
 	//See Google Sheets document for details & examples on the upcoming
@@ -94,8 +97,21 @@ getTodaysDate{
 
 //this was for testing
 dateCheck{
-	_diff = FUNCTIONEX("time_check.dll","how_many_days",lastbootdate[0],lastbootdate[1],lastbootdate[2],lastbootdate[3],lastbootdate[4],lastbootdate[5])
-	_diff
+	//_diff = FUNCTIONEX("time_check.dll","how_many_days",lastbootdate[0],lastbootdate[1],lastbootdate[2],lastbootdate[3],lastbootdate[4],lastbootdate[5])
+	//_diff
+	_today = getTodaysDate
+	if (lastbootdate[0] != _today[0])  || (lastbootdate[1] != _today[1]) || (lastbootdate[2] != _today[2])
+	{
+		1
+	}else{
+		0
+	}
+}
+
+syncodate{
+	lastbootdate = thisbootdate
+	thisbootdate = getTodaysDate
+
 }
 
 
@@ -211,9 +227,10 @@ ONBOOTVARS{
 	//they don't care anymore (forgot about it lol)
 	usermadeconcussion	= 0
 	
-	//heals so many days
-	for _i = 0; _i < _daychange; _i++{
+	//wound processing
+	if lastbootdate != thisbootdate{
 		OnDayPassHealth
+		"heal"
 	}
 	
 	//if a day has passed, it's been long enough for them to return, or its a signaled return
@@ -245,12 +262,13 @@ OnGenerateExperiment{
 	_randomgen = RAND(50)
 	
 	//Half the time nothing happens
-	if _randomgen % 2 == 0{
+	if _randomgen % 2 == 1{
 		experimentcode = 0
 	}else{
 		experimentcode = 1
 	}
 	
+	InitializeExperiment
 	
 }
 
@@ -259,17 +277,17 @@ InitializeExperiment{
 	case experimentcode{
 		//No experiment occured; apply random injuries
 		when 0{
-			awarenessbuff = 10 - RAND(10)
+			awarenessbuff = RAND(10) + 1
 			
-			if _randomgen % 2{
+			if _randomgen % 2 == 1{
 				APPLYFACECUT
 				APPLYLWRISTSORE
 			}
-			if randomgen % 7{
+			if _randomgen % 5== 1{
 				APPLYRWRISTSORE
 				APPLYLTWISTEDANKLE
 			}
-			if randomgen % 8{
+			if _randomgen % 8== 1{
 				if timestatus[2] == "healed"{
 					APPLYCONCUSSION
 				}
@@ -282,19 +300,17 @@ InitializeExperiment{
 			APPLYLWRISTSORE
 			APPLYRWRISTSORE
 			APPLYINJECTION
-			if _randomgen % 2{
+			if _randomgen % 2 == 1{
 				APPLYFACECUT
 			}
-			if randomgen % 5{
+			if _randomgen % 5 == 1{
 				APPLYRTWISTEDANKLE
 				APPLYLTWISTEDANKLE
 			}
-			if randomgen % 6{
+			if _randomgen % 6 == 1{
 				if timestatus[1] == "healed"{
 					APPLYEYEPROC
 				}
-				
-				
 			}
 		}
 		when 3{

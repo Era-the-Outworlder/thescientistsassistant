@@ -28,10 +28,14 @@ MouseMove0Head
 	
 	if (visualstate[1] < 2){
 	
+		if awareness <= HIGHCONSC && RAND(4) > 0{
+			awarenessbuff--
+		}
+		
 		if awareness > HIGHCONSC{
 		
 			if trust > TRUSTGOOD{
-				trust+= .25
+				//trust+= .25
 					if pets > 40{
 						"%(tsaOpen)%(tsaRelieved)Okay, it can be kind of nice%(ellps)"
 						"%(tsaOpen)%(tsaRelieved)Only because it's you%(ellps)"
@@ -77,7 +81,7 @@ MouseMove0Head
 				"%(nrrtr)(Your cursor catches in one of their tangles, and they bite back a whimper.)"
 			}
 		}else{
-			awarenessbuff--
+			
 			ConfigureHealth
 			if trust > TRUSTBAD{
 				"%(nrrtr)(Sometimes all you can do is stroke someone until they feel better.)"
@@ -136,7 +140,7 @@ MouseMove0Face
 MouseDoubleClick0Head
 {
 	punches++
-	currentpunches--
+	currentpunches++
 	trust--
 	if currentpunches % 3{
 		zonedout = 1

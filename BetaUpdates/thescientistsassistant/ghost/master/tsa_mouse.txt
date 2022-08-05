@@ -28,7 +28,7 @@ MouseMove0Head
 	
 	if (visualstate[1] < 2){
 	
-		if awareness < HIGHCONSC && RAND(4) > 0{
+		if awareness <= HIGHCONSC && RAND(4) > 0{
 			awarenessbuff--
 		}
 		

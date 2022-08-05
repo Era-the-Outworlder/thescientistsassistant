@@ -146,7 +146,11 @@ OnExperiment0Concussion{
 			if awareness > HIGHCONSC{
 				"\0%(tsaNeutral)I don't think that would help much..."
 			}elseif awareness > LOWCONSC{
-				"%(tsaNeutral)What%(ellps)? Needs cleaning%(ellps) but more for the blood%(ellps) try the %(injuryrequires[1])%(ellps)"
+				if injuryrequires[1] != "none"{
+					"%(tsaNeutral)What%(ellps)? Needs cleaning%(ellps) but more for the blood%(ellps) try the %(injuryrequires[1])%(ellps)"
+				}else{
+					"%(tsaNeutral)Doesn't need that%(ellps)"
+				}	
 			}else{
 				"%(nrrtr)(Maybe you should try something else.)"
 			}
@@ -209,8 +213,7 @@ OnExperiment0Concussion{
 					--
 					injuryrequires[1] = "none"
 					"\0%(tsaNeutral)Ah... thanks. \w[840]Protecting wounds is%(ellps) step one. \w3Wait. \w5Two? \w9Three?"
-					"%(tsaNeutral)Thanks for helping%(ellps) this time I just tripped. \w8Kind of funny with everything else that happens in my life%(ellps)"
-					"%(tsaOw)Ouch! \w8\w8%(br)%(tsaNeutral)Ah%(ellps) %(tsaRelieved)Thank you for all the help. \w8%(tsaNervous)People need to keep the lab cleaner than they do%(ellps) and stop stacking things so precariously%(ellps)"
+						"%(tsaOw)Ouch! \w8\w8%(br)%(tsaNeutral)Ah%(ellps) %(tsaRelieved)Thank you for all the help. \w8%(tsaNervous)People need to keep the lab cleaner than they do%(ellps) and stop stacking things so tall and precariously%(ellps)"
 				}elseif injuryrequires[1] == "washcloth"{
 					"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you're supposed to clean wounds first."
 				}else{
@@ -342,7 +345,7 @@ OnExperiment0InjectionSite{
 			if injuryrequires[3] == "bandaid"{
 				BANDAID(3)
 				--
-				injuryrequires[0] = "none"
+				injuryrequires[3] = "none"
 				"\0%(tsaNeutral)Ah%(ellps) %(tsaRelieved)thanks. \w[840]Protected%(ellps)"
 			}elseif injuryrequires[3] == "antibac"{
 				"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you%(ellps) clean wounds first%(ellps)"
@@ -571,7 +574,7 @@ OnExperiment0TwistedAnkle{
 				WASHCLOTH(_argv[0])
 				--
 				injuryrequires[_argv[0]] = "gauze"
-				"\0%(tsaNeutral)%(tsaOw)Oh... ouch, that stings a little. %(tsaNeutral)Maybe be a little lighter handed? w9Please?"
+				"\0%(tsaNeutral)%(tsaOw)Oh... ouch, that stings a little. %(tsaNeutral)Maybe be a little lighter handed? \w9Please?"
 			}elseif timestatus[_argv[0]] == "sanitized"{
 				"\0%(tsaNeutral)You already cleaned it..."
 			}else{
@@ -835,7 +838,6 @@ OnExperiment1EyeProcedure{
 	case itemgrabbed{
 	//Antibacterial
 	when 4{
-		
 		if awareness > HIGHCONSC{
 			"\0%(tsaNeutral)I don't think that would help much..."
 		}elseif awareness > LOWCONSC{
@@ -851,7 +853,7 @@ OnExperiment1EyeProcedure{
 			if injuryrequires[2] == "washcloth"{
 				WASHCLOTH(2)
 				--
-				injuryrequires[2] = "antibac"
+				injuryrequires[2] = "gauze"
 				"\0%(tsaNeutral)%(tsaOw)Oh... ouch, that stings a little. It's catching on the stitch%(ellps)"
 			}elseif timestatus[2] == "sanitized"{
 				"\0%(tsaNeutral)You already cleaned it..."
@@ -862,7 +864,7 @@ OnExperiment1EyeProcedure{
 			if injuryrequires[2] == "washcloth"{
 				WASHCLOTH(2)
 				--
-				injuryrequires[2] = "antibac"
+				injuryrequires[2] = "gauze"
 				"\0%(tsaNeutral)%(tsaOw)Ouch%(ellps) hurts%(ellps) be more careful, it runs deep%(ellps)"
 			}elseif timestatus[2] == "sanitized"{
 				"\0%(tsaNeutral)It's clean already, %(username)%(ellps)"
@@ -873,8 +875,8 @@ OnExperiment1EyeProcedure{
 			if injuryrequires[2] == "washcloth"{
 				WASHCLOTH(2)
 				--
-				injuryrequires[2] = "antibac"
-				"\0%(tsaNeutral)%(nrrtr)(You wrap their head snugly in bandages. Best to go wide.)"
+				injuryrequires[2] = "gauze"
+				"\0%(tsaNeutral)%(nrrtr)(You carefully dab at the traces of blood and swelling.)"
 			}elseif timestatus[2] == "sanitized"{
 				"\0%(tsaNeutral)%(nrrtr)(You already cleaned their face up.)"
 			}else{
@@ -903,8 +905,8 @@ OnExperiment1EyeProcedure{
 				injuryrequires[2] = "none"
 				"\0%(tsaNeutral)Ah... thanks. \w[840]Protecting incisions is%(ellps) step one. \w3Wait. \w5Two? \w9Three?"
 				"%(tsaOw)Ouch! \w8\w8%(br)%(tsaNeutral)Ah%(ellps) %(tsaRelieved)Thank you for all the help%(ellps) I don't know why %(TheScientist) didn't clean this thing up%(ellps)"
-			}elseif injuryrequires[1] == "washcloth"{
-				"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you're supposed to clean it first."
+			}elseif injuryrequires[2] == "washcloth" || injuryrequires[2] == "antibac"{
+				"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you're supposed to clean it more first."
 			}else{
 				//otherwise, there's already a bandaid on it.
 				"%(tsaNeutral)I think you wrapped it well enough%(ellps)"
@@ -916,7 +918,7 @@ OnExperiment1EyeProcedure{
 				injuryrequires[2] = "none"
 				"\0%(tsaNeutral)Ah... thanks. \w[840]Safe now%(ellps)"
 				
-			}elseif injuryrequires[1] == "washcloth"{
+			}elseif injuryrequires[2] == "washcloth"{
 				"%(tsaNeutral)%(tsaOw)Ouch%(ellps) I think you%(ellps) clean wounds first%(ellps)"
 			}else{
 				//otherwise, there's already a bandaid on it.

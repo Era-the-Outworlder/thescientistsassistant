@@ -307,15 +307,56 @@ OnUpdateComplete
 	{
 		"%(tsaNeutral)%(medkit)"
 	--
+		"\![reload,shiori]"
+		--
 		if !awayforscientist{
 			zonedout = 0
-			"(Update completed.)%(br)\0%(tsaNeutral)What just happened...? Did I miss something.\w4.\w4?"
+			"%(nrrtr)(Update completed.)%(br)\0%(tsaNeutral)What just happened...? Did I miss something.\w4.\w4?"
 		}else{
 			"%(nrrtr)(Update successful. Anything could happen to %(TheAssistant) when they return...)"
 		}
+		--
+		"\![raise,OnUpdateVars]TEST"
 		
 	}
 }
+
+//------------------------------------------------------------------------------
+// Variables that change with the update
+//------------------------------------------------------------------------------
+OnUpdateVars{
+	version = "V1.0.1 (beta)"
+
+	if !ISVAR(fontheight){
+		fontheight = 12
+	}
+	INIT(&betaupdates)
+	
+	bodypart[6] = "right leg"
+	bodypart[7] = "left leg"
+	
+	if !ISVAR(leftinfected){
+		//set all to 0
+		leftinfected = IARRAY
+		for _i=0; _i < ARRAYSIZE(bodypart); _i++{
+			leftinfected[_i] = 0;
+			
+			//check if this is an outdated state, as what used to be raw is now scarred
+			if visualstate[_i] == 4{
+				visualstate[_i] = 5
+			}
+			
+		}
+	}
+
+}
+
+INIT{
+	if !ISVAR(_argv[0]){
+		_argv[0] = 0
+	}
+}
+
 
 //------------------------------------------------------------------------------
 //ネットワーク更新失敗
@@ -473,7 +514,7 @@ OnUpdatedataCreating
 //------------------------------------------------------------------------------
 OnUpdatedataCreated
 {
-	"(They come back to the present.)%(br)What 'update' did I miss...?\e"
+	"(They come back to the present.)%(br)%(tsaNeutral)What 'update' did I miss...?\e"
 	zonedout = 0
 }
 
@@ -493,7 +534,7 @@ OnNarCreating
 OnNarCreated
 {
 	if awareness > LOWCONSC{
-		"(They blink, coming back to the present.)%(br)Something's new. Something was added... %(br)"
+		"(They blink, coming back to the present.)%(br)%(tsaNeutral)Something's new. Something was added... %(br)"
 	   
 	}
 	"%(nrrtr)(Nar of %(reference0) created at %(reference1).)\e"

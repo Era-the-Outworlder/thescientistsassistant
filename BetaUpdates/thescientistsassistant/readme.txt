@@ -8,7 +8,7 @@ Code by Ecclysium and Era the Outworlder
 
 https://www.instagram.com/the_pixel_zoo/
 https://era-the-outworlder.github.io/era_makes_ghosts/
-https://github.com/ecclysium
+https://ecclysium.github.io/
 
 CONTENT WARNING: blood, injury, excessive violence, and discussion of misuse of assorted chemicals
 
@@ -36,4 +36,16 @@ CHANGELOG:
 	*5/12/2022
 		Version 1.0.0 Release
 		Ghost Jam 2022
+	*8/4/2022
+		Version 1.0.1 Patch/Mini-Update
+		Beta Updates added
+		Mechanical Bugfixes (so it may seem like there are new mechanics, but there aren't many entirely new)
+		Visual Bugfixes
+		Dialogue Bugfixes
+		Minor Dialogue Additions
+		Art Updates
+		Rebalancing (Consciousness, friendship, etc)
+		Frankly I did a lot of these updates long enough ago I forgot what all was changed.
+		
+		
 

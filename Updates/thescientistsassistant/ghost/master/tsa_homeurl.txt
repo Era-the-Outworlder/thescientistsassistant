@@ -9,6 +9,11 @@
 //------------------------------------------------------------------------------
 On_homeurl
 {
-	"https://raw.githubusercontent.com/ecclysium/thescientistsassistant/master/Updates/thescientistsassistant/"
+	if betaupdates{
+		"https://raw.githubusercontent.com/ecclysium/thescientistsassistant/master/BetaUpdates/thescientistsassistant/"
+	}else{
+		"https://raw.githubusercontent.com/ecclysium/thescientistsassistant/master/Updates/thescientistsassistant/"
+	}
+	
 }
 

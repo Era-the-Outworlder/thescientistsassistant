@@ -11,7 +11,7 @@ OpenVitals{
 	//--
 	//"PROPERTY OF DOCTRIX\nVERSION 0.0.0\n"
 	--
-	"ACTIVE REPORT CODE #%(experimentcode * (thisboot[1]))%(thisboot[2])\n"
+	"ACTIVE REPORT CODE #%(experimentcode * (thisbootdate[1]))%(thisbootdate[2])%(thisbootdate[1])\n"
 	--
 	"\f[height,+2]\f[align,center]"
 	--
@@ -36,25 +36,25 @@ OpenVitals{
 		"ALERT"
 	}elseif awareness > LOWCONSC{
 		"SEMI CONSCIOUS"
-	}elseif awareness > 2{
-		"UNRESPONSIVE"
+	}elseif awareness > 5{
+		"RESPONSIVE"
 	}else{
 		"UNCONSCIOUS"
 	}
 	--
 	"%(br)"
 	--
-	"CONSCIOUSNESS: %(TOINT(awareness))%%(br)"
+	"CONSCIOUSNESS: %(TOINT(awareness))% %(br)"
 	--
-	"HEAD: %(TOINT(headhealth))%\n"
+	"HEAD: %(TOINT((headhealth + awareness)/2))% %(getPartInfection('head'))\n"
 	--
-	"RIGHT LEG: %(TOINT(rleghealth))%\n"
+	"RIGHT LEG: %(TOINT(rleghealth))% %(getPartInfection('right leg'))\n"
 	--
-	"LEFT LEG: %(TOINT(lleghealth))%\n"
+	"LEFT LEG: %(TOINT(lleghealth))% %(getPartInfection('left leg'))\n"
 	--
-	"RIGHT ARM: %(TOINT(rarmhealth))%\n"
+	"RIGHT ARM: %(TOINT(rarmhealth))% %(getPartInfection('right arm'))\n"
 	--
-	"LEFT ARM: %(TOINT(larmhealth))%\n"
+	"LEFT ARM: %(TOINT(larmhealth))% %(getPartInfection('left arm'))\n"
 	--
 	"%(br)OVERALL HEALTH SCORE: %(TOINT(overallhealth))%\n"
 	
@@ -83,6 +83,20 @@ getHeartRate{
 	_baseheart
 }
 
+//returns nothing if not infected, "(infected)" if it is
+//_argv[0] is name of the part
+getPartInfection{
+	_size = ARRAYSIZE(bodypart)
+	for _i = 0; _i < _size; _i++{
+		if bodypart[_i] == _argv[0]{
+			if timestatus[_i] == "infected"{
+				"(infected)"
+				return
+			}
+		}
+	}
+}
+
 
 //Initialize health variables
 FirstBootHealth{
@@ -97,17 +111,19 @@ FirstBootHealth{
 	conditionpreposition = IARRAY
 	injurystatus = IARRAY
 	wheninfected = IARRAY
+	leftinfected = IARRAY
 	
 	//Index 0 - FaceCut
 	//The FaceCut is the only one that starts out injured for now.
 	bodypart ,= "face"
-	severity ,= 4
+	severity ,= 0
 	injuryrequires ,= "antibac"
-	visualstatus ,= 3
-	timestatus ,= "fresh"
+	visualstatus ,= 0
+	timestatus ,= "healed"
 	conditionpreposition ,= "cut on"
-	injurystatus ,= "looks shallow enough"
+	injurystatus ,= "healed well"
 	wheninfected ,= "antibac"
+	leftinfected ,= 0
 	
 	//Index 1 - Concussion
 	bodypart ,= "head"
@@ -118,6 +134,7 @@ FirstBootHealth{
 	conditionpreposition ,= "concussion I got"
 	injurystatus ,= "seems to have healed well"
 	wheninfected ,= "washcloth"
+	leftinfected ,= 0
 	
 	//Index 2 - EyeProcedure
 	bodypart ,= "face"
@@ -128,6 +145,7 @@ FirstBootHealth{
 	conditionpreposition ,= "procedure %(TheScientist) did"
 	injurystatus ,= "seems to have healed well"
 	wheninfected ,= "washcloth"
+	leftinfected ,= 0
 	
 	//Index 3 - InjectionSite
 	bodypart ,= "left arm"
@@ -138,6 +156,7 @@ FirstBootHealth{
 	conditionpreposition ,= "botched IV wound on"
 	injurystatus ,= "seems to have healed well"
 	wheninfected ,= "antibac"
+	leftinfected ,= 0
 	
 	//Index 4 - LWristSore
 	bodypart ,= "left arm"
@@ -148,6 +167,7 @@ FirstBootHealth{
 	conditionpreposition ,= "restraint sores on"
 	injurystatus ,= "seems to have healed well"
 	wheninfected ,= "antibac"
+	leftinfected ,= 0
 	
 	//Index 5 - RWristSore
 	bodypart ,= "right arm"
@@ -158,17 +178,8 @@ FirstBootHealth{
 	conditionpreposition ,= "restraint sores on"
 	injurystatus ,= "seems to have healed well"
 	wheninfected ,= "antibac"
-	
-	//Index 6 - LTwistedAnkle
-	bodypart ,= "left leg"
-	severity ,= 0
-	injuryrequires ,= "none"
-	visualstatus ,= 0
-	timestatus ,= "healed"
-	conditionpreposition ,= "ankle I twisted"
-	injurystatus ,= "seems to have healed well"
-	wheninfected ,= "washcloth"
-	
+	leftinfected ,= 0
+
 	//Index 6 - RTwistedAnkle
 	bodypart ,= "right leg"
 	severity ,= 0
@@ -177,8 +188,19 @@ FirstBootHealth{
 	timestatus ,= "healed"
 	conditionpreposition ,= "ankle I twisted"
 	injurystatus ,= "seems to have healed well"
-	wheninfected ,= "washcloth"
-	
+	wheninfected ,= "washcloth"	
+	leftinfected ,= 0
+
+	//Index 7 - LTwistedAnkle
+	bodypart ,= "left leg"
+	severity ,= 0
+	injuryrequires ,= "none"
+	visualstatus ,= 0
+	timestatus ,= "healed"
+	conditionpreposition ,= "ankle I twisted"
+	injurystatus ,= "seems to have healed well"
+	wheninfected ,= "washcloth"	
+	leftinfected ,= 0
 	
 	//Configure Health based on each body part and the like
 	ConfigureHealth
@@ -220,7 +242,7 @@ ConfigureHealth{
 			}
 		}
 		_multiplier = 1
-		if bodypart[_i] == head{
+		if bodypart[_i] == "head"{
 			_multiplier = 2
 		}
 		awareness -= severity[_i] * _multiplier
@@ -235,6 +257,7 @@ ConfigureHealth{
 	NONEG(&rarmhealth)
 	NONEG(&lleghealth)
 	NONEG(&rleghealth)
+	NONEG(&awareness)
 }
 
 //_argv[0] becomes 0 if less than
@@ -263,17 +286,18 @@ OnDayPassHealth{
 		case timestatus[_i]{
 		when "fresh"{
 			timestatus[_i] = "infected"
-			visualstatus[_i] = 4
+			visualstatus[_i] = 5
 			severity[_i] += severity[_i]*.25
 			injurystatus[_i] = "got infected"
 			injuryrequires[_i] = wheninfected[_i]
 		}
 		when "infected"{
 			timestatus[_i] = "infected"
-			visualstatus[_i] = 4
+			visualstatus[_i] = 5
 			severity[_i] += severity[_i]*.25
 			injurystatus[_i] = "is infected pretty bad"
 			injuryrequires[_i] = wheninfected[_i] //still needs to be reset
+			leftinfected[_i]++
 		}
 		when "sanitized"{
 			if RAND(2){
@@ -283,10 +307,11 @@ OnDayPassHealth{
 				injurystatus[_i] = "is starting to heal"
 			}else{
 				timestatus[_i] = "infected"
-				visualstatus[_i] = 4
+				visualstatus[_i] = 5
 				severity[_i] += severity[_i]*.25
 				injurystatus[_i] = "is getting infected"
 				injuryrequires[_i] = wheninfected[_i]
+				leftinfected[_i]++
 			}
 		}
 		when "bandaged"{
@@ -298,14 +323,27 @@ OnDayPassHealth{
 		}
 		when "healing"{
 			timestatus[_i] = "tender"
-			visualstatus[_i] = 0
 			severity[_i] -= CEIL(severity[_i]/2)
 			injurystatus[_i] = "is healing well, but is still tender"
+			
+			//Show it as scarred if this is a long term thing.
+			if leftinfected[_i] > 2{
+				visualstatus[_i] = 4
+			}else{
+				visualstatus[_i] = 0
+			}
 		}
 		when "tender"{
-			timestatus[_i] = "healed"
-			severity[_i] = 0
-			injurystatus[_i] = "healed well"
+			if leftinfected[_i] > 2{
+				timestatus[_i] = "scarred"
+				severity[_i] = 0
+				injurystatus[_i] = "scarred over"
+			}else{
+				timestatus[_i] = "healed"
+				severity[_i] = 0
+				injurystatus[_i] = "healed well"
+			}
+			
 		}
 		
 		}
@@ -599,7 +637,7 @@ APPLYFACECUT{
 	bodypart[0] = "face"
 	severity[0] = 4
 	injuryrequires[0] = "antibac"
-	visualstatus[0] = 4
+	visualstatus[0] = 5
 	timestatus[0] = "fresh"
 	conditionpreposition[0] = "cut on"
 	injurystatus[0] = "looks shallow enough"
@@ -611,7 +649,7 @@ APPLYCONCUSSION{
 	bodypart[1] = "head"
 	severity[1] = 8
 	injuryrequires[1] = "washcloth"
-	visualstatus[1] = 4
+	visualstatus[1] = 5
 	timestatus[1] = "fresh"
 	conditionpreposition[1] = "concussion I got"
 	injurystatus[1] = "seems to have healed well"
@@ -623,7 +661,7 @@ APPLYEYEPROC{
 	bodypart[2] = "face"
 	severity[2] = 12
 	injuryrequires[2] = "washcloth"
-	visualstatus[2] = 4
+	visualstatus[2] = 5
 	timestatus[2] = "fresh"
 	conditionpreposition[2] = "procedure %(TheScientist) did"
 	injurystatus[2] = "seems to have healed well"
@@ -635,7 +673,7 @@ APPLYINJECTION{
 	bodypart[3] = "left arm"
 	severity[3] = 4
 	injuryrequires[3] = "antibac"
-	visualstatus[3] = 4
+	visualstatus[3] = 5
 	timestatus[3] = "fresh"
 	conditionpreposition[3] = "botched IV wound on"
 	injurystatus[3] = "seems to have healed well"
@@ -647,7 +685,7 @@ APPLYLWRISTSORE{
 	bodypart[4] = "left arm"
 	severity[4] = 6
 	injuryrequires[4] = "antibac"
-	visualstatus[4] = 4
+	visualstatus[4] = 5
 	timestatus[4] = "fresh"
 	conditionpreposition[4] = "restraint sores on"
 	injurystatus[4] = "seems to have healed well"
@@ -659,7 +697,7 @@ APPLYRWRISTSORE{
 	bodypart[5] = "right arm"
 	severity[5] = 6
 	injuryrequires[5] = "antibac"
-	visualstatus[5] = 4
+	visualstatus[5] = 5
 	timestatus[5] = "fresh"
 	conditionpreposition[5] = "restraint sores on"
 	injurystatus[5] = "seems to have healed well"
@@ -667,27 +705,27 @@ APPLYRWRISTSORE{
 }
 
 APPLYLTWISTEDANKLE{
-	//Index 6 - LTwistedAnkle
-	bodypart[6] = "left leg"
-	severity[6] = 9
-	injuryrequires[6] = "washcloth"
-	visualstatus[6] = 4
-	timestatus[6] = "fresh"
-	conditionpreposition[6] = "ankle I twisted"
-	injurystatus[6] = "seems to have healed well"
-	wheninfected[6] = "washcloth"
-}
-
-APPLYRTWISTEDANKLE{
-	//Index 7 - RTwistedAnkle
-	bodypart[7] = "right leg"
+	//Index 7 - LTwistedAnkle
+	bodypart[7] = "left leg"
 	severity[7] = 9
 	injuryrequires[7] = "washcloth"
-	visualstatus[7] = 4
+	visualstatus[7] = 5
 	timestatus[7] = "fresh"
 	conditionpreposition[7] = "ankle I twisted"
 	injurystatus[7] = "seems to have healed well"
 	wheninfected[7] = "washcloth"
+}
+
+APPLYRTWISTEDANKLE{
+	//Index 6 - RTwistedAnkle
+	bodypart[6] = "right leg"
+	severity[6] = 9
+	injuryrequires[6] = "washcloth"
+	visualstatus[6] = 5
+	timestatus[6] = "fresh"
+	conditionpreposition[6] = "ankle I twisted"
+	injurystatus[6] = "seems to have healed well"
+	wheninfected[6] = "washcloth"
 }
 
 

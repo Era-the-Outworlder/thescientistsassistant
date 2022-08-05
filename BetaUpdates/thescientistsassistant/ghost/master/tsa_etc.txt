@@ -307,13 +307,16 @@ OnUpdateComplete
 	{
 		"%(tsaNeutral)%(medkit)"
 	--
-		OnUpdateVars
+		"\![reload,shiori]"
+		--
 		if !awayforscientist{
 			zonedout = 0
-			"(Update completed.)%(br)\0%(tsaNeutral)What just happened...? Did I miss something.\w4.\w4?"
+			"%(nrrtr)(Update completed.)%(br)\0%(tsaNeutral)What just happened...? Did I miss something.\w4.\w4?"
 		}else{
 			"%(nrrtr)(Update successful. Anything could happen to %(TheAssistant) when they return...)"
 		}
+		--
+		"\![raise,OnUpdateVars]TEST"
 		
 	}
 }
@@ -333,9 +336,16 @@ OnUpdateVars{
 	bodypart[7] = "left leg"
 	
 	if !ISVAR(leftinfected){
+		//set all to 0
 		leftinfected = IARRAY
 		for _i=0; _i < ARRAYSIZE(bodypart); _i++{
 			leftinfected[_i] = 0;
+			
+			//check if this is an outdated state, as what used to be raw is now scarred
+			if visualstate[_i] == 4{
+				visualstate[_i] = 5
+			}
+			
 		}
 	}
 

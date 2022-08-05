@@ -129,7 +129,7 @@ OpenMenu
 			}
 		}
 		--
-		"\f[height,+2]\n\f[align,left]"
+		" %(version)\f[height,+2]\n\f[align,left]"
 	}
 }
 
@@ -274,7 +274,7 @@ OnQuestionnaire
 				elseif trust > TRUSTBAD
 				{
 					"Name%(ellps)? %(tsaAlert)Uh, %(TheAssistant) is fine. %(tsaCurledUp)%(tsaDepressed)Names don’t really matter anymore."
-					"%(tsaCurledUp)Doesn’t just %tsanicknamed work for you%(ellps)?"
+					"%(tsaCurledUp)Doesn’t just %tsanickname work for you%(ellps)?"
 				}
 				else
 				{
@@ -641,6 +641,9 @@ Menu_RIGHTARM{
         }
     }elseif awareness > LOWCONSC{
         "%(tsaGesture)Yes, Doctrix%(ellps)"
+		"%(tsaGesture)As you wish%(ellps)"
+		"Mmmn%(ellps) %(tsaGesture)here."
+		"%(tsaGesture)Yes, Doctrix%(ellps)"
     }else{
 		"%(tsaSuperDazed)Uh%(ellps) \w4%(tsaGesture)\w[2]%(tsaSuperDazed)%(br)%(nrrtr)(They jaggedly shove it up, but soon it falls limply back down.)%(tsaNeutral)"
     }
@@ -702,7 +705,7 @@ Menu_HEADLINECANCEL
 
 Menu_SETTINGS{
 	//ELEPHANT: make it nicer binch
-	"\![quicksection,true]"
+	"\b2\![quicksection,true]"
 	--
 	"Your Name: \![*]\__q[Menu_CHANGENAME]%username\__q\n"
 	//AYATEMPLATE.MenuItem("Name: %username","Menu_CHANGENAME")
@@ -717,6 +720,8 @@ Menu_SETTINGS{
 	--
 	"\n[half]"
 	--
+		"Font Height: \__q[Menu_DOWNFONTHEIGHT]\![*]\__q%fontheight\__q[Menu_UPFONTHEIGHT]\![*]\__q\n"
+	--
 	if timenoises{
 		//AYATEMPLATE.MenuItem("Time Noises: on","Menu_FLIPBELL")
 		"Hour Bell: \![*]\__q[Menu_FLIPBELL]on\__q\n"
@@ -729,6 +734,14 @@ Menu_SETTINGS{
 		"Medical Sound Effects: \![*]\__q[Menu_FLIPSFX]on\__q\n"
 	}else{
 		"Medical Sound Effects: \![*]\__q[Menu_FLIPSFX]off\__q\n"
+	}
+	--
+	"\n"
+	--
+	if betaupdates{
+		"Beta Updates: \![*]\__q[Menu_FLIPBETA]on\__q\n"
+	}else{
+		"Beta Updates: \![*]\__q[Menu_FLIPBETA]off\__q\n"
 	}
 	--
 	AYATEMPLATE.MenuItem("Back","OpenMenu",150)
@@ -796,6 +809,18 @@ OnMenu_CHANGEHONORIFICFINISH{
 	"%(tsaNeutral)Yes, %honor%(ellps)"
 }
 
+Menu_UPFONTHEIGHT{
+	fontheight++
+	Menu_SETTINGS
+}
+
+Menu_DOWNFONTHEIGHT{
+	fontheight--
+	Menu_SETTINGS
+}
+
+
+
 Menu_FLIPBELL{
 	if timenoises{
 		timenoises = 0
@@ -813,6 +838,16 @@ Menu_FLIPSFX{
 	}else{
 		soundeffects = 1
 		"%(nrrtr)(Sound effects turned on.)"
+	}
+}
+
+Menu_FLIPBETA{
+	if betaupdates{
+		betaupdates = 0
+		"%(nrrtr)(Opted out of beta testing.)"
+	}else{
+		betaupdates = 1
+		"%(nrrtr)(Opted into beta testing.)"
 	}
 }
 
